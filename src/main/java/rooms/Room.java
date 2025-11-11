@@ -1,3 +1,5 @@
+package rooms;
+
 public abstract class Room
 {
     protected int maxCapacity; 
@@ -30,17 +32,17 @@ public void setRoomType(String roomType)
     {
         try {
         if (roomType == null || roomType.isEmpty()) {
-            throw new IllegalArgumentException("Room type cannot be empty.");
+            throw new IllegalArgumentException("rooms.Room type cannot be empty.");
         }
 
-        // Accept only "Lab Room" or "Lecture Room" (case insensitive)
-        if (!roomType.equalsIgnoreCase("Lab Room") && 
-            !roomType.equalsIgnoreCase("Lecture Room")) {
-            throw new IllegalArgumentException("Invalid room type. Must be 'Lab Room' or 'Lecture Room'.");
+        // Accept only "Lab rooms.Room" or "Lecture rooms.Room" (case insensitive)
+        if (!roomType.equalsIgnoreCase("Lab rooms.Room") &&
+            !roomType.equalsIgnoreCase("Lecture rooms.Room")) {
+            throw new IllegalArgumentException("Invalid room type. Must be 'Lab rooms.Room' or 'Lecture rooms.Room'.");
         }
 
         this.roomType = roomType;
-        System.out.println("Room type successfully set to: " + roomType);
+        System.out.println("rooms.Room type successfully set to: " + roomType);
 
     } catch (IllegalArgumentException e) {
         System.out.println("Error: " + e.getMessage());

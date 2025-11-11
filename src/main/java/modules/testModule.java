@@ -1,3 +1,5 @@
+package modules;
+
 public class testModule {
     public static void main(String[] args) {
         Module oop = new Module("OOP", "CS4013");

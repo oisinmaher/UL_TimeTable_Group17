@@ -1,3 +1,5 @@
+package rooms;
+
 public class LectureRoom extends Room{
 
     public LectureRoom(String roomID, String roomType, int maxCapacity)
@@ -27,12 +29,12 @@ public class LectureRoom extends Room{
     {
         try {
             if (roomType == null || roomType.isEmpty()) {
-                throw new IllegalArgumentException("Room type cannot be empty.");
+                throw new IllegalArgumentException("rooms.Room type cannot be empty.");
             }
 
-            // Only "Lab Room" allowed (case-insensitive)
-            if (!roomType.equalsIgnoreCase("Lecture Room")) {
-                throw new IllegalArgumentException("Invalid room type for this class. Must be 'Lab Room'.");
+            // Only "Lab rooms.Room" allowed (case-insensitive)
+            if (!roomType.equalsIgnoreCase("Lecture rooms.Room")) {
+                throw new IllegalArgumentException("Invalid room type for this class. Must be 'Lab rooms.Room'.");
             }
 
             return "Lecture and Tutorial";
@@ -41,11 +43,6 @@ public class LectureRoom extends Room{
             System.out.println("Error: " + e.getMessage());
             return null;
         }
-    } 
-
-
-    
-
-
+    }
     
 }
