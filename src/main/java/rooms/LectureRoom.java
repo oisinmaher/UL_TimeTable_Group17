@@ -1,4 +1,4 @@
-package rooms;
+package src.main.java.rooms;
 
 public class LectureRoom extends Room{
 
