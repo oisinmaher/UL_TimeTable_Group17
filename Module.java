@@ -84,7 +84,7 @@ public class Module {
      * This might work with Times class.
      */
     public void createTutorials(int numberOfTutorials) {
-
+        
     }
 
     /*
