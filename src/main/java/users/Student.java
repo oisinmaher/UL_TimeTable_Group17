@@ -4,12 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
+/**
+ *
+ */
 public class Student extends User {
     int courseId;
 
     // testing objects (will remove likely)
     List<String[]> timeTable;
     Set<String> occupiedTimes;
+
+    /**
+     *
+     * @param name
+     * @param userId
+     * @param courseId
+     */
     public Student(String name, int userId, int courseId) {
         super(name, userId);
         this.courseId = courseId;
@@ -18,12 +28,24 @@ public class Student extends User {
         timeTable = new ArrayList<>();
         occupiedTimes = new HashSet<>();
     }
+
+    /**
+     *
+     * @return
+     */
     public int getCourseId(){
         return this.courseId;
     }
+
+    /**
+     *
+     * @return
+     */
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }
+
+
     // test methods
     public void addClassToTimeTable(
             String modName, String classType, String roomNumber, String dateTime

@@ -4,9 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
+/**
+ *
+ */
 public class TimeTable {
     // Map Stores schedule of each day (Mon -> Fri)
-    Map<String, TreeSet<String[]>> daySchedule;
+    Map<String, TreeSet<TimeSlot>> daySchedule;
+
+    /**
+     *
+     */
     public TimeTable(){
         // Init map
         daySchedule = new HashMap<>();
@@ -15,14 +22,49 @@ public class TimeTable {
                 "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
         };
         // Creates new schedule for each day
+
+
         for(String day : daysOfWeek){
             // Ordered Set of Strings
             // (set[0] will be the time in 24 hours no decimal point 0900 = 9 am)
-            TreeSet<String[]> schedule = new TreeSet<>(
-                    (a,b) -> a[0].compareTo(b[0])
+            TreeSet<TimeSlot> schedule = new TreeSet<>(
+                    (a,b) -> a.compareTo(b)
             );
             daySchedule.put(day, schedule);
         }
+
+    }
+
+    /**
+     *
+     * @param day
+     * @param slot
+     */
+    public void addTimeSlot(String day, TimeSlot slot){
+        daySchedule.get(day).add(slot);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Map<String, TreeSet<TimeSlot>> getDaySchedule() {
+        return daySchedule;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for(String day : daySchedule.keySet()){
+            TreeSet<TimeSlot> slot = daySchedule.get(day);
+            sb.append(day + "\n" + slot.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }
 
