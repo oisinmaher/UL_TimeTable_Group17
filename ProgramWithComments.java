@@ -1,6 +1,8 @@
+import src.main.java.Program;
+
 import java.util.*;
  
-// Main Program class representing a degree program.
+// Main src.main.java.Program class representing a degree program.
 // Holds a code, a name, and a list of ProgramYear objects.
 public class ProgramWithComments
 {
@@ -8,7 +10,7 @@ public class ProgramWithComments
     private String name; 
     private List<ProgramYear> years; 
 
-    // Constructor for Program.
+    // Constructor for src.main.java.Program.
     // Validates that code, name, and years are not null, then copies the list of years.
     public ProgramWithComments(String code, String name, List<ProgramYear> years)
     {
@@ -29,8 +31,8 @@ public class ProgramWithComments
         this.years = new ArrayList<>(years); 
     }
 
-    // Nested class representing a specific year within a Program (e.g. Year 1, Year 2).
-    // Holds a reference to the parent Program, the year number, and a list of semesters.
+    // Nested class representing a specific year within a src.main.java.Program (e.g. Year 1, Year 2).
+    // Holds a reference to the parent src.main.java.Program, the year number, and a list of semesters.
     public final static class ProgramYear
     {
         private final Program programme; 
@@ -47,7 +49,7 @@ public class ProgramWithComments
             this.semesters = new ArrayList<>(semesters);
         }
 
-        // Returns the parent Program this year belongs to.
+        // Returns the parent src.main.java.Program this year belongs to.
         public Program getProgramme() 
         {
             return programme; 

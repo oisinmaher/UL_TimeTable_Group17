@@ -1,3 +1,5 @@
+package src.main.java;
+
 import java.util.*;
  
 
@@ -197,7 +199,7 @@ public class Program
             {
                 return new ArrayList<>(moduleCodes); 
             }
-            private List<String> validate(int yearNumber)
+            public List<String> validate(int yearNumber)
             {
                 List<String> issues = new ArrayList<>(); 
                 if(name.isEmpty())

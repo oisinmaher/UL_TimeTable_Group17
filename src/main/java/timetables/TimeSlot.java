@@ -3,6 +3,9 @@ import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
 import src.main.java.users.Student;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
  * in the timetable
@@ -13,19 +16,19 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     //these could be replaced by a program object
     private CourseModule module;
-    private Student student;
+    private List<Student> students;
 
     /**
      *
      * @param time the time of day that the timeslot starts
      * @param module the module that occurs at the time
-     * @param student the student that attends the timeslot
+     * @param students the student that attends the timeslot
      * @param lectureRoom the lecture room that the timeslot occurs at
      */
-    public TimeSlot(String time, CourseModule module, Student student, LectureRoom lectureRoom){
+    public TimeSlot(String time, CourseModule module, List<Student> students, LectureRoom lectureRoom){
         this.time = time;
         this.module = module;
-        this.student = student;
+        this.students = students;
         this.lectureRoom = lectureRoom;
     }
 
@@ -45,6 +48,12 @@ public class TimeSlot implements Comparable<TimeSlot> {
      */
     @Override
     public String toString(){
-        return "Time:" + time + ", Module: " + module.getModuleName() + ", Student: " + student.getUserId() + ", Room: " + lectureRoom.getRoomID();
+        StringBuilder sb = new StringBuilder();
+        for(Student s:students ){
+            sb.append(s.getUserId()).append(", ");
+        }
+
+        return "Time:" + time + ", Module: " + module.getModuleName() + ", Student: " + sb + ", Room: " + lectureRoom.getRoomID();
     }
+
 }

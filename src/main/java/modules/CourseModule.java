@@ -157,6 +157,7 @@ public class CourseModule {
         return unique;
     }
 
+
     /**
      *
      * @return
@@ -169,19 +170,24 @@ public class CourseModule {
         return listOfModules;
     }
 
-    /**
+    @Override
+    public String toString(){
+        return moduleCode + " - " + moduleName;
+    }
+
+    /*
      *
      * @return
-     */
+     *
     public String toStringLec() {
         return moduleCode + " - " + "LEC" + "\n" +
                lecturers + "\n";
     }
 
-    /**
+    /*
      *
      * @return
-     */
+     *
     public String toStringLab() {
         return moduleCode + " - " + "LAB" + " - " + "labGroup" + "\n" +
                lecturers + "\n";
@@ -190,11 +196,15 @@ public class CourseModule {
     /**
      *
      * @return
-     */
+     *
     public String toStringTut() {
         return moduleCode + " - " + "TUT" + " - " + "labGroup" + "\n" +
                lecturers + "\n";
+
+
     }
+
+     */
 }
 /* 
 public ArrayList<String> getLecturers() {
