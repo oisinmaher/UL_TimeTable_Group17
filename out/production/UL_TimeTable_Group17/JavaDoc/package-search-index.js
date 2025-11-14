@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"src.main.java"},{"l":"src.main.java.modules"},{"l":"src.main.java.rooms"},{"l":"src.main.java.timetables"},{"l":"src.main.java.users"}];updateSearchResults();
