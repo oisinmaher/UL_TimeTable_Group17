@@ -1,8 +1,6 @@
 package src.main.java.timetables;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  *
@@ -15,21 +13,16 @@ public class TimeTable {
      *
      */
     public TimeTable(){
-        // Init map
-        daySchedule = new HashMap<>();
-        // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
-        String[] daysOfWeek = new String[]{
-                "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
-        };
-        // Creates new schedule for each day
+        // Init map - changed to LinkedHashMap to maintain order
+        daySchedule = new LinkedHashMap<>();
+        // Array of days of week (so it can loop through instead of hardcoding 5 put statements) - changed to ArrayList to maintain order
+        List<String> daysOfWeek = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
 
 
         for(String day : daysOfWeek){
             // Ordered Set of Strings
             // (set[0] will be the time in 24 hours no decimal point 0900 = 9 am)
-            TreeSet<TimeSlot> schedule = new TreeSet<>(
-                    (a,b) -> a.compareTo(b)
-            );
+            TreeSet<TimeSlot> schedule = new TreeSet<>( Comparator.naturalOrder() );
             daySchedule.put(day, schedule);
         }
 
