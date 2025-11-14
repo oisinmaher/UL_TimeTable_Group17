@@ -4,6 +4,7 @@ public class LectureRoom extends Room{
     {
         super(roomID, roomType, maxCapacity); 
     }
+    
     @Override
     public void setMaxCapacity(int maxCapacity)
     { 
