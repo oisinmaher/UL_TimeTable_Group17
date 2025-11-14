@@ -1,11 +1,20 @@
 package src.main.java.rooms;
 
+/**
+ *
+ */
 public abstract class Room
 {
     protected int maxCapacity; 
     private String roomID; 
-    protected String roomType; 
+    protected String roomType;
 
+    /**
+     *
+     * @param roomID
+     * @param roomType
+     * @param maxCapacity
+     */
     public Room(String roomID, String roomType, int maxCapacity){
         this.roomID = roomID; 
         this.roomType = roomType; 
@@ -13,22 +22,44 @@ public abstract class Room
     }
 
 
+    /**
+     *
+     * @return
+     */
     public String getRoomID()
     {
         return this.roomID; 
-    } 
+    }
+
+    /**
+     *
+     * @param roomID
+     */
     public void setRoomID(String roomID)
     {
         this.roomID = roomID; 
     }
 
-    public abstract void setMaxCapacity(int maxCapacity); 
+    /**
+     *
+     * @param maxCapacity
+     */
+    public abstract void setMaxCapacity(int maxCapacity);
+
+    /**
+     *
+     * @return
+     */
     public int getMaxCapacity()
     {
         return this.maxCapacity;
     }
 
-public void setRoomType(String roomType)
+    /**
+     *
+     * @param roomType
+     */
+    public void setRoomType(String roomType)
     {
         try {
         if (roomType == null || roomType.isEmpty()) {
@@ -48,11 +79,22 @@ public void setRoomType(String roomType)
         System.out.println("Error: " + e.getMessage());
     }
 
-    }    public String getRoomType()
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getRoomType()
     {
         return this.roomType; 
-    }    
+    }
 
+    /**
+     *
+     * @param roomType
+     * @return
+     */
     public abstract String canHold(String roomType); 
 
 

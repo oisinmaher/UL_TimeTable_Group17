@@ -1,11 +1,25 @@
 package src.main.java.rooms;
 
+/**
+ *
+ */
 public class LectureRoom extends Room{
 
+    /**
+     *
+     * @param roomID
+     * @param roomType
+     * @param maxCapacity
+     */
     public LectureRoom(String roomID, String roomType, int maxCapacity)
     {
         super(roomID, roomType, maxCapacity); 
     }
+
+    /**
+     *
+     * @param maxCapacity
+     */
     @Override
     public void setMaxCapacity(int maxCapacity)
     { 
@@ -22,8 +36,13 @@ public class LectureRoom extends Room{
             
         }
          
-    } 
+    }
 
+    /**
+     *
+     * @param roomType
+     * @return
+     */
     @Override
     public  String canHold(String roomType)
     {
