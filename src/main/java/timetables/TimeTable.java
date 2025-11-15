@@ -1,5 +1,7 @@
 package src.main.java.timetables;
 
+import src.main.java.users.User;
+import src.main.java.timetables.ProgramWithModule;
 import java.util.*;
 
 /**
@@ -16,15 +18,39 @@ public class TimeTable {
     // TreeSet Contains Times in 24 hour clock 1400 is 2pm 0900 is 9 am
     Map<String, TreeSet<TimeSlot>> daySchedule;
     String[] daysOfWeek;
+    // This variable will be used if its a persons timetable (e.g student/teacher)
+    User user;
+    // This variable will be used if it's a program timetable (e.g a course timetable consisting of all labs and lectures)
+    ProgramWithModule program;
+
+
     /**
-     *
+     * Timetable for an INDIVIDUAL user, won't have overlapping classes in same timeslot
      */
-    public TimeTable(){
+    public TimeTable(User user){
         // Init map - changed to LinkedHashMap to maintain order
         daySchedule = new HashMap<>();
         // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
         this.daysOfWeek = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        this.user = user;
+        for(String day : daysOfWeek){
+            // Ordered Set of Strings
+            // (set[0] will be the time in 24 hours no decimal point 0900 = 9 am)
+            TreeSet<TimeSlot> schedule = new TreeSet<>( Comparator.naturalOrder() );
+            daySchedule.put(day, schedule);
+        }
+    }
 
+    /**
+     * Timetable for a whole program, can have overlapping classes in same timeslot
+     * for example one group of students have a database lab, while another group have OOP lab at same time
+     */
+    public TimeTable(ProgramWithModule program){
+        // Init map - changed to LinkedHashMap to maintain order
+        daySchedule = new HashMap<>();
+        // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
+        this.daysOfWeek = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        this.program = program;
         for(String day : daysOfWeek){
             // Ordered Set of Strings
             // (set[0] will be the time in 24 hours no decimal point 0900 = 9 am)

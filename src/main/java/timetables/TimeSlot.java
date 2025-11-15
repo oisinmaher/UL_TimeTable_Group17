@@ -1,6 +1,7 @@
 package src.main.java.timetables;
 import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
+import src.main.java.rooms.Room;
 import src.main.java.users.Student;
 import src.main.java.users.Teacher;
 
@@ -16,7 +17,8 @@ import java.util.List;
  */
 public class TimeSlot implements Comparable<TimeSlot> {
     private String time;
-    private Room lectureRoom;
+    // Having room public allows for methods calls like timeslot.room.getRoomType() in other classes
+    public Room classRoom;
     private Teacher teacher;
     //these could be replaced by a program object
     private CourseModule module;
@@ -27,19 +29,21 @@ public class TimeSlot implements Comparable<TimeSlot> {
      * @param time the time of day that the timeslot starts in 24-hour clock (9 am is 0900)
      * @param module the module that occurs at the time
      * @param students the student that attends the timeslot
-     * @param lectureRoom the lecture room that the timeslot occurs at
+     * @param classRoom the lecture room that the timeslot occurs at
      */
-    public TimeSlot(String time, CourseModule module, List<Student> students, LectureRoom lectureRoom){
+    public TimeSlot(String time, CourseModule module, List<Student> students, Room classRoom) {
         this.time = time;
         this.module = module;
         this.students = students;
-        this.lectureRoom = lectureRoom;
+        this.classRoom = classRoom;
     }
-    public TimeSlot(String time, LectureRoom lectureRoom){
+
+    public TimeSlot(String time, Room classRoom) {
         this.time = time;
-        this.lectureRoom = lectureRoom;
+        this.classRoom = classRoom;
         students = new ArrayList<>();
     }
+
     // Add a single student
     public void addStudent(Student student){
         students.add(student);
@@ -60,9 +64,22 @@ public class TimeSlot implements Comparable<TimeSlot> {
     public void setTeacher(Teacher teacher){
         this.teacher = teacher;
     }
-    public void setRoom(Room lectureRoom){
-        this.room = lectureRoom;
+    // Chane room
+    public void setRoom(Room classRoom){
+        this.classRoom = classRoom;
     }
+
+    // Some base Methods for retrieving info, this might not be needed because
+    // room already has all necessary functions, you could to timeslot.classroom.getRoomID() instead
+    // Get Room ID (e.g CSG001)
+    public String getRoomID() {
+        return classRoom.getRoomID();
+    }
+    // Get Room Type (e.g Lecture/lab)
+    public String roomType(){
+        return classRoom.getRoomType();
+    }
+
 
 
 
@@ -89,7 +106,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
             sb.append(s.getUserId()).append(", ");
         }
 
-        return "Time:" + time + ", Module: " + module.getModuleName() + ", Student: " + sb + ", Room: " + lectureRoom.getRoomID();
+        return "Time:" + time + ", Module: " + module.getModuleName() + ", Student: " + sb + ", Room: " + classRoom.getRoomID();
     }
 
 }

@@ -3,7 +3,7 @@ package src.main.java.users;
 /**
  *
  */
-class User{
+public abstract class User{
     String name;
     int userId;
 

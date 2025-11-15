@@ -48,8 +48,8 @@ public class Student extends User {
     /**
      * @return
      */
-    public int getCourseId(){
-        return this.courseId;
+    public ProgramWithModule getProgram(){
+        return this.program;
     }
 
     /**
