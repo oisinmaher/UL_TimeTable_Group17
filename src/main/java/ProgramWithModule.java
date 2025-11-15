@@ -26,5 +26,6 @@ public class ProgramWithModule {
         this.years = new ArrayList<>(years);
     }
 
-    // (You can add getters or other behaviour here later if needed.)
+    // We can add getters or other behaviour here later if needed.
 }
+
