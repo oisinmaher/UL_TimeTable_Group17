@@ -1,35 +1,51 @@
 package src.main.java.users;
 
+import src.main.java.timetables.ProgramWithModule;
+import src.main.java.timetables.TimeTable;
+
 import java.util.ArrayList;
 import java.util.*;
 
-/**
- *
+
+/** This clas is for students,
+*  It inherits the User class
+*  It will hold the following info
+*  Student name/ id
+*  Program Students enrolled in
+*  The students timetable
+*  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
  */
 public class Student extends User {
-    int courseId;
-
-    // testing objects (will remove likely)
-    List<String[]> timeTable;
-    Set<String> occupiedTimes;
+    ProgramWithModule program;
+    TimeTable timeTable;
+    int year;
 
     /**
-     *
      * @param name
      * @param userId
-     * @param courseId
      */
-    public Student(String name, int userId, int courseId) {
+    // Constructor with just base params of User
+    public Student(String name, int userId) {
         super(name, userId);
-        this.courseId = courseId;
-
-        // testing objects (will remove likely)
-        timeTable = new ArrayList<>();
-        occupiedTimes = new HashSet<>();
+        timeTable = new TimeTable();
     }
 
+    public Student(String name, int userId, ProgramWithModule program) {
+        super(name, userId);
+        this.program = program;
+        timeTable = new TimeTable();
+    }
+
+    public void setProgram(ProgramWithModule program) {
+        this.program = program;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+
     /**
-     *
      * @return
      */
     public int getCourseId(){
@@ -37,32 +53,15 @@ public class Student extends User {
     }
 
     /**
-     *
      * @return
      */
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }
 
+    public TimeTable getTimeTable() {
+        return timeTable;
+    }
 
-    // test methods
-    public void addClassToTimeTable(
-            String modName, String classType, String roomNumber, String dateTime
-    ){
-        if(occupiedTimes.contains(dateTime)){
-            System.out.println("Time is already taken");
-            return;
-        }
-        String[] full = new String[]{modName, classType, roomNumber, dateTime};
-        timeTable.add(full);
-    }
-    public void displayTimeTable(){
-        for(String[] s : timeTable){
-            System.out.println("Module Name " + s[0]); // OOP
-            System.out.println("Class Type " + s[1]); // Tutorial
-            System.out.println("Room Number " + s[2]); // CS1044
-            System.out.println("Date & Time " + s[3]); // Tuesday 3PM
-            System.out.println("------------------------------");
-        }
-    }
+
 }
