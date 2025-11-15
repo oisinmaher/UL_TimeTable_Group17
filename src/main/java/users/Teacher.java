@@ -21,7 +21,7 @@ public class Teacher extends User {
     // Constructor with base parameters of user
     public Teacher(String name, int userId) {
         super(name, userId);
-        this.timeTable = new TimeTable();
+        this.timeTable = new TimeTable(this);
         programsTaught = new ArrayList<>();
     }
 

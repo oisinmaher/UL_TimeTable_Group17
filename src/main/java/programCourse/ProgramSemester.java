@@ -63,8 +63,8 @@ public final class ProgramSemester { // CHANGED: was nested static class
                 continue; 
             }
             char lastChar = code.charAt(code.length() - 1);
-            if (!Character.isDigit(lastChar)) {
-            continue; 
+            if (!Character.isDigit(lastChar))
+                continue;
             int lastDigit = Character.getNumericValue(lastChar);
 
             if (sem.contains("autumn") || sem.contains("fall")) {
@@ -89,8 +89,7 @@ public final class ProgramSemester { // CHANGED: was nested static class
             }
        
         }
-
-        }
+        return selected;
     }
 
     @Override
