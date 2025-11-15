@@ -1,4 +1,4 @@
-package src.main.java.timetables;
+package src.main.java.programCourse;
 
 import src.main.java.modules.CourseModule;
 import java.util.*;

@@ -1,6 +1,6 @@
 package src.main.java.users;
 
-import src.main.java.timetables.ProgramWithModule;
+import src.main.java.programCourse.ProgramWithModule;
 import src.main.java.timetables.TimeTable;
 
 import java.util.*;

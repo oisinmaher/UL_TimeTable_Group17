@@ -1,10 +1,8 @@
 package src.main.java.users;
 
-import src.main.java.timetables.ProgramWithModule;
+import src.main.java.programCourse.ProgramSemester;
+import src.main.java.programCourse.ProgramYear;
 import src.main.java.timetables.TimeTable;
-
-import java.util.ArrayList;
-import java.util.*;
 
 
 /** This clas is for students,
@@ -16,9 +14,10 @@ import java.util.*;
 *  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
  */
 public class Student extends User {
-    ProgramWithModule program;
+    ProgramSemester programSemester;
+    ProgramYear programYear;
     TimeTable timeTable;
-    int year;
+    int yearOfStudy;
 
     /**
      * @param name
@@ -27,29 +26,39 @@ public class Student extends User {
     // Constructor with just base params of User
     public Student(String name, int userId) {
         super(name, userId);
-        timeTable = new TimeTable();
+        timeTable = new TimeTable(this);
     }
 
-    public Student(String name, int userId, ProgramWithModule program) {
+    // Constructor with all info
+    public Student(String name, int userId, int yearOfStudy, ProgramSemester programSemester, ProgramYear programYear) {
         super(name, userId);
-        this.program = program;
-        timeTable = new TimeTable();
+        this.programSemester = programSemester;
+        this.programYear = programYear;
+        this.yearOfStudy = yearOfStudy;
+        // passes in the instantiation of this object (current student object)
+        timeTable = new TimeTable(this);
     }
 
-    public void setProgram(ProgramWithModule program) {
-        this.program = program;
+    public void setProgramSemester(ProgramSemester programSemester) {
+        this.programSemester = programSemester;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setProgramYear(ProgramYear programYear) {
+        this.programYear = programYear;
     }
 
+    public void setYearOfStudy(int yearOfStudy) {
+        this.yearOfStudy = yearOfStudy;
+    }
 
     /**
      * @return
      */
-    public ProgramWithModule getProgram(){
-        return this.program;
+    public ProgramSemester getProgramSemester(){
+        return this.programSemester;
+    }
+    public ProgramYear getProgramYear(){
+        return this.programYear;
     }
 
     /**
