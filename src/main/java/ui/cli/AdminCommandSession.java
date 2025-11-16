@@ -100,7 +100,6 @@ public class AdminCommandSession implements UserSession {
     private void cmdUpdateStudent(String[] args) {
         if (args.length < 3) {
             System.out.println("Usage: update-student <id> <field> <newValue>");
-            System.out.println("Fields: student_name");
             return;
         }
         String id = args[0];
