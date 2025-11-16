@@ -81,9 +81,6 @@ public final class ProgramYear {
         String target = semesterName.toLowerCase();
         for (ProgramSemester s : semesters) {
             if (s.getName().toLowerCase().equals(target)) {
-                // CHANGED: previously returned all modules in the semester.
-                // Now delegates to ProgramSemester to filter modules
-                // using the odd/even final digit rule.
                 return s.pickModulesForThisSemester();
             }
         }
@@ -119,7 +116,7 @@ public final class ProgramYear {
      *
      * This method:
      *  - Validates that the provided semester names exist in this ProgramYear
-     *  - Returns a defensive copy of the mapping
+     *  - Returns a copy of the mapping
      *
      * @param semesterToGroupIDs a map from semester name to list of student group IDs
      * @return a new Map with the same keys and copies of the group lists
