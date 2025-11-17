@@ -27,7 +27,7 @@ public class Teacher extends User {
     public Teacher(String name, String userId, List<CourseFull> programsTaught) {
         super(userId, name);
         this.timeTable = new TimeTable(this);
-        this.courseTaught = courseTaught;
+        this.courseTaught = new ArrayList<>();
     }
 
     // Returns timetable
