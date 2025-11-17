@@ -1,4 +1,4 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
 
 import src.main.java.users.Lecturer;
 
@@ -20,7 +20,7 @@ public interface LecturerService
      * @param name the lecturer's name
      * @return true if the lecturer was added; false if the ID already exists
      */
-    boolean addLecturer(int id, String name);   // Add a lecturer
+    boolean addLecturer(String id, String name);   // Add a lecturer
 
     /**
      * Updates a specific field of a lecturer.
@@ -30,7 +30,7 @@ public interface LecturerService
      * @param newValue the new value for that field
      * @return true if the update succeeded; false if invalid ID or field
      */
-//    boolean updateLecturerField(int id, String field, String newValue);   // Update a field
+    boolean updateLecturerField(String id, String field, String newValue);   // Update a field
 
     /**
      * Finds a lecturer by their unique ID.
