@@ -1,72 +1,76 @@
 package src.main.java.users;
 
-import java.util.ArrayList;
-import java.util.*;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseYear;
+import src.main.java.timetables.TimeTable;
 
-/**
- *
+
+/** This clas is for students,
+*  It inherits the User class
+*  It will hold the following info
+*  Student name/ id
+*  course Students enrolled in
+*  The students timetable
+*  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
  */
 public class Student extends User {
-    int courseId;
-
-    // testing objects (will remove likely)
-    List<String[]> timeTable;
-    Set<String> occupiedTimes;
+    CourseSemester courseSemester;
+    CourseYear courseYear;
+    TimeTable timeTable;
+    int yearOfStudy;
 
     /**
-     *
      * @param name
      * @param userId
-     * @param courseId
      */
-    public Student(String name, int userId, int courseId) {
+    // Constructor with just base params of User
+    public Student(String name, int userId) {
         super(name, userId);
-        this.courseId = courseId;
+        timeTable = new TimeTable(this);
+    }
 
-        // testing objects (will remove likely)
-        timeTable = new ArrayList<>();
-        occupiedTimes = new HashSet<>();
+    // Constructor with all info
+    public Student(String name, int userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
+        super(name, userId);
+        this.courseSemester = courseSemester;
+        this.courseYear = courseYear;
+        this.yearOfStudy = yearOfStudy;
+        // passes in the instantiation of this object (current student object)
+        timeTable = new TimeTable(this);
+    }
+
+    public void setCourseSemester(CourseSemester courseSemester) {
+        this.courseSemester = courseSemester;
+    }
+
+    public void setCourseYear(CourseYear courseYear) {
+        this.courseYear = courseYear;
+    }
+
+    public void setYearOfStudy(int yearOfStudy) {
+        this.yearOfStudy = yearOfStudy;
     }
 
     /**
-     *
      * @return
      */
-    public int getCourseId(){
-        return this.courseId;
+    public CourseSemester getCourseSemester(){
+        return this.courseSemester;
+    }
+    public CourseYear getCourseYear(){
+        return this.courseYear;
     }
 
     /**
-     *
      * @return
      */
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }
 
-
-    // test methods
-    public void addClassToTimeTable(
-            String modName, String classType, String roomNumber, String dateTime
-    ){
-        if(occupiedTimes.contains(dateTime)){
-            System.out.println("Time is already taken");
-            return;
-        }
-        String[] full = new String[]{modName, classType, roomNumber, dateTime};
-        timeTable.add(full);
-    }
-    public void displayTimeTable(){
-        for(String[] s : timeTable){
-            System.out.println("Module Name " + s[0]); // OOP
-            System.out.println("Class Type " + s[1]); // Tutorial
-            System.out.println("Room Number " + s[2]); // CS1044
-            System.out.println("Date & Time " + s[3]); // Tuesday 3PM
-            System.out.println("------------------------------");
-        }
+    public TimeTable getTimeTable() {
+        return timeTable;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 }

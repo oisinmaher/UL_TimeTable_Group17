@@ -1,6 +1,8 @@
 package src.main.java.programCourse;
 
 import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseFull;
 
 import java.util.*;
 
@@ -18,11 +20,11 @@ import java.util.*;
  *  - Map semesters to student group IDs
  *  - Validate the structure of the year and its semesters
  */
-public final class ProgramYear {
+public final class CourseYear{
 
-    private final ProgramWithModule programme;
+    private final CourseFull courseFull;
     private final int yearNumber;
-    private final List<ProgramSemester> semesters;
+    private final List<CourseSemester> semesters;
 
     /**
      * Constructs a ProgramYear with a reference to ProgramWithModule,
@@ -34,7 +36,7 @@ public final class ProgramYear {
      *
      * @throws IllegalArgumentException if semesters is null
      */
-    public ProgramYear(ProgramWithModule programme, int yearNumber, List<ProgramSemester> semesters) {
+    public ProgramYear(CourseFull programme, int yearNumber, List<ProgramSemester> semesters) {
         if (semesters == null) {
             throw new IllegalArgumentException("semesters is null");
         }
