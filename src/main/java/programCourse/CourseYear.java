@@ -3,6 +3,7 @@ package src.main.java.programCourse;
 import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseFull;
+import src.main.java.ProgramWithModule;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ public final class CourseYear{
      *
      * @throws IllegalArgumentException if semesters is null
      */
-    public ProgramYear(CourseFull programme, int yearNumber, List<ProgramSemester> semesters) {
+    public CourseYear(CourseFull programme, int yearNumber, List<CourseSemester> semesters) {
         if (semesters == null) {
             throw new IllegalArgumentException("semesters is null");
         }
@@ -68,7 +69,7 @@ public final class CourseYear{
      *
      * @return a new List containing the ProgramSemester objects
      */
-    public List<ProgramSemester> getSemesters() {
+    public List<CourseSemester> getSemesters() {
         return new ArrayList<>(semesters);
     }
 
@@ -82,7 +83,7 @@ public final class CourseYear{
             return new ArrayList<>();
         }
         String target = semesterName.toLowerCase();
-        for (ProgramSemester s : semesters) {
+        for (CourseSemester s : semesters) {
             if (s.getName().toLowerCase().equals(target)) {
                 return s.pickModulesForThisSemester();
             }
@@ -99,7 +100,7 @@ public final class CourseYear{
     public List<CourseModule> allModules() {
         List<CourseModule> out = new ArrayList<>();
         Set<CourseModule> seen = new HashSet<>();
-        for (ProgramSemester s : semesters) {
+        for (CourseSemester s : semesters) {
             for (CourseModule m : s.getModuleCodes()) {
                 if (!seen.contains(m)) {
                     seen.add(m);
@@ -155,7 +156,7 @@ public final class CourseYear{
             return false;
         }
         String target = name.toLowerCase();
-        for (ProgramSemester s : semesters) {
+        for (CourseSemester s : semesters) {
             if (s.getName().toLowerCase().equals(target)) {
                 return true;
             }
@@ -185,7 +186,7 @@ public final class CourseYear{
         }
 
         Set<String> seenNames = new HashSet<>();
-        for (ProgramSemester s : semesters) {
+        for (CourseSemester s : semesters) {
             String key;
             if (s.getName() == null) {
                 key = "";

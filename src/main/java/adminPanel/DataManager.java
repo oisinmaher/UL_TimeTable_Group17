@@ -22,8 +22,8 @@ public class DataManager {
 
     List<Student> studentsList = new ArrayList<>();
     List<Teacher> teachersList = new ArrayList<>();
-    List<ProgramSemester> programSemList = new ArrayList<>();
-    List<ProgramYear> programYearsList = new ArrayList<>();
+    List<CourseSemester> programSemList = new ArrayList<>();
+    List<CourseYear> programYearsList = new ArrayList<>();
     List<Room> roomsList = new ArrayList<>();
     List<TimeSlot> timeSlotList = new ArrayList<>();
     List<TimeTable> timeTableList = new ArrayList<>();

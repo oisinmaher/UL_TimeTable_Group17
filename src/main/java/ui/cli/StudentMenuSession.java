@@ -1,7 +1,7 @@
 package src.main.java.ui.cli;
 
 import java.util.Scanner;
-
+import src.main.java.users.Student;
 /**
  * Represents the menu-based CLI session for a student user.
  * <p>

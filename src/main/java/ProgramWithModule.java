@@ -1,6 +1,7 @@
 package src.main.java.timetables;
 
 import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseYear;
 import java.util.*;
 
 /**
@@ -18,7 +19,7 @@ public class ProgramWithModule {
 
     private String code;
     private String name;
-    private List<ProgramYear> years;
+    private List<CourseYear> years;
 
     /**
      * Constructs a ProgramWithModule object by assigning the program code,
@@ -30,7 +31,7 @@ public class ProgramWithModule {
      *
      * @throws IllegalArgumentException if any argument is null
      */
-    public ProgramWithModule(String code, String name, List<ProgramYear> years) {
+    public ProgramWithModule(String code, String name, List<CourseYear> years) {
 
         // Validate inputs
         if (code == null) {
