@@ -1,8 +1,6 @@
-package src.main.java.programCourse;
+package programCourse;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseFull;
+import modules.CourseModule;
 
 import java.util.*;
 

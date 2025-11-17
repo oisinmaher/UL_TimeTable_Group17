@@ -1,8 +1,9 @@
-package src.main.java.timetables;
+package timetables;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.Room;
-import src.main.java.users.Lecturer;
+import rooms.LectureRoom;
+import modules.CourseModule;
+import rooms.Room;
+import users.Lecturer;
 
 import java.time.LocalTime;
 
@@ -15,7 +16,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     private Lecturer lecturer;
 
     public TimeSlot(LocalTime startTime, LocalTime endTime, CourseModule module,
-                    Group group, Room room, Lecturer lecturer) {
+                    Group group, LectureRoom room, Lecturer lecturer) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.module = module;
@@ -31,10 +32,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     @Override
     public String toString() {
-        return startTime + "-" + endTime + " " + module.getModuleCode() + "Group: " + group.getYear() +
+        return startTime + "-" + endTime + " " + module.getModuleCode() + " Group: " + group.getYear() +
                 " Room: " + room.getRoomID() +
                 " Lecturer: " + lecturer.getName();
     }
-
-    // Getters omitted for brevity
 }

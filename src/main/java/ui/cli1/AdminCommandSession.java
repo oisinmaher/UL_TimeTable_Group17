@@ -1,8 +1,8 @@
-package src.main.java.ui.cli1;
-import src.main.java.users.*;
+package ui.cli1;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import users.*;
 
 public class AdminCommandSession implements UserSession {
 

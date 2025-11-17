@@ -1,4 +1,4 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
 import java.util.Scanner;
 

@@ -1,8 +1,8 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeTable;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
+import timetables.TimeTable;
 
 
 /** This clas is for students,

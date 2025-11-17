@@ -1,10 +1,8 @@
-package src.main.java.timetables;
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.Room;
-import src.main.java.users.Student;
+package timetables;
 
+import users.Student;
 import java.util.List;
-import java.util.Set;
+
 
 public class Group {
 

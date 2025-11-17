@@ -1,7 +1,7 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.timetables.TimeTable;
+import programCourse.CourseFull;
+import timetables.TimeTable;
 
 import java.util.*;
 
