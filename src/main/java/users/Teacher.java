@@ -17,15 +17,15 @@ public class Teacher extends User {
     List<CourseFull> courseTaught;
 
     // Constructor with base parameters of user
-    public Teacher(String name, int userId) {
-        super(name, userId);
+    public Teacher(String userId, String name) {
+        super(userId, name);
         this.timeTable = new TimeTable(this);
         courseTaught = new ArrayList<>();
     }
 
     // Constructor but with a pre-made list of Programs (Likely won't use)
-    public Teacher(String name, int userId, List<CourseFull> programsTaught) {
-        super(name, userId);
+    public Teacher(String name, String userId, List<CourseFull> programsTaught) {
+        super(userId, name);
         this.timeTable = new TimeTable(this);
         this.courseTaught = courseTaught;
     }

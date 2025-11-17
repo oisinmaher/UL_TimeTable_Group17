@@ -9,16 +9,19 @@ import java.util.Map;
 
 public class InMemoryLecturerService implements LecturerService {
 
-    private final Map<Integer, Lecturer> lecturers = new HashMap<>();
+    /**
+     * Maps lectureId (as String) to Lecturer object
+     */
+    private final Map<String, Lecturer> lecturers = new HashMap<>();
 
     public InMemoryLecturerService() {
         
-        addLecturer(123, "Michael");
-        addLecturer(1243, "Alan");
+        addLecturer("123", "Michael");
+        addLecturer("455", "Alan");
     }
 
 //    @Override
-    public boolean addLecturer(int id, String name) {
+    public boolean addLecturer(String id, String name) {
         if (lecturers.containsKey(id)) {
             return false;
         }
@@ -26,19 +29,19 @@ public class InMemoryLecturerService implements LecturerService {
         return true;
     }
 
-//    @Override
-//    public boolean updateLecturerField(String id, String field, String newValue) {
-//        Lecturer l = lecturers.get(id);
-//        if (l == null) return false;
-//
-//        switch(field.toLowerCase()) {
-//            case "name":
-//                l.setName(newValue);
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
+    @Override
+    public boolean updateLecturerField(String id, String field, String newValue) {
+        Lecturer l = lecturers.get(id);
+        if (l == null) return false;
+
+        switch(field.toLowerCase()) {
+            case "name":
+                l.setName(newValue);
+                return true;
+            default:
+                return false;
+        }
+    }
 
     @Override
     public Lecturer findLecturerById(String id) {

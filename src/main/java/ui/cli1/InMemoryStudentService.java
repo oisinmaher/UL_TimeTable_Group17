@@ -10,15 +10,16 @@ import src.main.java.users.Student;
 
 public class InMemoryStudentService implements StudentService
 {
-    private final Map<Integer, Student> students = new HashMap<>();
+    // map student id (string) to Student object
+    private final Map<String, Student> students = new HashMap<>();
     public InMemoryStudentService() {
         // Sample data – change/remove as you like
-        addStudent(24254444, "Yousef");
-        addStudent(24254666, "Alex");
+        addStudent("43424", "Yousef");
+        addStudent("555", "Alex");
     }
 
     @Override
-    public boolean addStudent(int id, String name)
+    public boolean addStudent(String id, String name)
     {
         if(students.containsKey(id))
         {

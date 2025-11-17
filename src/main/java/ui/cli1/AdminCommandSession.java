@@ -72,7 +72,7 @@ public class AdminCommandSession implements UserSession {
             System.out.println("Usage: add-student <id> <name>");
             return;
         }
-        int id = Integer.parseInt(args[0]);
+        String id = args[0];
         String name = args[1];
 
         boolean ok = studentService.addStudent(id, name);
@@ -116,14 +116,13 @@ public class AdminCommandSession implements UserSession {
 
     private void cmdAddLecturer(String[] args) {
         if (args.length < 3) {
-            System.out.println("Usage: add-lecturer <id> <firstName> <lastName>");
+            System.out.println("Usage: add-lecturer <id> <fullName>");
             return;
         }
         String id = args[0];
-        String firstName = args[1];
-        String lastName = args[2];
+        String name = args[1];
 
-        boolean ok = lecturerService.addLecturer(id, firstName, lastName);
+        boolean ok = lecturerService.addLecturer(id, name);
         if (ok) {
             System.out.println("Lecturer added: " + id);
         } else {
