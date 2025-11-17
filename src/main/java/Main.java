@@ -1,4 +1,9 @@
 package src.main.java;
+<<<<<<< Updated upstream
+=======
+import src.main.java.programCourse.ProgramSemester;
+import src.main.java.programCourse.ProgramWithModule;
+>>>>>>> Stashed changes
 import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
 import src.main.java.timetables.ProgramWithCourseModule;
