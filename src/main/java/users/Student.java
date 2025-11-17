@@ -1,7 +1,7 @@
 package src.main.java.users;
 
-import src.main.java.programCourse.ProgramSemester;
-import src.main.java.programCourse.ProgramYear;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseYear;
 import src.main.java.timetables.TimeTable;
 
 
@@ -9,13 +9,13 @@ import src.main.java.timetables.TimeTable;
 *  It inherits the User class
 *  It will hold the following info
 *  Student name/ id
-*  Program Students enrolled in
+*  course Students enrolled in
 *  The students timetable
 *  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
  */
 public class Student extends User {
-    ProgramSemester programSemester;
-    ProgramYear programYear;
+    CourseSemester courseSemester;
+    CourseYear courseYear;
     TimeTable timeTable;
     int yearOfStudy;
 
@@ -30,21 +30,21 @@ public class Student extends User {
     }
 
     // Constructor with all info
-    public Student(String name, int userId, int yearOfStudy, ProgramSemester programSemester, ProgramYear programYear) {
+    public Student(String name, int userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
         super(name, userId);
-        this.programSemester = programSemester;
-        this.programYear = programYear;
+        this.courseSemester = courseSemester;
+        this.courseYear = courseYear;
         this.yearOfStudy = yearOfStudy;
         // passes in the instantiation of this object (current student object)
         timeTable = new TimeTable(this);
     }
 
-    public void setProgramSemester(ProgramSemester programSemester) {
-        this.programSemester = programSemester;
+    public void setCourseSemester(CourseSemester courseSemester) {
+        this.courseSemester = courseSemester;
     }
 
-    public void setProgramYear(ProgramYear programYear) {
-        this.programYear = programYear;
+    public void setCourseYear(CourseYear courseYear) {
+        this.courseYear = courseYear;
     }
 
     public void setYearOfStudy(int yearOfStudy) {
@@ -54,11 +54,11 @@ public class Student extends User {
     /**
      * @return
      */
-    public ProgramSemester getProgramSemester(){
-        return this.programSemester;
+    public CourseSemester getCourseSemester(){
+        return this.courseSemester;
     }
-    public ProgramYear getProgramYear(){
-        return this.programYear;
+    public CourseYear getCourseYear(){
+        return this.courseYear;
     }
 
     /**
