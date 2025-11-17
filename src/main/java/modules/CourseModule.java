@@ -13,6 +13,8 @@ public class CourseModule {
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
+
+    // this has to be list of timeSlots, and each timeslot will have list of students
     static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
 
     /**
