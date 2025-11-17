@@ -26,10 +26,10 @@ public class Main {
         List<Student> group1a = Arrays.asList(student);
 
         TimeTable timeTable = new TimeTable();
-        TimeSlot monday9am = new TimeSlot("0900", oop, group1a, csg001);
+        TimeSlot monday9am = new TimeSlot("1100", oop, group1a, csg001);
 
         timeTable.addTimeSlot("Monday", monday9am);
-        timeTable.addTimeSlot("Tuesday", new TimeSlot("1000", swReq, group1a, csg001));
+        timeTable.addTimeSlot("Monday", new TimeSlot("1000", swReq, group1a, csg001));
 
         System.out.println(timeTable);
 
