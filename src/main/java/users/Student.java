@@ -39,6 +39,10 @@ public class Student extends User {
         timeTable = new TimeTable(this);
     }
 
+    public String getId(){
+        return  this.userId;
+    }
+
     public void setCourseSemester(CourseSemester courseSemester) {
         this.courseSemester = courseSemester;
     }
