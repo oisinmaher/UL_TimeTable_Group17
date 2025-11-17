@@ -1,10 +1,9 @@
 package src.main.java.users;
 
 /**
- * Abstract user class, this won't be initialized
- * It will just set basis for student, teacher & admin
+ *
  */
-public abstract class User{
+class User{
     String name;
     int userId;
 

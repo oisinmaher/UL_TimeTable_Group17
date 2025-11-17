@@ -1,12 +1,10 @@
-package src.main.java.programCourse;
+package src.main.java.timetables;
 
 import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseYear;
 import java.util.*;
 
 /**
- * Represents a semester within a courseYear (e.g. Autumn, Spring).
+ * Represents a semester within a ProgramYear (e.g. Autumn, Spring).
  * 
  * Each semester:
  *  - Has a name (Autumn, Spring, Summer...)
@@ -14,20 +12,20 @@ import java.util.*;
  *  - Can validate its modules
  *  - Can select a subset of modules based on the semester rules
  */
-public final class CourseSemester {
+public final class ProgramSemester {
 
     private final String name;
     private final List<CourseModule> moduleCodes;
 
     /**
-     * Creates a CourseSemester with a name and list of module codes.
+     * Creates a ProgramSemester with a name and list of module codes.
      *
      * @param name        the name of the semester (e.g. "Autumn")
      * @param moduleCodes list of CourseModule objects assigned to this semester
      *
      * @throws IllegalArgumentException if name or moduleCodes is null
      */
-    public CourseSemester(String name, List<CourseModule> moduleCodes) {
+    public ProgramSemester(String name, List<CourseModule> moduleCodes) {
         if (name == null) {
             throw new IllegalArgumentException("name is null");
         }

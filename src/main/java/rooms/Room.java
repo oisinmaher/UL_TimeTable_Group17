@@ -21,6 +21,7 @@ public abstract class Room
         this.maxCapacity = maxCapacity; 
     }
 
+
     /**
      *
      * @return
