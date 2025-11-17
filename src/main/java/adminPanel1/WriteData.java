@@ -1,4 +1,4 @@
-package src.main.java.adminPanel;
+package src.main.java.adminPanel1;
 
 /**
  * This will get all info from the DataManager class
