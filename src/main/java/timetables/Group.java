@@ -9,17 +9,25 @@ import java.util.Set;
 public class Group {
 
     private int year ;
+    private String groupId;
     private List<Student> students;
-    private CourseModule modules;
-    private Set<Room> rooms;
+    private String courseCode;
 
-    public Group(int year, List<Student> students, CourseModule modules, Set<Room> rooms){
+    public Group(int year, String groupId, List<Student> students, String courseCode) {
 
         this.year = year;
         this.students = students;
-        this.modules = modules;
-        this.rooms = rooms;
+        this.groupId = groupId;
+        this.courseCode = courseCode;
 
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
     }
 
     public int getYear() {
@@ -30,25 +38,10 @@ public class Group {
         return students;
     }
 
-    public CourseModule getModules() {
-        return modules;
-    }
-
-    public Set<Room> getRooms() {
-
-
-        return rooms;
-    }
-
     @Override
     public String toString() {
 
-        StringBuilder sb = new StringBuilder();
-        for (Student s : students) {
-            sb.append(s.getUserId()).append(", ");
-        }
-
-        return "Year: " + year + ", Students: " + sb + ", Rooms: " + rooms;
+        return "Group: " + groupId + "Year: " + year + " Course: " + courseCode;
     }
 
 }

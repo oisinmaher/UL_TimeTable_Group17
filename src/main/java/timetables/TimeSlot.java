@@ -1,56 +1,40 @@
 package src.main.java.timetables;
+
 import src.main.java.modules.CourseModule;
-import src.main.java.rooms.LectureRoom;
-import src.main.java.users.Student;
+import src.main.java.rooms.Room;
+import src.main.java.users.Lecturer;
 
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalTime;
 
-/**
- * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
- * in the timetable
- */
-public class TimeSlot implements Comparable<TimeSlot>  {
-    private String time;
-    //private LectureRoom lectureRoom;
-
-    //these could be replaced by a program object
-    //private CourseModule module;
-    //private List<Student> students;
-
+public class TimeSlot implements Comparable<TimeSlot> {
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private CourseModule module;
     private Group group;
+    private Room room;
+    private Lecturer lecturer;
 
-    public TimeSlot(String time, Group group){
-        this.time = time;
-        //this.module = module;
-        //this.students = students;
-        //this.lectureRoom = lectureRoom;
-
+    public TimeSlot(LocalTime startTime, LocalTime endTime, CourseModule module,
+                    Group group, Room room, Lecturer lecturer) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.module = module;
         this.group = group;
+        this.room = room;
+        this.lecturer = lecturer;
     }
 
-    /**
-     * Compares a TimeSlot with another TimeSlot for order based on time
-     * @param o the object to be compared.
-     * @return a negative integer, zero or a positive integer if the TimeSlot is earlier, the same or after the other
-     */
     @Override
     public int compareTo(TimeSlot o) {
-        return this.time.compareTo(o.time);
+        return this.startTime.compareTo(o.startTime);
     }
 
-    /**
-     * Returns the timeslot object as a string
-     * @return the time, module, student and room
-     */
     @Override
-    public String toString(){
-        //StringBuilder sb = new StringBuilder();
-        //for(Student s:students ){
-       //     sb.append(s.getUserId()).append(", ");
-       // }
-
-        return "Time:" + time + " Group: " + group;
+    public String toString() {
+        return startTime + "-" + endTime + " " + module.getModuleCode() + "Group: " + group.getYear() +
+                " Room: " + room.getRoomID() +
+                " Lecturer: " + lecturer.getName();
     }
 
+    // Getters omitted for brevity
 }
