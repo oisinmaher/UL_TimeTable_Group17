@@ -1,16 +1,38 @@
-package src.main.java.programCourse;
+package src.main.java.timetables;
 
+import src.main.java.modules.CourseModule;
 import java.util.*;
 
+/**
+ * Represents an entire academic program (degree) such as
+ * BSc Computer Science or BA Business.
+ *
+ * A ProgramWithModule contains:
+ *  - A program code (e.g., "BSC-CS")
+ *  - A human-readable program name
+ *  - A list of ProgramYear objects that describe the structure of the degree
+ *
+ * This class acts as the top-level container for program structure.
+ */
 public class ProgramWithModule {
 
     private String code;
     private String name;
-    private List<ProgramYear> years; // CHANGED: was List<ProgramWithCourseModule.ProgramYear>
+    private List<ProgramYear> years;
 
-    // Constructor for ProgramWithCourseModule.
-    // Validates that code, name, and years are not null, then copies the list of years.
-    public ProgramWithModule(String code, String name, List<ProgramYear> years) { // CHANGED: parameter type
+    /**
+     * Constructs a ProgramWithModule object by assigning the program code,
+     * name, and list of academic years that make up the program.
+     *
+     * @param code  the program identifier (e.g. "BSC-CS")
+     * @param name  the program name displayed to users
+     * @param years the list of ProgramYear objects representing each academic year
+     *
+     * @throws IllegalArgumentException if any argument is null
+     */
+    public ProgramWithModule(String code, String name, List<ProgramYear> years) {
+
+        // Validate inputs
         if (code == null) {
             throw new IllegalArgumentException("Code can't be null");
         }
@@ -20,11 +42,13 @@ public class ProgramWithModule {
         if (years == null) {
             throw new IllegalArgumentException("Years can't be null");
         }
+
         this.code = code;
         this.name = name;
+
+        // Store a defensive copy of the list of years
         this.years = new ArrayList<>(years);
     }
 
-    // We can add getters or other behaviour here later if needed.
+    // You can add getters or program behaviour methods later if needed.
 }
-
