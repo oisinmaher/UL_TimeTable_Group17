@@ -6,20 +6,16 @@ import src.main.java.users.Student;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Group will be the students in a given room for a given module at a given time
+ */
 public class Group {
 
-    private int year ;
-    private List<Student> students;
+
     private CourseModule modules;
-    private Set<Room> rooms;
 
-    public Group(int year, List<Student> students, CourseModule modules, Set<Room> rooms){
-
-        this.year = year;
-        this.students = students;
+    public Group(CourseModule modules){
         this.modules = modules;
-        this.rooms = rooms;
-
     }
 
     public int getYear() {
@@ -34,10 +30,8 @@ public class Group {
         return modules;
     }
 
-    public Set<Room> getRooms() {
-
-
-        return rooms;
+    public Room getRooms() {
+        return room;
     }
 
     @Override

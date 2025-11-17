@@ -12,64 +12,41 @@ import java.util.*;
  * A CourseYear:
  *  - Belongs to a specific CourseFull
  *  - Has a year number (e.g. 1, 2, 3)
- *  - Contains a list of CourseSemesters objects (e.g. Autumn, Spring)
+ *  - Contains a map of Season -> CourseSemester objects (e.g. Autumn, Spring)
  *
- * It provides behaviours to:
- *  - Retrieve modules by semester
- *  - Retrieve all modules across the year (without duplicates)
- *  - Map semesters to student group IDs
- *  - Validate the structure of the year and its semesters
  */
 public final class CourseYear{
 
-    private final CourseFull courseFull;
-    private final int yearNumber;
-    private final List<CourseSemester> courseSemesters;
+    private final String yearNumber;
+    private final Map<String, CourseSemester> courseSemesters;
 
     /**
      * Constructs a CourseYear with a reference to CourseWithModule,
      * a year number, and a list of semesters.
      *
-     * @param courseFull  CourseWithModule this year belongs to (can be null)
      * @param yearNumber the numeric identifier for the year (e.g. 1, 2, 3)
-     * @param courseSemesters  the list of CourseSemester objects for this year
      *
      * @throws IllegalArgumentException if semesters is null
      */
-    public CourseYear(CourseFull courseFull, int yearNumber, List<CourseSemester> courseSemesters) {
-        if (courseSemesters == null) {
-            throw new IllegalArgumentException("semesters is null");
-        }
-        this.courseFull = courseFull;
+    public CourseYear(String yearNumber) {
         this.yearNumber = yearNumber;
-        this.courseSemesters = new ArrayList<>(courseSemesters);
+        this.courseSemesters = new HashMap<>();
     }
 
     /**
-     * Returns the parent course this year belongs to.
-     *
-     * @return the CourseFull instance, or null if not set
-     */
-    public CourseFull getCourseme() {
-        return courseFull;
-    }
-
-    /**
-     * Returns the numeric year number (e.g. 1 for first year).
-     *
+     * Returns the numeric year number as String (e.g. "1" for first year).
      * @return the year number
      */
-    public int getYearNumber() {
+    public String getYearNumber() {
         return yearNumber;
     }
 
     /**
      * Returns a copy of the list of semesters in this year.
-     *
      * @return a new List containing the CourseSemester objects
      */
     public List<CourseSemester> getSemesters() {
-        return new ArrayList<>(courseSemesters);
+        return new ArrayList<>(courseSemesters.values());
     }
 
    /**
@@ -77,37 +54,25 @@ public final class CourseYear{
      * This now uses CourseSemester.pickModulesForThisSemester(), which applies
      * the odd/even last digit rule based on the semester name.
      */
-    public List<CourseModule> modulesForSemester(String semesterName) {
+    public List<CourseModule> getModulesNameForSemester(String semesterName) {
         if (semesterName == null) {
-            return new ArrayList<>();
+            throw new IllegalArgumentException("Parameters can't be null");
         }
         String target = semesterName.toLowerCase();
-        for (CourseSemester s : courseSemesters) {
-            if (s.getName().toLowerCase().equals(target)) {
-                return s.pickModulesForThisSemester();
-            }
+        if(!courseSemesters.containsKey(semesterName)){
+            throw new IllegalArgumentException("This semester doesnt exist, it must be created first");
         }
-        return new ArrayList<>();
+        return courseSemesters.get(semesterName).pickModulesForThisSemester();
     }
-    /**
-     * Returns all CourseModule objects across all semesters in this year,
-     * with duplicates removed. If a module appears in more than one semester,
-     * it will only be included once in the returned list.
-     *
-     * @return a List of unique CourseModule objects for this year
-     */
-    public List<CourseModule> allModules() {
-        List<CourseModule> out = new ArrayList<>();
-        Set<CourseModule> seen = new HashSet<>();
-        for (CourseSemester s : courseSemesters) {
-            for (CourseModule m : s.getModuleCodes()) {
-                if (!seen.contains(m)) {
-                    seen.add(m);
-                    out.add(m);
-                }
-            }
+    public List<String> getModuleCodesForSemester(String semesterName){
+        if (semesterName == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
         }
-        return out;
+        String target = semesterName.toLowerCase();
+        if(!courseSemesters.containsKey(semesterName)){
+            throw new IllegalArgumentException("This semester doesnt exist, it must be created first");
+        }
+        return courseSemesters.get(semesterName).getModuleCodes();
     }
 
     /**
@@ -155,8 +120,8 @@ public final class CourseYear{
             return false;
         }
         String target = name.toLowerCase();
-        for (CourseSemester s : courseSemesters) {
-            if (s.getName().toLowerCase().equals(target)) {
+        for (String s : courseSemesters.keySet()) {
+            if (s.equals(target)) {
                 return true;
             }
         }
@@ -185,12 +150,12 @@ public final class CourseYear{
         }
 
         Set<String> seenNames = new HashSet<>();
-        for (CourseSemester s : courseSemesters) {
+        for (String s : courseSemesters.keySet()) {
             String key;
-            if (s.getName() == null) {
+            if (s == null) {
                 key = "";
             } else {
-                key = s.getName().toLowerCase();
+                key = s.toLowerCase();
             }
 
             if (key.isEmpty()) {
@@ -200,7 +165,6 @@ public final class CourseYear{
             } else {
                 seenNames.add(key);
             }
-            issues.addAll(s.validate(yearNumber));
         }
         return issues;
     }
