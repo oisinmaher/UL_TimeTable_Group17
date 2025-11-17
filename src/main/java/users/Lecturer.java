@@ -1,7 +1,5 @@
 package src.main.java.users;
 import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeTable;
 
 public class Lecturer extends User{
     String name;

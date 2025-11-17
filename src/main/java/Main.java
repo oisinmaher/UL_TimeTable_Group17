@@ -1,4 +1,6 @@
 package src.main.java;
+import src.main.java.coursePrograms.ProgramSemester;
+import src.main.java.coursePrograms.ProgramWithModule;
 import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
 import src.main.java.rooms.Room;
