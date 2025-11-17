@@ -30,6 +30,7 @@ public class AdminCommandSession implements UserSession {
             String[] parts = line.split("\\s+");
             String cmd = parts[0].toLowerCase();
             String[] args = Arrays.copyOfRange(parts, 1, parts.length);
+//            System.out.println("Arguments are " + Arrays.toString(args));
 
             switch (cmd) {
                 case "add-student":
@@ -68,12 +69,16 @@ public class AdminCommandSession implements UserSession {
     // ===== Commands =====
 
     private void cmdAddStudent(String[] args) {
-        if (args.length < 3) {
+//        System.out.println("Arguments in function are " + Arrays.toString(args));
+        if (args.length < 2) {
             System.out.println("Usage: add-student <id> <name>");
             return;
         }
         String id = args[0];
         String name = args[1];
+        for(int i = 2; i < args.length; i++){
+            name = name + " " + args[i];
+        }
 
         boolean ok = studentService.addStudent(id, name);
         if (ok) {
@@ -84,7 +89,7 @@ public class AdminCommandSession implements UserSession {
     }
 
     private void cmdRemoveStudent(String[] args) {
-        if (args.length < 1) {
+        if (args.length != 1) {
             System.out.println("Usage: remove-student <id>");
             return;
         }
@@ -105,7 +110,9 @@ public class AdminCommandSession implements UserSession {
         String id = args[0];
         String field = args[1];
         String newValue = args[2];
-
+        for(int i = 3; i < args.length; i++){
+            newValue = newValue + " " + args[i];
+        }
         boolean ok = studentService.updateStudentField(id, field, newValue);
         if (ok) {
             System.out.println("Student " + id + " updated (" + field + ").");
@@ -115,13 +122,15 @@ public class AdminCommandSession implements UserSession {
     }
 
     private void cmdAddLecturer(String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             System.out.println("Usage: add-lecturer <id> <fullName>");
             return;
         }
         String id = args[0];
         String name = args[1];
-
+        for(int i = 2; i < args.length; i++){
+            name = name + " " + args[i];
+        }
         boolean ok = lecturerService.addLecturer(id, name);
         if (ok) {
             System.out.println("Lecturer added: " + id);
@@ -133,12 +142,15 @@ public class AdminCommandSession implements UserSession {
     private void cmdUpdateLecturer(String[] args) {
         if (args.length < 3) {
             System.out.println("Usage: update-lecturer <id> <field> <newValue>");
-            System.out.println("Fields: firstName, lastName");
+            System.out.println("Fields: fullName");
             return;
         }
         String id = args[0];
         String field = args[1];
         String newValue = args[2];
+        for(int i = 3; i < args.length; i++){
+            newValue = newValue + " " + args[i];
+        }
 
         boolean ok = lecturerService.updateLecturerField(id, field, newValue);
         if (ok) {
@@ -164,10 +176,10 @@ public class AdminCommandSession implements UserSession {
 
     private void printHelp() {
         System.out.println("Available commands:");
-        System.out.println("  add-student <id> <firstName> <lastName>");
+        System.out.println("  add-student <id> <fullName>");
         System.out.println("  remove-student <id>");
         System.out.println("  update-student <id> <field> <newValue>");
-        System.out.println("  add-lecturer <id> <firstName> <lastName>");
+        System.out.println("  add-lecturer <id> <fullName>");
         System.out.println("  update-lecturer <id> <field> <newValue>");
         System.out.println("  list-students");
         System.out.println("  list-lecturers");

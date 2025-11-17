@@ -4,7 +4,11 @@ import src.main.java.programCourse.CourseYear;
 import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
 import src.main.java.rooms.Room;
+import src.main.java.ui.cli1.AdminCommandSession;
 import src.main.java.timetables.*;
+import src.main.java.ui.cli1.InMemoryLecturerService;
+import src.main.java.ui.cli1.InMemoryStudentService;
+import src.main.java.ui.cli1.StudentService;
 import src.main.java.users.Student;
 
 import java.util.*;
@@ -69,19 +73,10 @@ public class Main {
 //
 //        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
 //
-//        List<ProgramYear> lm0512526 = Arrays.asList(AY2025Y1);
 //
-//        ProgramWithModule lm051 = new ProgramWithModule("LM051", "BSc Computer Systems", lm0512526);
-//
-//        Group lm051AY24 = new Group(2025, group1a, oop, lm051Rooms);
-//
-//        TimeTable timeTable = new TimeTable();
-//        TimeSlot monday9am = new TimeSlot("1100", lm051AY24);
-//
-//        timeTable.addTimeSlot("Monday", monday9am);
-//
-//        System.out.println(timeTable);
-
+        Scanner sc = new Scanner(System.in);
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
+        ad.run();
 
     }
 }
