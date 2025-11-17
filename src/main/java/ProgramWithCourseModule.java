@@ -1,4 +1,4 @@
-package src.main.java.timetables;
+package src.main.java;
 
 import src.main.java.modules.CourseModule;
 
@@ -27,18 +27,18 @@ public class ProgramWithCourseModule {
         }
 
         public final static class ProgramYear {
-            private final src.main.java.timetables.ProgramWithCourseModule programme;
+            private final ProgramWithCourseModule programme;
             private final int yearNumber;
             private final List<ProgramWithCourseModule.ProgramSemester> semesters;
 
-            public ProgramYear(src.main.java.timetables.ProgramWithCourseModule programme, int yearNumber, List<ProgramWithCourseModule.ProgramSemester> semesters) {
+            public ProgramYear(ProgramWithCourseModule programme, int yearNumber, List<ProgramWithCourseModule.ProgramSemester> semesters) {
                 if (semesters == null) throw new IllegalArgumentException("semesters is null");
                 this.programme = programme;
                 this.yearNumber = yearNumber;
                 this.semesters = new ArrayList<>(semesters);
             }
 
-            public src.main.java.timetables.ProgramWithCourseModule getProgramme() {
+            public ProgramWithCourseModule getProgramme() {
                 return programme;
             }
 

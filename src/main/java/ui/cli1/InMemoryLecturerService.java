@@ -1,4 +1,6 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
+
+import src.main.java.users.Lecturer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,20 +9,23 @@ import java.util.Map;
 
 public class InMemoryLecturerService implements LecturerService {
 
+    /**
+     * Maps lectureId (as String) to Lecturer object
+     */
     private final Map<String, Lecturer> lecturers = new HashMap<>();
 
     public InMemoryLecturerService() {
         
-        addLecturer("L001", "Michael", "English");
-        addLecturer("L002", "Alan", "Ryan");
+        addLecturer("123", "Michael");
+        addLecturer("455", "Alan");
     }
 
-    @Override
-    public boolean addLecturer(String id, String firstName, String lastName) {
+//    @Override
+    public boolean addLecturer(String id, String name) {
         if (lecturers.containsKey(id)) {
             return false;
         }
-        lecturers.put(id, new Lecturer(id, firstName, lastName));
+        lecturers.put(id, new Lecturer(name, id));
         return true;
     }
 
@@ -29,14 +34,9 @@ public class InMemoryLecturerService implements LecturerService {
         Lecturer l = lecturers.get(id);
         if (l == null) return false;
 
-        switch (field.toLowerCase()) {
-            case "firstname":
-            case "first_name":
-                l.setFirstName(newValue);
-                return true;
-            case "lastname":
-            case "last_name":
-                l.setLastName(newValue);
+        switch(field.toLowerCase()) {
+            case "name":
+                l.setName(newValue);
                 return true;
             default:
                 return false;

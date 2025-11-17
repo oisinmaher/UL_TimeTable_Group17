@@ -10,24 +10,22 @@ import java.util.*;
  *  It will be quiet similiar to Student but with modules from different courses
  */
 public class Teacher extends User {
-    // Timetable object
+    // Timetable Object
     TimeTable timeTable;
 
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
     List<CourseFull> courseTaught;
 
-
-
     // Constructor with base parameters of user
-    public Teacher(String name, int userId) {
-        super(name, userId);
+    public Teacher(String userId, String name) {
+        super(userId, name);
         this.timeTable = new TimeTable(this);
         courseTaught = new ArrayList<>();
     }
 
     // Constructor but with a pre-made list of Programs (Likely won't use)
-    public Teacher(String name, int userId, List<CourseFull> programsTaught) {
-        super(name, userId);
+    public Teacher(String name, String userId, List<CourseFull> programsTaught) {
+        super(userId, name);
         this.timeTable = new TimeTable(this);
         this.courseTaught = courseTaught;
     }

@@ -24,14 +24,14 @@ public class Student extends User {
      * @param userId
      */
     // Constructor with just base params of User
-    public Student(String name, int userId) {
-        super(name, userId);
+    public Student(String userId, String name) {
+        super(userId, name);
         timeTable = new TimeTable(this);
     }
 
     // Constructor with all info
-    public Student(String name, int userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
-        super(name, userId);
+    public Student(String name, String userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
+        super(userId, name);
         this.courseSemester = courseSemester;
         this.courseYear = courseYear;
         this.yearOfStudy = yearOfStudy;
@@ -70,6 +70,10 @@ public class Student extends User {
 
     public TimeTable getTimeTable() {
         return timeTable;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
 

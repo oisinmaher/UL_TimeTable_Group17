@@ -1,4 +1,6 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
+
+import src.main.java.users.Lecturer;
 
 import java.util.List;
 
@@ -9,17 +11,16 @@ import java.util.List;
  * it allows the CLI to work independently from the underlying data storage.
  * </p>
  */
-public interface LecturerService 
+public interface LecturerService
 {
     /**
      * Adds a new lecturer to the system.
      *
      * @param id the lecturer's unique ID
-     * @param firstName the lecturer's first name
-     * @param lastName the lecturer's last name
+     * @param name the lecturer's name
      * @return true if the lecturer was added; false if the ID already exists
      */
-    boolean addLecturer(String id, String firstName, String lastName);   // Add a lecturer
+    boolean addLecturer(String id, String name);   // Add a lecturer
 
     /**
      * Updates a specific field of a lecturer.

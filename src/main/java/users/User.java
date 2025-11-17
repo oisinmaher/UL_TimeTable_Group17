@@ -1,19 +1,18 @@
 package src.main.java.users;
 
 /**
- * Abstract user class, this won't be initialized
- * It will just set basis for student, teacher & admin
+ *
  */
 public class User{
     String name;
-    int userId;
+    String userId;
 
     /**
      *
      * @param name
      * @param userId
      */
-    public User(String name, int userId){
+    public User(String userId, String name){
         this.name = name;
         this.userId = userId;
     }
@@ -30,7 +29,7 @@ public class User{
      *
      * @return
      */
-    public int getUserId(){
+    public String getUserId(){
         return this.userId;
     }
 

@@ -1,4 +1,4 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,21 +10,22 @@ import src.main.java.users.Student;
 
 public class InMemoryStudentService implements StudentService
 {
-    private final Map<String, Student> students = new HashMap<>(); 
+    // map student id (string) to Student object
+    private final Map<String, Student> students = new HashMap<>();
     public InMemoryStudentService() {
         // Sample data – change/remove as you like
-        addStudent("24254444", "Yousef", "Abu Al-Salqan");
-        addStudent("24254666", "Alex", "Dalla Pria");
+        addStudent("43424", "Yousef");
+        addStudent("555", "Alex");
     }
 
     @Override
-    public boolean addStudent(String id, String firstName, String lastName)
+    public boolean addStudent(String id, String name)
     {
         if(students.containsKey(id))
         {
             return false; 
         }
-        students.put(id, new Student(id, firstName, lastName)); 
+        students.put(id, new Student(id, name));
         return true; 
     } 
 
