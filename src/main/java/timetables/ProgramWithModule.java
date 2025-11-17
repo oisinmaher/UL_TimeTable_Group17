@@ -12,7 +12,7 @@ import java.util.*;
  *  - A human-readable program name
  *  - A list of ProgramYear objects that describe the structure of the degree
  *
- * This class acts as the top-level container for program structure.
+ * This class is the high level class for the program structure
  */
 public class ProgramWithModule {
 
@@ -46,9 +46,9 @@ public class ProgramWithModule {
         this.code = code;
         this.name = name;
 
-        // Store a defensive copy of the list of years
+
         this.years = new ArrayList<>(years);
     }
 
-    // You can add getters or program behaviour methods later if needed.
+
 }
