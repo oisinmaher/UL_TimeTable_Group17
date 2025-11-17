@@ -1,9 +1,8 @@
 package src.main.java;
 import src.main.java.modules.CourseModule;
 import src.main.java.rooms.LectureRoom;
-import src.main.java.timetables.ProgramWithCourseModule;
-import src.main.java.timetables.TimeSlot;
-import src.main.java.timetables.TimeTable;
+import src.main.java.rooms.Room;
+import src.main.java.timetables.*;
 import src.main.java.users.Student;
 
 import java.util.*;
@@ -16,7 +15,14 @@ public class Main {
         CourseModule swReq = new CourseModule("SW Requirements", "CS4178");
         oop.setLecHours(6);
         LectureRoom csg001 = new LectureRoom("CSG-001", " ", 100);
+        LectureRoom d1050 = new LectureRoom("D-1050", "", 150);
+
+        d1050.setRoomType("Lecture rooms.room");
         csg001.setRoomType("Lecture rooms.Room");
+
+        Set<Room> lm051Rooms = new HashSet<Room>();
+        lm051Rooms.add(d1050);
+        lm051Rooms.add(csg001);
 
         //Test code (uses Strings instead of modules and room object)
         Student student = new Student("Oisin", 24377112, 121);
@@ -25,13 +31,9 @@ public class Main {
 
         List<Student> group1a = Arrays.asList(student);
 
-        TimeTable timeTable = new TimeTable();
-        TimeSlot monday9am = new TimeSlot("1100", oop, group1a, csg001);
 
-        timeTable.addTimeSlot("Monday", monday9am);
-        timeTable.addTimeSlot("Monday", new TimeSlot("1000", swReq, group1a, csg001));
 
-        System.out.println(timeTable);
+
 
         List<CourseModule> year1Sem1Modules = Arrays.asList(oop, swTest);
         List<CourseModule> year1Sem2Modules = Arrays.asList(os);
@@ -59,8 +61,24 @@ public class Main {
         System.out.println(semester1);
         System.out.println(semester2);
 
+        ProgramSemester lm0512526Sem1 = new ProgramSemester("lm051AY25Sem1", year1Sem1Modules);
+        ProgramSemester lm0512526Sem2 = new ProgramSemester("lm051AY25Sem1", year1Sem2Modules);
 
 
+        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
+
+        List<ProgramYear> lm0512526 = Arrays.asList(AY2025Y1);
+
+        ProgramWithModule lm051 = new ProgramWithModule("LM051", "BSc Computer Systems", lm0512526);
+
+        Group lm051AY24 = new Group(2025, group1a, oop, lm051Rooms);
+
+        TimeTable timeTable = new TimeTable();
+        TimeSlot monday9am = new TimeSlot("1100", lm051AY24);
+
+        timeTable.addTimeSlot("Monday", monday9am);
+
+        System.out.println(timeTable);
 
 
     }
