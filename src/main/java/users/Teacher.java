@@ -16,8 +16,6 @@ public class Teacher extends User {
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
     List<CourseFull> courseTaught;
 
-
-
     // Constructor with base parameters of user
     public Teacher(String name, int userId) {
         super(name, userId);

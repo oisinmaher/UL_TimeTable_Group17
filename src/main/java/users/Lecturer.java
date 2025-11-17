@@ -10,7 +10,5 @@ public class Lecturer extends User{
     public void setName(String name){
         this.name = name;
     }
-//    void findLecturerById(){
-//      return id;
-//    }
+
 }

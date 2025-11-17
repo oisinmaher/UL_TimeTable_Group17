@@ -1,7 +1,4 @@
-package src.main.java.ui.cli;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeTable;
+package src.main.java.ui.cli1;
 import src.main.java.users.*;
 
 import java.util.Arrays;
