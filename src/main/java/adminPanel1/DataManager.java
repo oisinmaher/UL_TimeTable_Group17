@@ -1,9 +1,9 @@
-package src.main.java.adminPanel;
+package src.main.java.adminPanel1;
 import src.main.java.users.*;
 import src.main.java.rooms.*;
 import src.main.java.timetables.*;
 import src.main.java.programCourse.*;
-import src.main.java.modules.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
