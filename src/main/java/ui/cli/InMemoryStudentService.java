@@ -43,14 +43,9 @@ public class InMemoryStudentService implements StudentService
         }
         switch(field.toLowerCase())
         {
-            case"First name":
-            case "First_name":
-                s.setFirstName(newValue); 
-                return true; 
-            case "Last name":
-            case "Last_Name": 
-                s.setLastName(newValue);
-                return true; 
+            case "student_name":
+                s.setName(newValue);
+                return true;
             default:
                 return false; 
             

@@ -65,4 +65,8 @@ public class Student extends User {
             System.out.println("------------------------------");
         }
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
