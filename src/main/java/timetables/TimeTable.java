@@ -1,7 +1,7 @@
 package src.main.java.timetables;
 
+import src.main.java.programCourse.CourseFull;
 import src.main.java.users.User;
-import src.main.java.programCourse.ProgramWithModule;
 import java.util.*;
 
 /**
@@ -21,7 +21,7 @@ public class TimeTable {
     // This variable will be used if its a persons timetable (e.g student/teacher)
     User user;
     // This variable will be used if it's a program timetable (e.g a course timetable consisting of all labs and lectures)
-    ProgramWithModule program;
+    CourseFull course;
 
 
     /**
@@ -45,12 +45,12 @@ public class TimeTable {
      * Timetable for a whole program, can have overlapping classes in same timeslot
      * for example one group of students have a database lab, while another group have OOP lab at same time
      */
-    public TimeTable(ProgramWithModule program){
+    public TimeTable(CourseFull course){
         // Init map - changed to LinkedHashMap to maintain order
         daySchedule = new HashMap<>();
         // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
         this.daysOfWeek = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-        this.program = program;
+        this.course = course;
         for(String day : daysOfWeek){
             // Ordered Set of Strings
             // (set[0] will be the time in 24 hours no decimal point 0900 = 9 am)
