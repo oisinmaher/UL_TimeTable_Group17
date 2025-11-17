@@ -10,7 +10,7 @@ import java.util.*;
  *  It will be quiet similiar to Student but with modules from different courses
  */
 public class Teacher extends User {
-    // Timetable object
+    // Timetable Object
     TimeTable timeTable;
 
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
