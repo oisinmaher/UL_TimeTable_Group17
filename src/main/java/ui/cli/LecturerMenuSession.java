@@ -1,5 +1,7 @@
 package src.main.java.ui.cli;
 
+import src.main.java.users.Lecturer;
+
 import java.util.Scanner;
 
 public class LecturerMenuSession implements UserSession {

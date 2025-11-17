@@ -1,4 +1,8 @@
 package src.main.java.ui.cli;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseYear;
+import src.main.java.timetables.TimeTable;
+import src.main.java.users.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -68,14 +72,13 @@ public class AdminCommandSession implements UserSession {
 
     private void cmdAddStudent(String[] args) {
         if (args.length < 3) {
-            System.out.println("Usage: add-student <id> <firstName> <lastName>");
+            System.out.println("Usage: add-student <id> <name>");
             return;
         }
-        String id = args[0];
-        String firstName = args[1];
-        String lastName = args[2];
+        int id = Integer.parseInt(args[0]);
+        String name = args[1];
 
-        boolean ok = studentService.addStudent(id, firstName, lastName);
+        boolean ok = studentService.addStudent(id, name);
         if (ok) {
             System.out.println("Student added: " + id);
         } else {
@@ -100,7 +103,6 @@ public class AdminCommandSession implements UserSession {
     private void cmdUpdateStudent(String[] args) {
         if (args.length < 3) {
             System.out.println("Usage: update-student <id> <field> <newValue>");
-            System.out.println("Fields: student_name");
             return;
         }
         String id = args[0];

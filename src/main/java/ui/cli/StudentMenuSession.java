@@ -1,5 +1,7 @@
 package src.main.java.ui.cli;
 
+import src.main.java.users.Student;
+
 import java.util.Scanner;
 
 /**
