@@ -24,7 +24,7 @@ public class Student extends User {
      * @param userId
      */
     // Constructor with just base params of User
-    public Student(String name, int userId) {
+    public Student(int userId, String name) {
         super(name, userId);
         timeTable = new TimeTable(this);
     }
@@ -70,6 +70,10 @@ public class Student extends User {
 
     public TimeTable getTimeTable() {
         return timeTable;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
 
