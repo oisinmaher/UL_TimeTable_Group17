@@ -1,5 +1,6 @@
 import java.util.*;
  
+import src.main.java.users.Student;
 
 public class Program
 {
@@ -31,6 +32,7 @@ public class Program
         private final Program programme; 
         private final int yearNumber; 
         private final List<ProgramSemester> semesters; 
+        private List<Student> studentsInProgram;
 
         public ProgramYear(Program programme, int yearNumber, List<ProgramSemester>semesters)
         {

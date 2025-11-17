@@ -1,5 +1,6 @@
 package src.main.java.modules;
 
+import src.main.java.users.Student;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,8 @@ public class CourseModule {
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
-    static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
+    private static ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
+    private static ArrayList<Student> students;
 
     /**
      *
@@ -143,7 +145,7 @@ public class CourseModule {
     }
 
     /**
-     *
+     * statically checks if module node is unique
      * @param newModuleCode
      * @return
      */
