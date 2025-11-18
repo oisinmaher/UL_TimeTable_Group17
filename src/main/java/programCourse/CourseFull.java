@@ -1,9 +1,5 @@
 package src.main.java.programCourse;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
 import java.util.*;
 
 /**
@@ -25,8 +21,6 @@ public class CourseFull {
     private static final Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't ba any data leaks.
     private final Map<String, CourseYear> yearCodeMapping;
 
-    //private Map<Integer, CourseYear> yearCodeMapping;// Suggestion
-
     /**
      * Constructs a CourseFull object by assigning the course code,
      * name, and list of academic years that make up the course.
@@ -40,7 +34,7 @@ public class CourseFull {
         // Validate inputs
         if (courseCode == null || name == null)
             throw new IllegalArgumentException("Parameters can't be null");
-
+        courseCode = courseCode.toLowerCase();
         if (courseCodeMapping.containsKey(courseCode))//Added by Yousef 18-11 9:00 to make sure that no one can overwrite this on accident.
         {
             throw new IllegalStateException("Course code alreay exists \n" + courseCodeMapping.get(courseCode));
@@ -68,20 +62,29 @@ public class CourseFull {
         return new ArrayList<>(yearCodeMapping.values());
     }
     // checks if a course code already exists
-    public static boolean checkCode(String code){
-        return courseCodeMapping.containsKey(code);
+    public static boolean containsCode(String code){
+        return courseCodeMapping.containsKey(code.toLowerCase());
     }
     // returns course object associated with code
-    public static CourseFull retrieveCourseFromCode(String code){
-        return courseCodeMapping.get(code);
+    public static CourseFull getCourseFromCode(String code){
+        return courseCodeMapping.get(code.toLowerCase());
     }
     // checks if a course year already exists, yearKey is just a string on its own "1", "2", etc
-    public boolean checkYear(String yearKey){
+    public boolean containsYear(String yearKey){
         return yearCodeMapping.containsKey(yearKey);
     }
     // returns courseYear object associated with year, yearKey is just a string on its own "1", "2", etc
-    public CourseYear retrieveCourseYearFromCode(String yearKey){
+    public CourseYear getCourseYear(String yearKey){
         return yearCodeMapping.get(yearKey);
+    }
+
+    // Retuns list of all courses
+    public static List<String> getAllCourses(){
+        List<String> list = new ArrayList<>();
+        for(Map.Entry<String, CourseFull> entry : courseCodeMapping.entrySet()){
+            list.add("Code: " + entry.getKey() + ", Name: " + entry.getValue().getName());
+        }
+        return list;
     }
 
     public String getCode(){
@@ -89,18 +92,5 @@ public class CourseFull {
     }
     public String getName(){
         return this.name;
-    }
-
-    /** hashing for sets, might not use */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CourseFull that = (CourseFull) o;
-        return this.getCode().equals(that.getCode());
-    }
-    @Override
-    public int hashCode(){
-        return this.getCode().hashCode();
     }
 }

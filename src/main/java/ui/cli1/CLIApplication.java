@@ -9,6 +9,8 @@ public class CLIApplication {
 
         StudentService studentService = new InMemoryStudentService();
         LecturerService lecturerService = new InMemoryLecturerService();
+        CourseFullService courseFullService = new InMemoryCourseFullService();
+        CourseYearService courseYearService = new InMemoryCourseYearService();
 
         boolean running = true;
 
@@ -45,7 +47,7 @@ public class CLIApplication {
                         System.out.println("Invalid admin password.");
                         break;
                     }
-                    session = new AdminCommandSession(in, studentService, lecturerService);
+                    session = new AdminCommandSession(in, studentService, lecturerService, courseFullService, courseYearService);
                     break;
 
                 case "4":

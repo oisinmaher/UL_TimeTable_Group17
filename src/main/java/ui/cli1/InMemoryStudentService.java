@@ -14,8 +14,8 @@ public class InMemoryStudentService implements StudentService
     private final Map<String, Student> students = new HashMap<>();
     public InMemoryStudentService() {
         // Sample data – change/remove as you like
-        addStudent("43424", "Yousef", "LM121", "1");
-        addStudent("555", "Alex", "LM121", "2");
+//        addStudent("43424", "Yousef", "LM121", "1");
+//        addStudent("555", "Alex", "LM121", "2");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class InMemoryStudentService implements StudentService
         {
             return false; 
         }
-        students.put(id, new Student(id, name, courseCode, year));
+        students.put(id, new Student(id, name, courseCode.toLowerCase(), year));
         return true; 
     } 
 

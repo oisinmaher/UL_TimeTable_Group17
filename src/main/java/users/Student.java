@@ -1,11 +1,9 @@
 package src.main.java.users;
 
 import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseYear;
 import src.main.java.timetables.TimeSlot;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +24,14 @@ public class Student extends User {
     // Constructor with just base params of User
     public Student(String userId, String name, String courseCode, String year) {
         super(userId, name);
-        if(!CourseFull.checkCode(courseCode)){
+        if(!CourseFull.containsCode(courseCode)){
             throw new IllegalArgumentException("Course Doesnt Exist, it must be made first");
         }
-        this.courseFull = CourseFull.retrieveCourseFromCode(courseCode);
-        if(!this.courseFull.checkYear(year)){
+        this.courseFull = CourseFull.getCourseFromCode(courseCode);
+        if(!this.courseFull.containsYear(year)){
             throw new IllegalArgumentException("Course Year Doesnt Exist, it must be made first");
         }
-        this.courseYear = courseFull.retrieveCourseYearFromCode(year);
+        this.courseYear = courseFull.getCourseYear(year);
         classTimes = new ArrayList<>();
     }
     public void setName(String name){
