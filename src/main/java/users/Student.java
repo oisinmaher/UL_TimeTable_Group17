@@ -4,6 +4,7 @@ import programCourse.CourseFull;
 import programCourse.CourseYear;
 import timetables.TimeSlot;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +16,6 @@ public class Student extends User {
     CourseFull courseFull;
     CourseYear courseYear;
     List<TimeSlot> classTimes = new ArrayList<>();
-
-public Student() {
-    super("","");
-}
-
-
     /**
      * @param userId
      * @param name
@@ -40,8 +35,9 @@ public Student() {
         this.courseYear = courseFull.retrieveCourseYearFromCode(year);
         classTimes = new ArrayList<>();
     }
-
-    public void setName(String name){this.name = name;}
+    public void setName(String name){
+        this.name = name;
+    }
     public void setCourseYear(CourseYear courseYear) {
         this.courseYear = courseYear;
     }

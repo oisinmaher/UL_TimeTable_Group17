@@ -1,7 +1,7 @@
 package adminPanel1;
 import programCourse.*;
 import rooms.*;
-import timetables.UserTimeTable;
+import timetables.*;
 import users.*;
 
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ public class DataManager {
     List<CourseSemester> programSemList = new ArrayList<>();
     List<CourseYear> programYearsList = new ArrayList<>();
     List<Room> roomsList = new ArrayList<>();
-    List<timetables.TimeSlot> timeSlotList = new ArrayList<>();
-    List<UserTimeTable> timeTableList = new ArrayList<>();
+    List<TimeSlot> timeSlotList = new ArrayList<>();
+//    List<TimeTable> timeTableList = new ArrayList<>();
     private DataManager() {
     }
     public static DataManager getInstance() {

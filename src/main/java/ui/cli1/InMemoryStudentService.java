@@ -14,18 +14,18 @@ public class InMemoryStudentService implements StudentService
     private final Map<String, Student> students = new HashMap<>();
     public InMemoryStudentService() {
         // Sample data – change/remove as you like
-        addStudent("43424", "Yousef");
-        addStudent("555", "Alex");
+        addStudent("43424", "Yousef", "LM121", "1");
+        addStudent("555", "Alex", "LM121", "2");
     }
 
     @Override
-    public boolean addStudent(String userId, String name, String courseCode, String year)
+    public boolean addStudent(String id, String name, String courseCode, String year)
     {
-        if(students.containsKey(userId))
+        if(students.containsKey(id))
         {
             return false; 
         }
-        students.put(userId, new Student(userId, name, courseCode, year);
+        students.put(id, new Student(id, name, courseCode, year));
         return true; 
     } 
 

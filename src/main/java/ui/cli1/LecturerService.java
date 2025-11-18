@@ -20,7 +20,7 @@ public interface LecturerService
      * @param name the lecturer's name
      * @return true if the lecturer was added; false if the ID already exists
      */
-    boolean addLecturer(String name, String id);   // Add a lecturer
+    boolean addLecturer(String id, String name);   // Add a lecturer
 
     /**
      * Updates a specific field of a lecturer.
@@ -46,7 +46,4 @@ public interface LecturerService
      * @return a list of all lecturers
      */
     List<Lecturer> getAllLecturers();   // Return all lecturers
-
-
-
 }

@@ -1,66 +1,74 @@
 package modules;
 
-import timetables.Group;
 
-import java.util.ArrayList;
+
+import users.Lecturer;
+
+import java.util.*;
 
 /**
  * Course Module
  */
 
-public class CourseModule extends Group {
-    private String moduleName;
-    private String moduleCode;
-    private String lecturers;
+public class CourseModule {
+    private final String moduleName;
+    private final String moduleCode;
+    private List<Lecturer> lecturers;
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
-
-    // this has to be list of timeSlots, and each timeslot will have list of students
-    static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
-
-    public CourseModule() {
-
-
-    }
+    // This will contain all created modules in a class
+    static private Map<String, CourseModule> allModules = new HashMap<>();
 
     /**
-     *
      * @param moduleName
      * @param moduleCode
      */
     public CourseModule(String moduleName, String moduleCode) {
+        if(moduleName == null || moduleCode == null){
+            throw new IllegalArgumentException("Parameters cant be null");
+        }
+        moduleCode = moduleCode.toLowerCase();
         if(checkUniqueModuleCode(moduleCode)) {
             this.moduleName = moduleName;
             this.moduleCode = moduleCode;
-            listOfModules.add(this);
+            allModules.put(moduleCode, this);
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
         }   
     }
 
-    /**
-     * Creates the course module object
-     * @param moduleName the name of the module
-     * @param moduleCode the module code
-     * @param lecturers the module lecturer
-     * @param numberOfLecHours the number of lecture hours required
-     * @param numberOfLabs the number of labs required
-     * @param numberOfTutorials the number of tutorials required
-     */
-    public CourseModule(String moduleName, String moduleCode, String lecturers,
-                        int numberOfLecHours, int numberOfLabs, int numberOfTutorials) {
-        if(checkUniqueModuleCode(moduleCode)) {
-            this.moduleName = moduleName;
-            this.moduleCode = moduleCode;
-            this.lecturers = lecturers;
-            this.numberOfLecHours = numberOfLecHours;
-            this.numberOfLabs = numberOfLabs;
-            this.numberOfTutorials = numberOfTutorials;
-            listOfModules.add(this);
-        } else {
-            throw new IllegalArgumentException("The inputted module code already exists.");
-        }
+//    /**
+//     * Creates the course module object
+//     * @param moduleName the name of the module
+//     * @param moduleCode the module code
+//     * @param lecturers the module lecturer
+//     * @param numberOfLecHours the number of lecture hours required
+//     * @param numberOfLabs the number of labs required
+//     * @param numberOfTutorials the number of tutorials required
+//     */
+//    public CourseModule(String moduleName, String moduleCode, String lecturers,
+//                        int numberOfLecHours, int numberOfLabs, int numberOfTutorials) {
+//        moduleCode = moduleCode.toLowerCase();
+//        if(checkUniqueModuleCode(moduleCode)) {
+//            this.moduleName = moduleName;
+//            this.moduleCode = moduleCode;
+//            this.lecturers = new ArrayList<>();
+//            this.numberOfLecHours = numberOfLecHours;
+//            this.numberOfLabs = numberOfLabs;
+//            this.numberOfTutorials = numberOfTutorials;
+//            allModules.put(moduleCode, this);
+//        } else {
+//            throw new IllegalArgumentException("The inputted module code already exists.");
+//        }
+//    }
+    public static boolean checkModuleCode(String moduleCode){
+        return allModules.containsKey(moduleCode.toLowerCase());
+    }
+    public static CourseModule getModuleFromCode(String moduleCode){
+        if(!checkModuleCode(moduleCode))
+            throw new IllegalArgumentException("This module code doesnt exist, it must be created first");
+        return allModules.get(moduleCode.toLowerCase());
     }
 
     /**
@@ -83,17 +91,17 @@ public class CourseModule extends Group {
      * Gets the name of the lecturer
      * @return the name of the lecturer
      */
-    public String getLecturers() {
-        return lecturers;
-    }
+//    public String getLecturers() {
+//        return lecturers;
+//    }
 
     /**
      * Sets the name of the lecturer
      * @param lecturers the name of the module's lecturer
      */
-    public void setLecturers(String lecturers) {
-        this.lecturers = lecturers;
-    }
+//    public void setLecturers(String lecturers) {
+//        this.lecturers = lecturers;
+//    }
 
     /**
      * Gets the number of required lecture hours
@@ -157,26 +165,15 @@ public class CourseModule extends Group {
      * @return
      */
     private static boolean checkUniqueModuleCode(String newModuleCode) {
-        boolean unique = true;
-        for(CourseModule m : listOfModules) {
-            if(m.moduleCode.equals(newModuleCode)) {
-                return unique = false;
-            }
-        }
-        return unique;
+        return (!allModules.containsKey(newModuleCode));
     }
 
 
-    /**
-     *
-     * @return
-     */
-    public ArrayList<String> getListOfModules() {
-        ArrayList<String> listOfModules = new ArrayList<String>();
-        for(int i = 0; i < listOfModules.size(); i++) {
-            listOfModules.add(listOfModules.get(i));
-        }
-        return listOfModules;
+    public ArrayList<CourseModule> getListOfModules() {
+        return new ArrayList<>(allModules.values());
+    }
+    public ArrayList<String> getListOfModuleCodes(){
+        return new ArrayList<>(allModules.keySet());
     }
 
     @Override

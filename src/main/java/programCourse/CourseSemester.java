@@ -11,32 +11,61 @@ import java.util.*;
  *  - Contains a list of CourseModule objects
  *  - Can validate its modules
  *  - Can select a subset of modules based on the semester rules
+ *  - Is NOT mutually referred to the CourseYear
  */
 public final class CourseSemester {
-
+    // Semester id = CourseYearId + "_" + season
+    private final String semesterId;
     private final String season;
     // module code -> Module object.  "cs4404" -> CourseModule Object
     private final Map<String, CourseModule> assignedModules;
-
+    private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
 
     /**
      * Creates a CourseSemester with a name and list of module codes.
-     *
      * @param season the name of the semester (e.g. "Autumn")
+     * @throws IllegalArgumentException if name is null
      *
-     * @throws IllegalArgumentException if name or assignedModules is null
+     * NOTE, as of Right now no mutual reference to the CourseYear its assigned
      */
-    public CourseSemester(String season) {
+    public CourseSemester(CourseYear courseYear, String season) {
         if (season == null) {
-            throw new IllegalArgumentException("name is null");
+            throw new IllegalArgumentException("season is null");
         }
+        season = season.toLowerCase();
+        if (!(season.equals("spring") || season.equals("autumn"))) {
+            throw new IllegalArgumentException("Season must be spring or autumn");
+        }
+        this.semesterId = courseYear.getYearId() + "_" + season;
         this.season = season;
+        allSemesters.put(semesterId, this);
         this.assignedModules = new HashMap<>();
+    }
+    public String getSemesterId(){
+        return this.semesterId;
+    }
+    public CourseSemester getSemesterById(String semesterId){
+        if(!allSemesters.containsKey(semesterId)){
+            throw new IllegalArgumentException("This semesterId doesnt exist");
+        }
+        return allSemesters.get(semesterId);
+    }
+    // adds a module that already exists (from its code)
+    public void addExistingModule(String moduleName){
+        assignedModules.put(moduleName.toLowerCase(), CourseModule.getModuleFromCode(moduleName));
+    }
+
+    /** Creates new Course module
+     * CourseMoudle constructor already has a check for existing modules
+     * @param code
+     * @param name
+     */
+    public void addNewModule(String code, String name){
+        CourseModule module = new CourseModule(name.toLowerCase(), code);
+        assignedModules.put(code.toLowerCase(), module);
     }
 
     /**
-     * Returns the name of the semester.
-     *
      * @return semester name as a String
      */
     public String getSeason() {
@@ -45,7 +74,6 @@ public final class CourseSemester {
 
     /**
      * Returns a defensive copy of the list of modules assigned to this semester.
-     *
      * @return list of CourseModule objects
      */
     public List<String> getModuleCodes() {
@@ -61,7 +89,6 @@ public final class CourseSemester {
      *  - Semester has at least one module
      *  - All module codes are non-null and non-blank
      *  - No duplicate module codes in this semester
-     *
      * @param yearNumber the academic year number this semester belongs to
      * @return list of validation error messages, empty if no issues
      */
@@ -88,21 +115,19 @@ public final class CourseSemester {
         return issues;
     }
 
-    /**
-     * Selects a subset of modules for this semester based on the UL rules:
-     *
-     *  - Autumn/Fall → modules ending in an ODD digit (1,3,5,7,9)
-     *  - Spring      → modules ending in an EVEN digit (0,2,4,6,8)
-     *  - Summer      → currently returns ALL modules
-     *
-     * If the semester name does not match Autumn/Fall, Spring, or Summer,
-     * an exception is thrown.
-     *
-     * @return list of CourseModule objects that match the semester's filtering rules
-     *
-     * @throws IllegalArgumentException if the semester name is not recognised
-     */
-   
+
+    /** hashing for sets, might not use */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseSemester that = (CourseSemester) o;
+        return this.getSemesterId().equals(that.getSemesterId());
+    }
+    @Override
+    public int hashCode(){
+        return this.getSemesterId().hashCode();
+    }
     /**
      * Converts the semester to a readable string format:
      * e.g. "Autumn: CS1011, MA4001"

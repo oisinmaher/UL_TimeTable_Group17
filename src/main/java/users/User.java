@@ -6,8 +6,7 @@ import timetables.Group;
 /**
  *
  */
-public class User extends Group {
-
+public class User{
     String name;
     String userId;
 

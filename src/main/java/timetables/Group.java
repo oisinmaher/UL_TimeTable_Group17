@@ -42,9 +42,6 @@ public class Group {
         this.groupId = groupId;
     }
 
-    public Group() {
-    }
-
     public String getYear() {
         return year.getYearNumber();
     }
