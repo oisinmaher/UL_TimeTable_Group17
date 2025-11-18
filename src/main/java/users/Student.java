@@ -1,5 +1,6 @@
 package users;
 
+import com.opencsv.bean.CsvIgnore;
 import programCourse.CourseSemester;
 import programCourse.CourseYear;
 import timetables.TimeTable;
@@ -16,7 +17,11 @@ import timetables.TimeTable;
 public class Student extends User {
     CourseSemester courseSemester;
     CourseYear courseYear;
+
+    @CsvIgnore
     TimeTable timeTable;
+
+
     int yearOfStudy;
 
     /**

@@ -7,9 +7,6 @@ import programCourse.CourseYear;
 import rooms.LectureRoom;
 import timetables.Group;
 import timetables.TimeSlot;
-import ui.cli1.AdminCommandSession;
-import ui.cli1.InMemoryLecturerService;
-import ui.cli1.InMemoryStudentService;
 import users.Lecturer;
 import users.Student;
 
@@ -17,7 +14,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
 
         // --- 1. Create Modules ---
@@ -66,9 +63,13 @@ public class Main {
 
         System.out.println("=== MODULE GROUP INFO ===");
 
-        Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
-        ad.run();
+
+
+
+
+        //Scanner sc = new Scanner(System.in);
+        //AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
+        //ad.run();
 
     }
 }
