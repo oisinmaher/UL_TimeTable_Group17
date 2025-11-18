@@ -3,6 +3,7 @@ package src.main.java.programCourse;
 import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseFull;
+import src.main.java.timetables.TimeSlot;
 
 import java.util.*;
 
@@ -17,8 +18,10 @@ import java.util.*;
  */
 public final class CourseYear{
 
+    // year id is fullCourse.getCode() + "_" + yearNumber
+    private String yearId;
     private final String yearNumber;
-    //private final int yearNumber;// suggestion 
+    //private final int yearNumber;
     private final Map<String, CourseSemester> courseSemesters;
 
     /**
@@ -29,7 +32,14 @@ public final class CourseYear{
      *
      * @throws IllegalArgumentException if semesters is null
      */
-    public CourseYear(String yearNumber) {
+    public CourseYear(CourseFull courseFull, String yearNumber) {
+        this.yearId = courseFull.getCode() + "_" + yearNumber;
+        this.yearNumber = yearNumber;
+        this.courseSemesters = new HashMap<>();
+    }
+    // Passing courseCode as string instead of object (not as safe)
+    public CourseYear(String courseCode, String yearNumber) {
+        this.yearId = courseCode + "_" + yearNumber;
         this.yearNumber = yearNumber;
         this.courseSemesters = new HashMap<>();
     }
@@ -100,6 +110,9 @@ public final class CourseYear{
         return result;
     }
 
+    public String getYearId(){
+        return this.yearId;
+    }
     /**
      * Checks whether this CourseYear contains a semester with the given name.
      * The comparison is case-insensitive.
@@ -118,6 +131,22 @@ public final class CourseYear{
             }
         }
         return false;
+    }
+    @Override
+    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+        if (this == o) return true;
+
+        // Check for null and class type
+        if (o == null || getClass() != o.getClass()) return false;
+
+        // Casts the object to TimeSlot
+        CourseYear that = (CourseYear) o;
+
+        return this.yearId.equals(that.yearId);
+    }
+    @Override
+    public int hashCode(){
+        return this.toString().hashCode();
     }
 
     /**

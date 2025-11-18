@@ -13,27 +13,36 @@ import java.util.*;
  *  - Contains a list of CourseModule objects
  *  - Can validate its modules
  *  - Can select a subset of modules based on the semester rules
+ *  - Is NOT mutually referred to the CourseYear
  */
 public final class CourseSemester {
-
+    // Semester id = CourseYearId + "_" + season
+    private String semesterId;
     private final String season;
     // module code -> Module object.  "cs4404" -> CourseModule Object
     private final Map<String, CourseModule> assignedModules;
 
-
     /**
      * Creates a CourseSemester with a name and list of module codes.
-     *
      * @param season the name of the semester (e.g. "Autumn")
+     * @throws IllegalArgumentException if name is null
      *
-     * @throws IllegalArgumentException if name or assignedModules is null
+     * NOTE, as of Right now no mutual reference to the CourseYear its assigned
      */
-    public CourseSemester(String season) {
+    public CourseSemester(CourseYear courseYear, String season) {
         if (season == null) {
-            throw new IllegalArgumentException("name is null");
+            throw new IllegalArgumentException("season is null");
         }
+        season = season.toLowerCase();
+        if (season.equals("spring") ^ season.equals("autumn")) {
+            throw new IllegalArgumentException("Season must be spring or autumn");
+        }
+        this.semesterId = courseYear.getYearId() + "_" + season;
         this.season = season;
         this.assignedModules = new HashMap<>();
+    }
+    public void addExistingModule(String moduleName){
+
     }
 
     /**
@@ -63,7 +72,6 @@ public final class CourseSemester {
      *  - Semester has at least one module
      *  - All module codes are non-null and non-blank
      *  - No duplicate module codes in this semester
-     *
      * @param yearNumber the academic year number this semester belongs to
      * @return list of validation error messages, empty if no issues
      */
@@ -90,21 +98,23 @@ public final class CourseSemester {
         return issues;
     }
 
-    /**
-     * Selects a subset of modules for this semester based on the UL rules:
-     *
-     *  - Autumn/Fall → modules ending in an ODD digit (1,3,5,7,9)
-     *  - Spring      → modules ending in an EVEN digit (0,2,4,6,8)
-     *  - Summer      → currently returns ALL modules
-     *
-     * If the semester name does not match Autumn/Fall, Spring, or Summer,
-     * an exception is thrown.
-     *
-     * @return list of CourseModule objects that match the semester's filtering rules
-     *
-     * @throws IllegalArgumentException if the semester name is not recognised
-     */
-   
+
+    @Override
+    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+        if (this == o) return true;
+
+        // Check for null and class type
+        if (o == null || getClass() != o.getClass()) return false;
+
+        // Casts the object to TimeSlot
+        CourseSemester that = (CourseSemester) o;
+
+        return this.semesterId.equals(that.semesterId);
+    }
+    @Override
+    public int hashCode(){
+        return this.toString().hashCode();
+    }
     /**
      * Converts the semester to a readable string format:
      * e.g. "Autumn: CS1011, MA4001"

@@ -1,6 +1,8 @@
 package src.main.java.modules;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Course Module
@@ -14,8 +16,9 @@ public class CourseModule {
     private int numberOfLabs;
     private int numberOfTutorials;
 
-    // this has to be list of timeSlots, and each timeslot will have list of students
-    static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
+    // This will be contain all created modules in a class
+    static private Set<CourseModule> allModules = new HashSet<>();
+
 
     /**
      *
