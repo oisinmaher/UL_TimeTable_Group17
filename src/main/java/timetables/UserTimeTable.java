@@ -35,6 +35,9 @@ public class UserTimeTable {
 
     }
 
+    public UserTimeTable() {
+    }
+
     public Map<String, Group> getTimeTableMapping() {
         // Returns map that contains each day of timetable and it's associated groups
         return schedule;

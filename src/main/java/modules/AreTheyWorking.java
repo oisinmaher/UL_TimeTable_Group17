@@ -112,7 +112,6 @@ public class AreTheyWorking {
         courses.add(oop);
 
         CourseSemester sem1 = new CourseSemester("Spring");
-        sem1.pickModulesForThisSemester();
         CourseYear year1 = new CourseYear("1");
         year1.hasSemester(sem1.getSeason());
 

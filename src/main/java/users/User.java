@@ -1,11 +1,12 @@
 package users;
 
 import com.opencsv.bean.CsvBindByName;
+import timetables.Group;
 
 /**
  *
  */
-public class User{
+public class User extends Group {
 
     String name;
     String userId;

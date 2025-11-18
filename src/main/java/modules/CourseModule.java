@@ -1,12 +1,14 @@
 package modules;
 
+import timetables.Group;
+
 import java.util.ArrayList;
 
 /**
  * Course Module
  */
 
-public class CourseModule {
+public class CourseModule extends Group {
     private String moduleName;
     private String moduleCode;
     private String lecturers;
@@ -18,6 +20,7 @@ public class CourseModule {
     static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
 
     public CourseModule() {
+
 
     }
 

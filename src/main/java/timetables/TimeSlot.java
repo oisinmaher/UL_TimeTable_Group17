@@ -6,7 +6,7 @@ import modules.CourseModule;
  * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
  * in the timetable
  */
-public class TimeSlot{
+public class TimeSlot extends UserTimeTable {
     private String day;
     private String time;
     private String dayTime;
@@ -16,7 +16,7 @@ public class TimeSlot{
     // group will hold list of students
     private Group group;
 
-    public TimeSlot(String day, String time, CourseModule module){
+    public TimeSlot(String day, String time, Group group){
         day = day.toLowerCase();
         // NEED CHECK FOR IF DAY IS mon tue wed thu fri
 
@@ -25,7 +25,7 @@ public class TimeSlot{
         // NEED CHECK IF TIME IS valid 24 hour clock no characters e.g 2240, NOT 22:40 or 2280
 
         dayTime = day + "" + time;
-        this.group = new Group(module);
+        this.group = group;
     }
 
     /**

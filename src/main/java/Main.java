@@ -39,14 +39,15 @@ public class Main {
         // --- 6. Create Teacher ---
         Lecturer drSmith = new Lecturer("T001", "Dr. Smith");
 
-        // --- 8. Create Groups (students attending modules) ---
-        Group groupCS101 = new Group(cs101);
-
         LectureRoom csg001 = new LectureRoom("csg001", "LectureRoom.room", 150);
 
+        // --- 8. Create Groups (students attending modules) ---
+        Group groupCS101 = new Group(cs101, year1, Arrays.asList(alice,bob), Arrays.asList(csg001), "groupcs101");
+
+
         // --- 9. Create TimeSlots ---
-        TimeSlot ts1 = new TimeSlot("Monday", "0900", cs101);
-        TimeSlot ts2 = new TimeSlot("Monday", "1000", ma101);
+        TimeSlot ts1 = new TimeSlot("Monday", "0900", groupCS101);
+        TimeSlot ts2 = new TimeSlot("Monday", "1000", groupCS101);
 
 
         // --- 11. Print everything ---

@@ -102,54 +102,7 @@ public final class CourseSemester {
      *
      * @throws IllegalArgumentException if the semester name is not recognised
      */
-    public List<CourseModule> pickModulesForThisSemester() {
-
-        List<CourseModule> selected = new ArrayList<>();
-
-        String sem = season.toLowerCase();
-
-        for (CourseModule module : assignedModules.values()) {
-
-            String code = module.getModuleCode();
-            if (code == null || code.isEmpty()) {
-                continue;
-            }
-
-            char lastChar = code.charAt(code.length() - 1);
-
-            if (!Character.isDigit(lastChar)) {
-                continue;
-            }
-
-            // FIXED: the braces in your original code prevented this from compiling
-            int lastDigit = Character.getNumericValue(lastChar);  // ✔ Correct position
-
-            if (sem.contains("autumn") || sem.contains("fall")) {
-                // Pick odd-ending module codes
-                if (lastDigit % 2 == 1) {
-                    selected.add(module);
-                }
-            }
-            else if (sem.contains("spring")) {
-                // Pick even-ending module codes
-                if (lastDigit % 2 == 0) {
-                    selected.add(module);
-                }
-            }
-            else if (sem.contains("summer")) {
-                // Summer gets all modules (as per your current rule)
-                selected.add(module);
-            }
-            else {
-                throw new IllegalArgumentException(
-                    "Invalid semester: '" + season + "'. Only Autumn/Fall and Spring are supported."
-                );
-            }
-        }
-
-        return selected;
-    }
-
+   
     /**
      * Converts the semester to a readable string format:
      * e.g. "Autumn: CS1011, MA4001"
