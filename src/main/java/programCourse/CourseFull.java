@@ -22,7 +22,7 @@ import java.util.*;
 public class CourseFull {
     private String code;
     private String name;
-    private static Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Added by Yousef 18-11 9:00 to make sure that there won't ba any data leaks. 
+    private static Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't ba any data leaks. 
     private Map<String, CourseYear> yearCodeMapping;
 
     //private Map<Integer, CourseYear> yearCodeMapping;// Suggestion

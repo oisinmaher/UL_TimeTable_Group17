@@ -18,6 +18,7 @@ import java.util.*;
 public final class CourseYear{
 
     private final String yearNumber;
+    //private final int yearNumber;// suggestion 
     private final Map<String, CourseSemester> courseSemesters;
 
     /**
@@ -54,22 +55,13 @@ public final class CourseYear{
      * This now uses CourseSemester.pickModulesForThisSemester(), which applies
      * the odd/even last digit rule based on the semester name.
      */
-    public List<CourseModule> getModulesNameForSemester(String semesterName) {
-        if (semesterName == null) {
-            throw new IllegalArgumentException("Parameters can't be null");
-        }
-        String target = semesterName.toLowerCase();
-        if(!courseSemesters.containsKey(semesterName)){
-            throw new IllegalArgumentException("This semester doesnt exist, it must be created first");
-        }
-        return courseSemesters.get(semesterName).pickModulesForThisSemester();
-    }
+
     public List<String> getModuleCodesForSemester(String semesterName){
         if (semesterName == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
         String target = semesterName.toLowerCase();
-        if(!courseSemesters.containsKey(semesterName)){
+        if(!courseSemesters.containsKey(target)){
             throw new IllegalArgumentException("This semester doesnt exist, it must be created first");
         }
         return courseSemesters.get(semesterName).getModuleCodes();
