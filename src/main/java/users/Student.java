@@ -1,11 +1,9 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeSlot;
+import programCourse.CourseFull;
+import programCourse.CourseYear;
+import timetables.TimeSlot;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +15,12 @@ public class Student extends User {
     CourseFull courseFull;
     CourseYear courseYear;
     List<TimeSlot> classTimes = new ArrayList<>();
+
+public Student() {
+    super("","");
+}
+
+
     /**
      * @param userId
      * @param name
@@ -37,6 +41,7 @@ public class Student extends User {
         classTimes = new ArrayList<>();
     }
 
+    public void setName(String name){this.name = name;}
     public void setCourseYear(CourseYear courseYear) {
         this.courseYear = courseYear;
     }

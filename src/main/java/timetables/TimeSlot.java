@@ -1,10 +1,6 @@
-package src.main.java.timetables;
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.LectureRoom;
-import src.main.java.users.Student;
+package timetables;
+import modules.CourseModule;
 
-import java.util.Collection;
-import java.util.List;
 
 /**
  * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
@@ -38,7 +34,7 @@ public class TimeSlot{
      * @param o the object to be compared.
      */
     @Override
-    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+    public boolean equals(Object o) { // FIX 1: Must take Object
         if (this == o) return true;
 
         // Check for null and class type

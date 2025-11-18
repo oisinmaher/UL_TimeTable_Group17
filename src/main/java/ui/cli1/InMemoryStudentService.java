@@ -19,13 +19,13 @@ public class InMemoryStudentService implements StudentService
     }
 
     @Override
-    public boolean addStudent(String id, String name)
+    public boolean addStudent(String userId, String name, String courseCode, String year)
     {
-        if(students.containsKey(id))
+        if(students.containsKey(userId))
         {
             return false; 
         }
-        students.put(id, new Student(id, name));
+        students.put(userId, new Student(userId, name, courseCode, year);
         return true; 
     } 
 

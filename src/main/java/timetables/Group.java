@@ -1,10 +1,10 @@
-package src.main.java.timetables;
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.Room;
-import src.main.java.users.Student;
+package timetables;
+import modules.CourseModule;
+import rooms.Room;
+import users.Student;
 
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Group will be the students in a given room for a given module at a given time
@@ -18,7 +18,7 @@ public class Group {
         this.modules = modules;
     }
 
-    public int getYear() {
+    /*public int getYear() {
         return year;
     }
 
@@ -43,6 +43,9 @@ public class Group {
         }
 
         return "Year: " + year + ", Students: " + sb + ", Rooms: " + rooms;
+
+
     }
+*/
 
 }

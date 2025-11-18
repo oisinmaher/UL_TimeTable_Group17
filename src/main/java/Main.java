@@ -23,48 +23,33 @@ public class Main {
         CourseModule ph101 = new CourseModule("Physics I", "PH101");
 
         // --- 2. Create Semesters ---
-        CourseSemester autumn = new CourseSemester("Autumn", Arrays.asList(cs101, ma101));
-        CourseSemester spring = new CourseSemester("Spring", Arrays.asList(ph101));
+        CourseSemester autumn = new CourseSemester("Autumn");
+        CourseSemester spring = new CourseSemester("Spring");
 
         // --- 3. Create Course Year ---
-        CourseYear year1 = new CourseYear(null, 1, Arrays.asList(autumn, spring));
+        CourseYear year1 = new CourseYear("3");
 
         // --- 4. Create Course ---
-        CourseFull bscCS = new CourseFull("BSC-CS", "BSc Computer Science", Arrays.asList(year1));
+        CourseFull bscCS = new CourseFull("BSC-CS", "BSc Computer Science");
 
         // --- 5. Create Students ---
-        Student alice = new Student("243", "Alex");
-        Student bob = new Student("244", "Billy");
+        Student alice = new Student("123","Alex","CS4013","2");
+        Student bob = new Student("124","Bob","CS4013","3");
 
         // --- 6. Create Teacher ---
         Lecturer drSmith = new Lecturer("T001", "Dr. Smith");
 
         // --- 8. Create Groups (students attending modules) ---
-        Group groupCS101 = new Group(1, "Group1a", Arrays.asList(alice, bob), cs101.getModuleCode());
+        Group groupCS101 = new Group(cs101);
 
         LectureRoom csg001 = new LectureRoom("csg001", "LectureRoom.room", 150);
 
         // --- 9. Create TimeSlots ---
-        TimeSlot ts1 = new TimeSlot( LocalTime.of(9,0), LocalTime.of(10,0), ma101,groupCS101, csg001, drSmith);
-        TimeSlot ts2 = new TimeSlot(LocalTime.of(10,0), LocalTime.of(11,0), ph101, groupCS101, csg001, drSmith);
+        TimeSlot ts1 = new TimeSlot("Monday", "0900", cs101);
+        TimeSlot ts2 = new TimeSlot("Monday", "1000", ma101);
 
-        // --- 10. Add TimeSlots to Timetables ---
-        alice.getTimeTable().addTimeSlot("Monday", ts1);
-        bob.getTimeTable().addTimeSlot("Monday", ts2);
 
         // --- 11. Print everything ---
-
-        System.out.println("=== STUDENT TIMETABLES ===");
-        System.out.println("Alice's timetable:");
-        System.out.println(alice.getTimeTable());
-
-        System.out.println("Bob's timetable:");
-        System.out.println(bob.getTimeTable());
-
-        System.out.println("=== MODULE GROUP INFO ===");
-
-
-
 
 
         //Scanner sc = new Scanner(System.in);

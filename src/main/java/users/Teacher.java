@@ -1,7 +1,8 @@
 package users;
 
 import programCourse.CourseFull;
-import timetables.TimeTable;
+import timetables.UserTimeTable;
+
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ import java.util.*;
  */
 public class Teacher extends User {
     // Timetable Object
-    TimeTable timeTable;
+    UserTimeTable timeTable;
 
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
     List<CourseFull> courseTaught;
@@ -19,19 +20,19 @@ public class Teacher extends User {
     // Constructor with base parameters of user
     public Teacher(String userId, String name) {
         super(userId, name);
-        this.timeTable = new TimeTable(this);
+        this.timeTable = new UserTimeTable(this);
         courseTaught = new ArrayList<>();
     }
 
     // Constructor but with a pre-made list of Programs (Likely won't use)
     public Teacher(String name, String userId, List<CourseFull> programsTaught) {
         super(userId, name);
-        this.timeTable = new TimeTable(this);
+        this.timeTable = new UserTimeTable(this);
         this.courseTaught = courseTaught;
     }
 
     // Returns timetable
-    public TimeTable getTimeTable() {
+    public UserTimeTable getTimeTable() {
         return timeTable;
     }
 }

@@ -3,6 +3,9 @@ package modules;
 import persistence.CourseModuleCsvStorage;
 import persistence.LecturerCsvStorage;
 import persistence.StudentCsvStorage;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
 import users.Lecturer;
 import users.Student;
 
@@ -83,10 +86,43 @@ public class AreTheyWorking {
 
 
 
+
+
+
+            List<CourseModule> modules = new ArrayList<>();
+            CourseModule oop= new CourseModule("OOP", "CS4013");
+            CourseModule os = new CourseModule("OS", "CS4013");
+            modules.add(oop);
+            modules.add(os);
+
+            CourseModuleCsvStorage courseModuleCsvStorage = new CourseModuleCsvStorage();
+            courseModuleCsvStorage.saveAll(modules);
+            System.out.println("CourseModules saved to CSV!");
+            List<CourseModule> loadedCourseModules = courseModuleCsvStorage.loadAll();
+            System.out.println("CourseModules loaded from CSV:");
+            for (CourseModule cm : loadedCourseModules) {
+                System.out.println(cm);
+            }
+
+
+
+
+        List<CourseModule> courses = new ArrayList<>();
+        courses.add(os);
+        courses.add(oop);
+
+        CourseSemester sem1 = new CourseSemester("Spring");
+        sem1.pickModulesForThisSemester();
+        CourseYear year1 = new CourseYear("1");
+        year1.hasSemester(sem1.getSeason());
+
+        CourseFull lm051 = new CourseFull("lm051", "Computer Systems");
+        lm051.addCourseYear(year1.getYearNumber());
+
         try {
             List<Student> students = new ArrayList<>();
-            students.add(new Student("123", "Alex"));
-            students.add(new Student("124", "Billy"));
+            students.add(new Student("123", "Alex", "lm051", "1"));
+            students.add(new Student("124", "Billy", "lm051", "1"));
 
             StudentCsvStorage studentCsvStorage = new StudentCsvStorage();
             studentCsvStorage.saveAll(students);
@@ -103,24 +139,6 @@ public class AreTheyWorking {
         }
 
 
-        try{
-            List<CourseModule> modules = new ArrayList<>();
-            modules.add(new CourseModule("OOP", "CS4013"));
-            modules.add(new CourseModule("OS", "CS4023"));
-
-            CourseModuleCsvStorage courseModuleCsvStorage = new CourseModuleCsvStorage();
-            courseModuleCsvStorage.saveAll(modules);
-            System.out.println("CourseModules saved to CSV!");
-            List<CourseModule> loadedCourseModules = courseModuleCsvStorage.loadAll();
-            System.out.println("CourseModules loaded from CSV:");
-            for (CourseModule cm : loadedCourseModules) {
-                System.out.println(cm);
-            }
-
-        }catch (Exception e) {
-            e.printStackTrace();
-
-        }
 
         }
     }
