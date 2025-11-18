@@ -22,8 +22,10 @@ import java.util.*;
 public class CourseFull {
     private String code;
     private String name;
-    static Map<String, CourseFull> courseCodeMapping = new HashMap<>();
+    private static Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Added by Yousef 18-11 9:00 to make sure that there won't ba any data leaks. 
     private Map<String, CourseYear> yearCodeMapping;
+
+    //private Map<Integer, CourseYear> yearCodeMapping;// Suggestion
 
     /**
      * Constructs a CourseFull object by assigning the course code,
@@ -39,6 +41,10 @@ public class CourseFull {
         if (code == null || name == null)
             throw new IllegalArgumentException("Parameters can't be null");
 
+        if (courseCodeMapping.containsKey(code))//Added by Yousef 18-11 9:00 to make sure that no one can overwrite this on accident.
+        {
+            throw new IllegalArgumentException("Course code alreay exists"); 
+        }
         yearCodeMapping = new HashMap<>();
         this.code = code;
         this.name = name;
@@ -46,6 +52,14 @@ public class CourseFull {
     }
     // creates class of course year and adds it to list
     public void addCourseYear(String year){
+        if(year == null || year.isEmpty())//18-11 Yousef 9:00
+        {
+            throw new IllegalArgumentException("Year can't be null"); 
+        }
+        if(yearCodeMapping.containsKey(year))//18-11 Yousef 9:00 
+        {
+            throw new IllegalStateException("year already exists for key "+ year); 
+        }
         CourseYear courseYearTemp = new CourseYear(year);
         yearCodeMapping.put(year, courseYearTemp);
     }

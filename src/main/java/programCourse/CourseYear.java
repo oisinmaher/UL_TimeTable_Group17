@@ -161,7 +161,7 @@ public final class CourseYear{
             if (key.isEmpty()) {
                 issues.add("Year" + yearNumber + "has a semester with a blank name");
             } else if (seenNames.contains(key)) {
-                issues.add("Year " + yearNumber + " has duplicate semester: " + s.getName());
+                issues.add("Year " + yearNumber + " has duplicate semester: " + s.toLowerCase());
             } else {
                 seenNames.add(key);
             }
