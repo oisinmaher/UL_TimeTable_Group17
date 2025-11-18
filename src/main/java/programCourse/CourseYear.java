@@ -65,7 +65,29 @@ public final class CourseYear{
     public String getYearNumber() {
         return yearNumber;
     }
-
+    /** Create a new course semester and add to mapping **/
+    public void addSemester(String season){
+        CourseSemester courseSemester = new CourseSemester(this, season.toLowerCase());
+        courseSemesters.put(season.toLowerCase(), courseSemester);
+    }
+    /**
+     * Checks whether this CourseYear contains a semester with the given name.
+     * The comparison is case-insensitive.
+     * @param name the semester name to search for
+     * @return true if a semester with the given name exists, false otherwise
+     */
+    public boolean hasSemester(String name) {
+        if (name == null) {
+            return false;
+        }
+        String target = name.toLowerCase();
+        for (String s : courseSemesters.keySet()) {
+            if (s.equals(target)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Returns a copy of the list of semesters in this year.
      * @return a new List containing the CourseSemester objects
@@ -124,24 +146,7 @@ public final class CourseYear{
     public String getYearId(){
         return this.yearId;
     }
-    /**
-     * Checks whether this CourseYear contains a semester with the given name.
-     * The comparison is case-insensitive.
-     * @param name the semester name to search for
-     * @return true if a semester with the given name exists, false otherwise
-     */
-    public boolean hasSemester(String name) {
-        if (name == null) {
-            return false;
-        }
-        String target = name.toLowerCase();
-        for (String s : courseSemesters.keySet()) {
-            if (s.equals(target)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     /** hashing for sets, might not use */
     @Override
     public boolean equals(Object o) {

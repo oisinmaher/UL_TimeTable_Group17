@@ -89,17 +89,17 @@ public class CourseModule {
      * Gets the name of the lecturer
      * @return the name of the lecturer
      */
-    public String getLecturers() {
-        return lecturers;
-    }
+//    public String getLecturers() {
+//        return lecturers;
+//    }
 
     /**
      * Sets the name of the lecturer
      * @param lecturers the name of the module's lecturer
      */
-    public void setLecturers(String lecturers) {
-        this.lecturers = lecturers;
-    }
+//    public void setLecturers(String lecturers) {
+//        this.lecturers = lecturers;
+//    }
 
     /**
      * Gets the number of required lecture hours
@@ -163,7 +163,7 @@ public class CourseModule {
      * @return
      */
     private static boolean checkUniqueModuleCode(String newModuleCode) {
-        return (allModules.containsKey(newModuleCode));
+        return (!allModules.containsKey(newModuleCode));
     }
 
 

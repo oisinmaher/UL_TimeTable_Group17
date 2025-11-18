@@ -36,7 +36,9 @@ public class Student extends User {
         this.courseYear = courseFull.retrieveCourseYearFromCode(year);
         classTimes = new ArrayList<>();
     }
-
+    public void setName(String name){
+        this.name = name;
+    }
     public void setCourseYear(CourseYear courseYear) {
         this.courseYear = courseYear;
     }

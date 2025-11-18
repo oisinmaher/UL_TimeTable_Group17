@@ -94,10 +94,10 @@ public class SubGroup extends Group {
         return result;
     }
 
-    public Map<String,String> mapSubGroupIdToRoomID()// Might have to be it's own class because it has to coordinate with room and its subclasses along with coursemodules
-    {
-
-    }
+//    public Map<String,String> mapSubGroupIdToRoomID()// Might have to be it's own class because it has to coordinate with room and its subclasses along with coursemodules
+//    {
+//
+//    }
 
 
 

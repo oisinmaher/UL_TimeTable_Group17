@@ -29,7 +29,7 @@ public class TimeSlot{
         // NEED CHECK IF TIME IS valid 24 hour clock no characters e.g 2240, NOT 22:40 or 2280
 
         dayTime = day + "" + time;
-        this.group = new Group(module);
+//        this.group = new Group(module);
     }
 
     /**

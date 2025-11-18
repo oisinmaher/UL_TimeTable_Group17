@@ -35,7 +35,7 @@ public final class CourseSemester {
             throw new IllegalArgumentException("season is null");
         }
         season = season.toLowerCase();
-        if (season.equals("spring") ^ season.equals("autumn")) {
+        if (!(season.equals("spring") || season.equals("autumn"))) {
             throw new IllegalArgumentException("Season must be spring or autumn");
         }
         this.semesterId = courseYear.getYearId() + "_" + season;
@@ -63,8 +63,8 @@ public final class CourseSemester {
      * @param name
      */
     public void addNewModule(String code, String name){
-        CourseModule module = new CourseModule(name, code);
-        assignedModules.put(code, module);
+        CourseModule module = new CourseModule(name.toLowerCase(), code);
+        assignedModules.put(code.toLowerCase(), module);
     }
 
     /**
