@@ -1,39 +1,66 @@
-package timetables;
+package src.main.java.timetables;
+import src.main.java.modules.CourseModule;
+import src.main.java.rooms.LectureRoom;
+import src.main.java.users.Student;
 
-import rooms.LectureRoom;
-import modules.CourseModule;
-import rooms.Room;
-import users.Lecturer;
+import java.util.Collection;
+import java.util.List;
 
-import java.time.LocalTime;
+/**
+ * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
+ * in the timetable
+ */
+public class TimeSlot{
+    private String day;
+    private String time;
+    private String dayTime;
+    //private LectureRoom lectureRoom;
 
-public class TimeSlot implements Comparable<TimeSlot> {
-    private LocalTime startTime;
-    private LocalTime endTime;
     private CourseModule module;
+    // group will hold list of students
     private Group group;
-    private Room room;
-    private Lecturer lecturer;
 
-    public TimeSlot(LocalTime startTime, LocalTime endTime, CourseModule module,
-                    Group group, LectureRoom room, Lecturer lecturer) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.module = module;
-        this.group = group;
-        this.room = room;
-        this.lecturer = lecturer;
+    public TimeSlot(String day, String time, CourseModule module){
+        day = day.toLowerCase();
+        // NEED CHECK FOR IF DAY IS mon tue wed thu fri
+
+        this.day = day;
+        this.time = time;
+        // NEED CHECK IF TIME IS valid 24 hour clock no characters e.g 2240, NOT 22:40 or 2280
+
+        dayTime = day + "" + time;
+        this.group = new Group(module);
     }
 
+    /**
+     * Compares a TimeSlot with another TimeSlot to check if same time
+     * (based on the value returned by toString(), which is dayTime)
+     * @param o the object to be compared.
+     */
     @Override
-    public int compareTo(TimeSlot o) {
-        return this.startTime.compareTo(o.startTime);
+    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+        if (this == o) return true;
+
+        // Check for null and class type
+        if (o == null || getClass() != o.getClass()) return false;
+
+        // Casts the object to TimeSlot
+        TimeSlot that = (TimeSlot) o;
+
+         return this.dayTime.equals(that.dayTime);
+    }
+    @Override
+    public int hashCode(){
+        return this.toString().hashCode();
     }
 
+    /**
+     * Returns the timeslot object as a string
+     * @return the time, module, student and room
+     */
     @Override
-    public String toString() {
-        return startTime + "-" + endTime + " " + module.getModuleCode() + " Group: " + group.getYear() +
-                " Room: " + room.getRoomID() +
-                " Lecturer: " + lecturer.getName();
+    public String toString(){
+        return dayTime;
     }
+
 }

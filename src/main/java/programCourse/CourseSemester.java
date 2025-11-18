@@ -14,27 +14,24 @@ import java.util.*;
  */
 public final class CourseSemester {
 
-    private final String name;
-    private final List<CourseModule> moduleCodes;
+    private final String season;
+    // module code -> Module object.  "cs4404" -> CourseModule Object
+    private final Map<String, CourseModule> assignedModules;
+
 
     /**
      * Creates a CourseSemester with a name and list of module codes.
      *
-     * @param name        the name of the semester (e.g. "Autumn")
-     * @param moduleCodes list of CourseModule objects assigned to this semester
+     * @param season the name of the semester (e.g. "Autumn")
      *
-     * @throws IllegalArgumentException if name or moduleCodes is null
+     * @throws IllegalArgumentException if name or assignedModules is null
      */
-    public CourseSemester(String name, List<CourseModule> moduleCodes) {
-        if (name == null) {
+    public CourseSemester(String season) {
+        if (season == null) {
             throw new IllegalArgumentException("name is null");
         }
-        if (moduleCodes == null) {
-            throw new IllegalArgumentException("moduleCodes is null");
-        }
-
-        this.name = name;
-        this.moduleCodes = new ArrayList<>(moduleCodes);
+        this.season = season;
+        this.assignedModules = new HashMap<>();
     }
 
     /**
@@ -42,8 +39,8 @@ public final class CourseSemester {
      *
      * @return semester name as a String
      */
-    public String getName() {
-        return this.name;
+    public String getSeason() {
+        return this.season;
     }
 
     /**
@@ -51,9 +48,10 @@ public final class CourseSemester {
      *
      * @return list of CourseModule objects
      */
-    public List<CourseModule> getModuleCodes() {
-        return new ArrayList<>(moduleCodes);
+    public List<String> getModuleCodes() {
+        return new ArrayList<>(assignedModules.keySet());
     }
+
 
     /**
      * Validates the semester and its modules.
@@ -70,15 +68,15 @@ public final class CourseSemester {
     public List<String> validate(int yearNumber) {
         List<String> issues = new ArrayList<>();
 
-        if (name.isEmpty()) {
+        if (season.isEmpty()) {
             issues.add("Year" + yearNumber + " has a semester with a blank name");
         }
-        if (moduleCodes.isEmpty()) {
+        if (assignedModules.isEmpty()) {
             issues.add("Year" + yearNumber + " has no modules listed");
         }
 
         Set<String> seen = new HashSet<>();
-        for (CourseModule m : moduleCodes) {
+        for (CourseModule m : assignedModules.values()) {
             if (m == null || m.getModuleCode().isEmpty()) {
                 issues.add("Year" + yearNumber + " has a blank module code");
             } else if (seen.contains(m.getModuleCode())) {
@@ -108,9 +106,9 @@ public final class CourseSemester {
 
         List<CourseModule> selected = new ArrayList<>();
 
-        String sem = name.toLowerCase();
+        String sem = season.toLowerCase();
 
-        for (CourseModule module : moduleCodes) {
+        for (CourseModule module : assignedModules.values()) {
 
             String code = module.getModuleCode();
             if (code == null || code.isEmpty()) {
@@ -144,7 +142,7 @@ public final class CourseSemester {
             }
             else {
                 throw new IllegalArgumentException(
-                    "Invalid semester: '" + name + "'. Only Autumn/Fall and Spring are supported."
+                    "Invalid semester: '" + season + "'. Only Autumn/Fall and Spring are supported."
                 );
             }
         }
@@ -160,10 +158,10 @@ public final class CourseSemester {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(name).append(": ");
-        for (int i = 0; i < moduleCodes.size(); i++) {
-            sb.append(moduleCodes.get(i));
-            if (i < moduleCodes.size() - 1) sb.append(", ");
+        StringBuilder sb = new StringBuilder(season).append(": ");
+        for (int i = 0; i < assignedModules.size(); i++) {
+            sb.append(assignedModules.get(i));
+            if (i < assignedModules.size() - 1) sb.append(", ");
         }
         return sb.toString();
     }

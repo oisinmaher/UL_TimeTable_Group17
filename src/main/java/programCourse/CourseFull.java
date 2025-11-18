@@ -6,17 +6,19 @@ import java.util.*;
  * BSc Computer Science or BA Business.
  *
  * A CourseFull contains:
- *  - A course code (e.g., "BSC-CS")
+ *  - A course code (e.g., "LM051")
  *  - A human-readable course name
- *  - A list of courseYear objects that describe the structure of the degree
+ *  - A static map to check if a courseFull already exist by a certain code (so two LM121 cant be made for example)
+ *  - A non-static map for yearCodeMapping to check if a courseYear object already exists
+ *  - This map yearCodeMapping will also be used as the list to find referenced CourseYears to a CourseFull
  *
  * This class acts as the top-level container for course structure.
  */
 public class CourseFull {
-
     private String code;
     private String name;
-    private List<CourseYear> years;
+    static Map<String, CourseFull> courseCodeMapping = new HashMap<>();
+    private Map<String, CourseYear> yearCodeMapping;
 
     /**
      * Constructs a CourseFull object by assigning the course code,
@@ -24,29 +26,49 @@ public class CourseFull {
      *
      * @param code  the course identifier (e.g. "BSC-CS")
      * @param name  the course name displayed to users
-     * @param years the list of CourseYear objects representing each academic year
      *
      * @throws IllegalArgumentException if any argument is null
      */
-    public CourseFull(String code, String name, List<CourseYear> years) {
-
+    public CourseFull(String code, String name) {
         // Validate inputs
-        if (code == null) {
-            throw new IllegalArgumentException("Code can't be null");
-        }
-        if (name == null) {
-            throw new IllegalArgumentException("Name can't be null");
-        }
-        if (years == null) {
-            throw new IllegalArgumentException("Years can't be null");
-        }
+        if (code == null || name == null)
+            throw new IllegalArgumentException("Parameters can't be null");
 
+        yearCodeMapping = new HashMap<>();
         this.code = code;
         this.name = name;
-
-        // Store a defensive copy of the list of years
-        this.years = new ArrayList<>(years);
+        courseCodeMapping.put(code, this);
+    }
+    // creates class of course year and adds it to list
+    public void addCourseYear(String year){
+        CourseYear courseYearTemp = new CourseYear(year);
+        yearCodeMapping.put(year, courseYearTemp);
+    }
+    // Retrieve list of Course Years
+    public List<CourseYear> getCourseYears(){
+        return new ArrayList<>(yearCodeMapping.values());
+    }
+    // checks if a course code already exists
+    public static boolean checkCode(String code){
+        return courseCodeMapping.containsKey(code);
+    }
+    // returns course object associated with code
+    public static CourseFull retrieveCourseFromCode(String code){
+        return courseCodeMapping.get(code);
+    }
+    // checks if a course year already exists, yearKey is just a string on its own "1", "2", etc
+    public boolean checkYear(String yearKey){
+        return yearCodeMapping.containsKey(yearKey);
+    }
+    // returns courseYear object associated with year, yearKey is just a string on its own "1", "2", etc
+    public CourseYear retrieveCourseYearFromCode(String yearKey){
+        return yearCodeMapping.get(yearKey);
     }
 
-    // You can add getters or course behaviour methods later if needed.
+    public String getCode(){
+        return this.code;
+    }
+    public String getName(){
+        return this.name;
+    }
 }

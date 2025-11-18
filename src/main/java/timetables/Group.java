@@ -1,31 +1,21 @@
-package timetables;
+package src.main.java.timetables;
+import src.main.java.modules.CourseModule;
+import src.main.java.rooms.Room;
+import src.main.java.users.Student;
 
-import users.Student;
 import java.util.List;
+import java.util.Set;
 
-
+/**
+ * Group will be the students in a given room for a given module at a given time
+ */
 public class Group {
 
-    private int year ;
-    private String groupId;
-    private List<Student> students;
-    private String courseCode;
 
-    public Group(int year, String groupId, List<Student> students, String courseCode) {
+    private CourseModule modules;
 
-        this.year = year;
-        this.students = students;
-        this.groupId = groupId;
-        this.courseCode = courseCode;
-
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public String getCourseCode() {
-        return courseCode;
+    public Group(CourseModule modules){
+        this.modules = modules;
     }
 
     public int getYear() {
@@ -36,10 +26,23 @@ public class Group {
         return students;
     }
 
+    public CourseModule getModules() {
+        return modules;
+    }
+
+    public Room getRooms() {
+        return room;
+    }
+
     @Override
     public String toString() {
 
-        return "Group: " + groupId + "Year: " + year + " Course: " + courseCode;
+        StringBuilder sb = new StringBuilder();
+        for (Student s : students) {
+            sb.append(s.getUserId()).append(", ");
+        }
+
+        return "Year: " + year + ", Students: " + sb + ", Rooms: " + rooms;
     }
 
 }

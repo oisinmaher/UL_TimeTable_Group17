@@ -1,94 +1,57 @@
-package users;
+package src.main.java.users;
 
-import com.opencsv.bean.CsvIgnore;
-import programCourse.CourseSemester;
-import programCourse.CourseYear;
-import timetables.TimeTable;
+import src.main.java.programCourse.CourseFull;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseYear;
+import src.main.java.timetables.TimeSlot;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /** This clas is for students,
-*  It inherits the User class
-*  It will hold the following info
-*  Student name/ id
-*  course Students enrolled in
-*  The students timetable
-*  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
+ * It inherits name and year from user class
  */
 public class Student extends User {
-    CourseSemester courseSemester;
+    CourseFull courseFull;
     CourseYear courseYear;
-
-    @CsvIgnore
-    TimeTable timeTable;
-
-
-    int yearOfStudy;
-
-
-    public Student() {
-        super("","");
-    }
-
+    List<TimeSlot> classTimes = new ArrayList<>();
     /**
-     * @param name
      * @param userId
+     * @param name
+     * @param courseCode
+     * @param year
      */
     // Constructor with just base params of User
-    public Student(String userId, String name) {
+    public Student(String userId, String name, String courseCode, String year) {
         super(userId, name);
-        timeTable = new TimeTable(this);
-    }
-
-    // Constructor with all info
-    public Student(String name, String userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
-        super(userId, name);
-        this.courseSemester = courseSemester;
-        this.courseYear = courseYear;
-        this.yearOfStudy = yearOfStudy;
-        // passes in the instantiation of this object (current student object)
-        timeTable = new TimeTable(this);
-    }
-
-    public String getId(){
-        return  this.userId;
-    }
-
-    public void setCourseSemester(CourseSemester courseSemester) {
-        this.courseSemester = courseSemester;
+        if(!CourseFull.checkCode(courseCode)){
+            throw new IllegalArgumentException("Course Doesnt Exist, it must be made first");
+        }
+        this.courseFull = CourseFull.retrieveCourseFromCode(courseCode);
+        if(!this.courseFull.checkYear(year)){
+            throw new IllegalArgumentException("Course Year Doesnt Exist, it must be made first");
+        }
+        this.courseYear = courseFull.retrieveCourseYearFromCode(year);
+        classTimes = new ArrayList<>();
     }
 
     public void setCourseYear(CourseYear courseYear) {
         this.courseYear = courseYear;
     }
-
-    public void setYearOfStudy(int yearOfStudy) {
-        this.yearOfStudy = yearOfStudy;
-    }
-
-    /**
-     * @return
-     */
-    public CourseSemester getCourseSemester(){
-        return this.courseSemester;
-    }
     public CourseYear getCourseYear(){
         return this.courseYear;
     }
+    public void setCourseFull(CourseFull courseFull){
+        this.courseFull = courseFull;
+    }
+    public CourseFull getCourseFull(){
+        return this.courseFull;
+    }
 
-    /**
-     * @return
-     */
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }
-
-    public TimeTable getTimeTable() {
-        return timeTable;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
 
 }
