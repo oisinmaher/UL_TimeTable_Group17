@@ -16,7 +16,7 @@ public class InMemoryCourseYearService implements CourseYearService{
             System.out.println("This course already has this year");
             return false;
         }
-        CourseYear courseYear = new CourseYear(courseFull, year);
+        courseFull.addCourseYear(year);
         return true;
     }
 }

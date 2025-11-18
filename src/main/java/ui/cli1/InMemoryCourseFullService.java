@@ -33,7 +33,7 @@ public class InMemoryCourseFullService implements CourseFullService {
         List<CourseYear> courseYears =  CourseFull.getCourseFromCode(courseCode).getCourseYears();
         List<String> yearsList = new ArrayList<>();
         for(CourseYear courseYear : courseYears){
-            yearsList.add(courseYear.getYearId());
+            yearsList.add(courseYear.getYearNumber());
         }
         return yearsList;
     }

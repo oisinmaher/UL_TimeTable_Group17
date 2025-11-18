@@ -63,7 +63,7 @@ public final class CourseYear{
      * @return the year number
      */
     public String getYearNumber() {
-        return yearNumber;
+        return this.yearNumber;
     }
     /** Create a new course semester and add to mapping **/
     public void addSemester(String season){

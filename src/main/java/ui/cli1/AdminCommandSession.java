@@ -2,6 +2,7 @@ package src.main.java.ui.cli1;
 import src.main.java.users.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminCommandSession implements UserSession {
@@ -63,6 +64,9 @@ public class AdminCommandSession implements UserSession {
                 case "list-courses":
                     cmdListCourses();
                     break;
+                case "list-course-years":
+                    cmdListCourseYears(args);
+                    break;
                 case "list-students":
                     cmdListStudents();
                     break;
@@ -92,6 +96,7 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  add-course-full <courseCode> <courseName>");
         System.out.println("  add-course-year <courseCode> <year>");
         System.out.println("  list-courses");
+        System.out.println("  list-course-years <courseCode>");
         System.out.println("  list-students");
         System.out.println("  list-lecturers");
         System.out.println("  help");
@@ -227,6 +232,23 @@ public class AdminCommandSession implements UserSession {
         System.out.println("All Courses on System:");
         for(String course : courseFullService.listAllCourses()){
             System.out.println(course);
+        }
+    }
+    private void cmdListCourseYears(String[] args){
+        if(args.length != 1){
+            System.out.println("Usage: list-course-years <courseCode>");
+        }
+        String courseCode = args[0];
+        List<String> courseYears = courseFullService.listCourseYears(courseCode);
+        if(courseYears.isEmpty()){
+            System.out.println(courseCode + " does not have any years, you must create them");
+        }
+        else{
+            System.out.print(courseYears.getFirst());
+            for(int i = 1; i < courseYears.size(); i++){
+                System.out.print(", " + courseYears.get(i));
+            }
+            System.out.println();
         }
     }
     private void cmdListStudents() {
