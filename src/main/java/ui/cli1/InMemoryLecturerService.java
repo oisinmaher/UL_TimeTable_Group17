@@ -16,16 +16,16 @@ public class InMemoryLecturerService implements LecturerService {
 
     public InMemoryLecturerService() {
         
-        addLecturer("123", "Michael");
-        addLecturer("455", "Alan");
+        addLecturer("Michael", "851");
+        addLecturer("Alan", "852");
     }
 
 //    @Override
-    public boolean addLecturer(String id, String name) {
+    public boolean addLecturer(String name, String id) {
         if (lecturers.containsKey(id)) {
             return false;
         }
-        lecturers.put(id, new Lecturer(name, id));
+        lecturers.put(id, new Lecturer(id, name));
         return true;
     }
 

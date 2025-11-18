@@ -1,9 +1,12 @@
 package users;
 
+import com.opencsv.bean.CsvBindByName;
+
 /**
  *
  */
 public class User{
+
     String name;
     String userId;
 

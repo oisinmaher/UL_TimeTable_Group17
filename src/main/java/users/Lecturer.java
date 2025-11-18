@@ -1,6 +1,10 @@
 package users;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class Lecturer extends User {
+
+
     public Lecturer() {
         super("", "");
     }

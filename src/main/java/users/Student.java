@@ -24,6 +24,11 @@ public class Student extends User {
 
     int yearOfStudy;
 
+
+    public Student() {
+        super("","");
+    }
+
     /**
      * @param name
      * @param userId
