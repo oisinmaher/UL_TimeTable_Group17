@@ -22,7 +22,8 @@ public final class CourseYear{
     private String yearId;
     private final String yearNumber;
     //private final int yearNumber;
-    private final Map<String, CourseSemester> courseSemesters;
+    private Map<String, CourseSemester> courseSemesters;
+    public static Map<String, CourseYear> allCourseYears = new HashMap<>();
 
     /**
      * Constructs a CourseYear with a reference to CourseWithModule,
@@ -33,14 +34,27 @@ public final class CourseYear{
      * @throws IllegalArgumentException if semesters is null
      */
     public CourseYear(CourseFull courseFull, String yearNumber) {
+        if(courseFull == null){
+            throw new IllegalArgumentException("Course cant be null");
+        }
         this.yearId = courseFull.getCode() + "_" + yearNumber;
+        if(allCourseYears.containsKey(yearId)){
+            throw new IllegalArgumentException("Course Year already exists: \n " +
+                    allCourseYears.get(yearId));
+        }
         this.yearNumber = yearNumber;
+        allCourseYears.put(yearId, this);
         this.courseSemesters = new HashMap<>();
     }
-    // Passing courseCode as string instead of object (not as safe)
+    // Passing courseCode (of CourseFull object) as string instead of object (not as safe)
     public CourseYear(String courseCode, String yearNumber) {
         this.yearId = courseCode + "_" + yearNumber;
+        if(allCourseYears.containsKey(yearId)){
+            throw new IllegalArgumentException("Course Year already exists: \n " +
+                    allCourseYears.get(yearId));
+        }
         this.yearNumber = yearNumber;
+        allCourseYears.put(yearId, this);
         this.courseSemesters = new HashMap<>();
     }
 
@@ -79,18 +93,15 @@ public final class CourseYear{
 
     /**
      * Maps semester names to lists of student group IDs.
-     *
      * The input map should contain:
      *  - key: semester name (e.g. "Autumn")
      *  - value: list of student group IDs (e.g. ["G1A", "G1B"])
-     *
      * This method:
      *  - Validates that the provided semester names exist in this CourseYear
      *  - Returns a copy of the mapping
      *
      * @param semesterToGroupIDs a map from semester name to list of student group IDs
      * @return a new Map with the same keys and copies of the group lists
-     *
      * @throws IllegalArgumentException if semesterToGroupIDs is null
      *                                  or contains a semester name that doesn't exist in this year
      */
@@ -116,7 +127,6 @@ public final class CourseYear{
     /**
      * Checks whether this CourseYear contains a semester with the given name.
      * The comparison is case-insensitive.
-     *
      * @param name the semester name to search for
      * @return true if a semester with the given name exists, false otherwise
      */
@@ -132,21 +142,17 @@ public final class CourseYear{
         }
         return false;
     }
+    /** hashing for sets, might not use */
     @Override
-    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+    public boolean equals(Object o) {
         if (this == o) return true;
-
-        // Check for null and class type
         if (o == null || getClass() != o.getClass()) return false;
-
-        // Casts the object to TimeSlot
         CourseYear that = (CourseYear) o;
-
-        return this.yearId.equals(that.yearId);
+        return this.getYearId().equals(that.getYearId());
     }
     @Override
     public int hashCode(){
-        return this.toString().hashCode();
+        return this.getYearId().hashCode();
     }
 
     /**
@@ -178,7 +184,6 @@ public final class CourseYear{
             } else {
                 key = s.toLowerCase();
             }
-
             if (key.isEmpty()) {
                 issues.add("Year" + yearNumber + "has a semester with a blank name");
             } else if (seenNames.contains(key)) {

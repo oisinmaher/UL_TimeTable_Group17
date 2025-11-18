@@ -38,7 +38,7 @@ public class TimeSlot{
      * @param o the object to be compared.
      */
     @Override
-    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+    public boolean equals(Object o) {
         if (this == o) return true;
 
         // Check for null and class type

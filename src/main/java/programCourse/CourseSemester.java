@@ -17,10 +17,11 @@ import java.util.*;
  */
 public final class CourseSemester {
     // Semester id = CourseYearId + "_" + season
-    private String semesterId;
+    private final String semesterId;
     private final String season;
     // module code -> Module object.  "cs4404" -> CourseModule Object
     private final Map<String, CourseModule> assignedModules;
+    private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
 
     /**
      * Creates a CourseSemester with a name and list of module codes.
@@ -39,15 +40,34 @@ public final class CourseSemester {
         }
         this.semesterId = courseYear.getYearId() + "_" + season;
         this.season = season;
+        allSemesters.put(semesterId, this);
         this.assignedModules = new HashMap<>();
     }
+    public String getSemesterId(){
+        return this.semesterId;
+    }
+    public CourseSemester getSemesterById(String semesterId){
+        if(!allSemesters.containsKey(semesterId)){
+            throw new IllegalArgumentException("This semesterId doesnt exist");
+        }
+        return allSemesters.get(semesterId);
+    }
+    // adds a module that already exists (from its code)
     public void addExistingModule(String moduleName){
+        assignedModules.put(moduleName.toLowerCase(), CourseModule.getModuleFromCode(moduleName));
+    }
 
+    /** Creates new Course module
+     * CourseMoudle constructor already has a check for existing modules
+     * @param code
+     * @param name
+     */
+    public void addNewModule(String code, String name){
+        CourseModule module = new CourseModule(name, code);
+        assignedModules.put(code, module);
     }
 
     /**
-     * Returns the name of the semester.
-     *
      * @return semester name as a String
      */
     public String getSeason() {
@@ -56,7 +76,6 @@ public final class CourseSemester {
 
     /**
      * Returns a defensive copy of the list of modules assigned to this semester.
-     *
      * @return list of CourseModule objects
      */
     public List<String> getModuleCodes() {
@@ -99,21 +118,17 @@ public final class CourseSemester {
     }
 
 
+    /** hashing for sets, might not use */
     @Override
-    public boolean equals(Object o) { // 👈 FIX 1: Must take Object
+    public boolean equals(Object o) {
         if (this == o) return true;
-
-        // Check for null and class type
         if (o == null || getClass() != o.getClass()) return false;
-
-        // Casts the object to TimeSlot
         CourseSemester that = (CourseSemester) o;
-
-        return this.semesterId.equals(that.semesterId);
+        return this.getSemesterId().equals(that.getSemesterId());
     }
     @Override
     public int hashCode(){
-        return this.toString().hashCode();
+        return this.getSemesterId().hashCode();
     }
     /**
      * Converts the semester to a readable string format:
