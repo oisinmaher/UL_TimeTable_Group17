@@ -15,6 +15,10 @@ public class CourseModule {
     private int numberOfTutorials;
     static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
 
+    public CourseModule() {
+
+    }
+
     /**
      *
      * @param moduleName

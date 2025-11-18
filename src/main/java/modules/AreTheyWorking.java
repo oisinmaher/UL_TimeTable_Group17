@@ -1,5 +1,6 @@
 package modules;
 
+import persistence.CourseModuleCsvStorage;
 import persistence.LecturerCsvStorage;
 import persistence.StudentCsvStorage;
 import users.Lecturer;
@@ -99,6 +100,26 @@ public class AreTheyWorking {
 
         }catch (Exception e) {
             e.printStackTrace();
+        }
+
+
+        try{
+            List<CourseModule> modules = new ArrayList<>();
+            modules.add(new CourseModule("OOP", "CS4013"));
+            modules.add(new CourseModule("OS", "CS4023"));
+
+            CourseModuleCsvStorage courseModuleCsvStorage = new CourseModuleCsvStorage();
+            courseModuleCsvStorage.saveAll(modules);
+            System.out.println("CourseModules saved to CSV!");
+            List<CourseModule> loadedCourseModules = courseModuleCsvStorage.loadAll();
+            System.out.println("CourseModules loaded from CSV:");
+            for (CourseModule cm : loadedCourseModules) {
+                System.out.println(cm);
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+
         }
 
         }
