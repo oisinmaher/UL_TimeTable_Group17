@@ -19,8 +19,9 @@ public class CourseModule {
     static private Map<String, CourseModule> allModules = new HashMap<>();
 
     /**
-     * @param moduleName
-     * @param moduleCode
+     * Constructor for course module
+     * @param moduleName module's name (e.g "Database systems")
+     * @param moduleCode module's code (e.g "cs4004")
      */
     public CourseModule(String moduleName, String moduleCode) {
         if(moduleName == null || moduleCode == null){
@@ -95,32 +96,32 @@ public class CourseModule {
     }
 
     /**
-     *
-     * @return
+     * returns number of labs this module has
+     * @return number of labs
      */
     public int getNumberOfLabs() {
         return numberOfLabs;
     }
 
     /**
-     *
-     * @param numberOfLabs
+     * sets number of labs this module has
+     * @param numberOfLabs the number of labs
      */
     public void setNumberOfLabs(int numberOfLabs) {
         this.numberOfLabs = numberOfLabs;
     }
 
     /**
-     *
-     * @return
+     * returns number of tutorials this module has
+     * @return number of tutorials
      */
     public int getNumberOfTutorials() {
         return numberOfTutorials;
     }
 
     /**
-     *
-     * @param numberOfTutorials
+     * returns the number of tutorials this module has
+     * @param numberOfTutorials the number of tutorials
      */
     public void setNumberOfTutorials(int numberOfTutorials) {
         this.numberOfTutorials = numberOfTutorials;
@@ -143,11 +144,19 @@ public class CourseModule {
         return (!allModules.containsKey(newModuleCode));
     }
 
-
-    public ArrayList<CourseModule> getListOfModules() {
+    /**
+     * static method returns list of all modules that exist
+     * @return list of modules
+     */
+    public static ArrayList<CourseModule> getListOfModules() {
         return new ArrayList<>(allModules.values());
     }
-    public ArrayList<String> getListOfModuleCodes(){
+
+    /**
+     * static method returns list of all module codes that exist
+     * @return list of modules
+     */
+    public static ArrayList<String> getListOfModuleCodes(){
         return new ArrayList<>(allModules.keySet());
     }
 
