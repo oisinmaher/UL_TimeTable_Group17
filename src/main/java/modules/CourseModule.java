@@ -1,5 +1,6 @@
 package src.main.java.modules;
 
+import src.main.java.timetables.Group;
 import src.main.java.users.Lecturer;
 
 import java.util.*;
@@ -15,6 +16,7 @@ public class CourseModule {
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
+    private Group groupAssigned;
     // This will contain all created modules in a class
     static private Map<String, CourseModule> allModules = new HashMap<>();
 
@@ -34,7 +36,8 @@ public class CourseModule {
             allModules.put(moduleCode, this);
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
-        }   
+        }
+        groupAssigned = new Group()
     }
 
     /**

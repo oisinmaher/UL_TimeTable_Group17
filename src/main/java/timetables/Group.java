@@ -3,10 +3,9 @@ import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.*;
 import src.main.java.rooms.Room;
 import src.main.java.users.Student;
+import src.main.java.users.Teacher;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
@@ -16,67 +15,89 @@ public class Group {
 
     private final CourseModule module;
     private final CourseYear year;
-    private final List<Student> students;
+    private final Map<String, Student> studentsInGroup;
+    private Teacher teacher;
     private final List<Room> rooms;
     private final String groupId;
 
-    public Group(CourseModule module, CourseYear year, List<Student> students, List<Room> rooms, String groupId){
-       if (module == null) {
-        throw new IllegalArgumentException("module can't be null");
-    }
-    if (year == null) {
-        throw new IllegalArgumentException("year can't be null");
-    }
-    if (students == null) {
-        throw new IllegalArgumentException("students list can't be null");
-    }
-    if (rooms == null) {
-        throw new IllegalArgumentException("rooms list can't be null");
-    }
+    // This will map it so if a module has multiple groups you can find which letter
+    // to assign for its next groupId,
+    // (e.g when creating a new group for a module that contains CS4004A, it will return A then you can do 'A'++
+    // to get 'B', assign the group the name cs4004B and update map to B
+    private static Map<String, Character> moduleRecentGroupId = new HashMap<>();
+
+    public Group(CourseModule module, CourseYear year){
+        if (module == null) {
+            throw new IllegalArgumentException("module can't be null");
+        }
+        if (year == null) {
+            throw new IllegalArgumentException("year can't be null");
+        }
         this.module = module;
-        this.year = year; 
-        this.students = students; 
-        this.rooms = rooms; 
-        this.groupId = groupId; 
+        this.year = year;
+        this.teacher = null;
+        // gets module name
+        String moduleCode = module.getModuleCode().toLowerCase();
+        studentsInGroup = new HashMap<>();
+        rooms = new ArrayList<>();
+        // group indicator (a letter a->z)
+        char groupIndicator;
+        // check if this module already has a group
+        if(moduleRecentGroupId.containsKey(moduleCode)){
+            // if it does the map value will be last indicator used (e.g 'a')
+            groupIndicator = moduleRecentGroupId.get(moduleCode);
+            // increases group indicator (example 'a' to 'b')
+            groupIndicator++;
+        }
+        // else it sets it to first value (which will be 'a')
+        else groupIndicator = 'a';
+        // makes group id the moduleCode + groupIndicator (e.g. cs4004a)
+        this.groupId = moduleCode + groupIndicator;
+        // adds / replaces module indicatorCode in the map
+        moduleRecentGroupId.put(moduleCode, groupIndicator);
     }
 
     public String getYear() {
         return year.getYearNumber();
     }
-    //public int getYear() {          // I think it's better this way 
-        //return year.getYearNumber();
-   // }
+    public void addStudent(String studentId){
+        if(Student.checkStudentId(studentId)){
+            studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
+        }
+        else{
+            System.out.println("Student with id " + studentId + " does not exist");
+        }
+    }
+    public void setTeacher(String teacherId){
+        if(Teacher.checkTeacherId(teacherId)){
+            this.teacher = Teacher.getTeacherFromId(teacherId);
+        }
+        else{
+            System.out.println("Teacher with id " + teacherId + " does not exist");
+        }
+    }
+    public Teacher getTeacherObject() {
+        return teacher;
+    }
+    public String getTeacherName(){
+        if(this.teacher == null) return "Teacher is yet to be assigned";
+        return this.teacher.getName();
+    }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Student> getStudentsObject() {
+        return new ArrayList<>(studentsInGroup.values());
+    }
+    public List<String> getStudentsId(){
+        return new ArrayList<>(studentsInGroup.keySet());
     }
 
     public int getNumberOfStudents() {
-    return students.size();
+        return studentsInGroup.size();
     }
-
 
     public String getModuleCode() {
         return module.getModuleCode();
     }
-
-    public Map<String, String> mapStudentsToModuleCodes() {
-        String moduleCode = module.getModuleCode();
-        if (moduleCode == null || moduleCode.isEmpty()) {
-            throw new IllegalStateException("Module code cannot be null or empty");
-    }
-
-    Map<String, String> result = new HashMap<>();
-
-    for (Student s : students) {
-        if (s == null) {
-            throw new IllegalStateException("Student list contains null");
-        }
-        result.put(s.getUserId(), moduleCode);
-    }
-
-    return result;
-}
 
     public List<Room> getRooms()
     {
@@ -95,17 +116,17 @@ public class Group {
         StringBuilder sb = new StringBuilder();
 
         // Build comma-separated list of student IDs
-        for (int i = 0; i < students.size(); i++) {
-            sb.append(students.get(i).getUserId());
-            if (i < students.size() - 1) {
-                sb.append(", ");
-            }
+        for (Student s: studentsInGroup.values()) {
+            sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
         }
+        // deletes last \n
+        if(!sb.isEmpty()) sb.deleteCharAt(sb.length()-1);
 
         return "Group{" +
                 "groupId='" + groupId + '\'' +
                 ", module=" + module.getModuleCode() +
                 ", year=" + year.getYearNumber() +
+                ", presiding teacher=" + this.teacher()
                 ", students=[" + sb +
                 "], rooms=" + rooms +
                 '}';

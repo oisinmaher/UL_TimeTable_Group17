@@ -5,7 +5,9 @@ import src.main.java.programCourse.CourseYear;
 import src.main.java.timetables.TimeSlot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /** This clas is for students,
@@ -15,6 +17,7 @@ public class Student extends User {
     CourseFull courseFull;
     CourseYear courseYear;
     List<TimeSlot> classTimes = new ArrayList<>();
+    private static Map<String, Student> allStudentsEnrolled = new HashMap<>();
     /**
      * @param userId
      * @param name
@@ -33,6 +36,13 @@ public class Student extends User {
         }
         this.courseYear = courseFull.getCourseYear(year);
         classTimes = new ArrayList<>();
+        allStudentsEnrolled.put(userId, this);
+    }
+    public static boolean checkStudentId(String studentId){
+        return allStudentsEnrolled.containsKey(studentId);
+    }
+    public static Student getStudentFromId(String studentId){
+        return allStudentsEnrolled.get(studentId);
     }
     public void setName(String name){
         this.name = name;

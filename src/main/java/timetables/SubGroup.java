@@ -52,6 +52,7 @@ public class SubGroup extends Group {
         // Call the parent Group constructor
         super(module, year, students, rooms, groupId);
 
+
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
         }
