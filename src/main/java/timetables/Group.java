@@ -4,9 +4,7 @@ import programCourse.CourseYear;
 import rooms.Room;
 import users.Student;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
@@ -16,67 +14,71 @@ public class Group {
 
     private final CourseModule module;
     private final CourseYear year;
-    private final List<Student> students;
+    private final Map<String, Student> studentsInGroup;
+    private Teacher teacher;
     private final List<Room> rooms;
-    private final String groupId;
+    private final Map<String, SubGroup> referencedSubGroups;
 
-    public Group(CourseModule module, CourseYear year, List<Student> students, List<Room> rooms, String groupId){
-       if (module == null) {
-        throw new IllegalArgumentException("module can't be null");
-    }
-    if (year == null) {
-        throw new IllegalArgumentException("year can't be null");
-    }
-    if (students == null) {
-        throw new IllegalArgumentException("students list can't be null");
-    }
-    if (rooms == null) {
-        throw new IllegalArgumentException("rooms list can't be null");
-    }
+
+    public Group(CourseModule module, CourseYear year){
+        if (module == null) {
+            throw new IllegalArgumentException("module can't be null");
+        }
+        if (year == null) {
+            throw new IllegalArgumentException("year can't be null");
+        }
         this.module = module;
-        this.year = year; 
-        this.students = students; 
-        this.rooms = rooms; 
-        this.groupId = groupId; 
-    }
+        this.year = year;
+        this.teacher = null;
+        rooms = new ArrayList<>();
+        referencedSubGroups = new HashMap<>();
+        studentsInGroup = new HashMap<>();
 
+    }
+    public void createSubGroup(){
+
+    }
     public String getYear() {
         return year.getYearNumber();
     }
-    //public int getYear() {          // I think it's better this way 
-        //return year.getYearNumber();
-   // }
+    public void addStudent(String studentId){
+        if(Student.checkStudentId(studentId)){
+            studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
+        }
+        else{
+            System.out.println("Student with id " + studentId + " does not exist");
+        }
+    }
+    public void setTeacher(String teacherId){
+        if(Teacher.checkTeacherId(teacherId)){
+            this.teacher = Teacher.getTeacherFromId(teacherId);
+        }
+        else{
+            System.out.println("Teacher with id " + teacherId + " does not exist");
+        }
+    }
+    public Teacher getTeacherObject() {
+        return teacher;
+    }
+    public String getTeacherName(){
+        if(this.teacher == null) return "Teacher is yet to be assigned";
+        return this.teacher.getName();
+    }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Student> getStudentsObject() {
+        return new ArrayList<>(studentsInGroup.values());
+    }
+    public List<String> getStudentsId(){
+        return new ArrayList<>(studentsInGroup.keySet());
     }
 
     public int getNumberOfStudents() {
-    return students.size();
+        return studentsInGroup.size();
     }
-
 
     public String getModuleCode() {
         return module.getModuleCode();
     }
-
-    public Map<String, String> mapStudentsToModuleCodes() {
-        String moduleCode = module.getModuleCode();
-        if (moduleCode == null || moduleCode.isEmpty()) {
-            throw new IllegalStateException("Module code cannot be null or empty");
-    }
-
-    Map<String, String> result = new HashMap<>();
-
-    for (Student s : students) {
-        if (s == null) {
-            throw new IllegalStateException("Student list contains null");
-        }
-        result.put(s.getUserId(), moduleCode);
-    }
-
-    return result;
-}
 
     public List<Room> getRooms()
     {
@@ -94,18 +96,23 @@ public class Group {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        // Build comma-separated list of student IDs
-        for (int i = 0; i < students.size(); i++) {
-            sb.append(students.get(i).getUserId());
-            if (i < students.size() - 1) {
-                sb.append(", ");
+        if(studentsInGroup.isEmpty()){
+            sb.append("No Students in course");
+        }
+        else {
+            // Build comma-separated list of student IDs
+            for (Student s : studentsInGroup.values()) {
+                sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
             }
+            // deletes last \n
+            if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
         }
 
         return "Group{" +
                 "groupId='" + groupId + '\'' +
                 ", module=" + module.getModuleCode() +
                 ", year=" + year.getYearNumber() +
+                ", presiding teacher=" + this.teacher.getTeacherId() +
                 ", students=[" + sb +
                 "], rooms=" + rooms +
                 '}';
