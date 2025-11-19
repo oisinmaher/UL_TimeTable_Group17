@@ -115,18 +115,23 @@ public class Group {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        // Build comma-separated list of student IDs
-        for (Student s: studentsInGroup.values()) {
-            sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
+        if(studentsInGroup.isEmpty()){
+            sb.append("No Students in course");
         }
-        // deletes last \n
-        if(!sb.isEmpty()) sb.deleteCharAt(sb.length()-1);
+        else {
+            // Build comma-separated list of student IDs
+            for (Student s : studentsInGroup.values()) {
+                sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
+            }
+            // deletes last \n
+            if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
+        }
 
         return "Group{" +
                 "groupId='" + groupId + '\'' +
                 ", module=" + module.getModuleCode() +
                 ", year=" + year.getYearNumber() +
-                ", presiding teacher=" + this.teacher()
+                ", presiding teacher=" + this.teacher.getTeacherId() +
                 ", students=[" + sb +
                 "], rooms=" + rooms +
                 '}';
