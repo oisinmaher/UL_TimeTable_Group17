@@ -1,7 +1,12 @@
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import modules.CourseModule;
+import persistence.StudentCsvStorage;
 import programCourse.*;
+import users.Student;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -70,15 +75,37 @@ public class Main {
 //        ad.run();
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().getFirst();
+        CourseYear courseYear = courseFull.getCourseYears().get(0);
         courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().getFirst();
+        CourseSemester semester = courseYear.getSemesters().get(0);
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
         System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
         System.out.println(courseModule.toString());
 
+        Student alex = new Student("123", "Alex", "LM121", "1");
+        Student bob = new Student("456", "Bob", "LM121", "1");
+
+        List<Student> students = Arrays.asList(alex, bob);
+
+        StudentCsvStorage storage = new StudentCsvStorage();
+
+        try {
+            storage.saveAll(students);
+        } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            List<Student> loadedStudents = storage.loadAll();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Student student : students) {
+            System.out.println(student.toString());
+        }
 
     }
 }

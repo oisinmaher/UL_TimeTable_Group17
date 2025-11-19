@@ -16,6 +16,11 @@ public class Student extends User {
     CourseFull courseFull;
     CourseYear courseYear;
     List<TimeSlot> classTimes = new ArrayList<>();
+
+    public Student(){
+        super("","");
+    }
+
     /**
      * @param userId
      * @param name
