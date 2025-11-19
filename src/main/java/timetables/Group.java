@@ -14,12 +14,11 @@ import java.util.Map;
 public class Group {
 
 
-    private CourseModule module;
-    private CourseYear year; 
-    private List<Student> students; 
-    private List<Room> rooms; 
-    private String groupId;
-
+    private final CourseModule module;
+    private final CourseYear year;
+    private final List<Student> students;
+    private final List<Room> rooms;
+    private final String groupId;
 
     public Group(CourseModule module, CourseYear year, List<Student> students, List<Room> rooms, String groupId){
        if (module == null) {

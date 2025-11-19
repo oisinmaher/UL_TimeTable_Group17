@@ -36,9 +36,20 @@ public class CourseModule {
         }   
     }
 
+    /**
+     * checks if a moduleCode already exists
+     * @param moduleCode the code associated with a module
+     * @return boolean value; true is moduleCode exists, false otherwise
+     */
     public static boolean checkModuleCode(String moduleCode){
         return allModules.containsKey(moduleCode.toLowerCase());
     }
+
+    /**
+     * static method that returns CourseModule object that already exists from its module code
+     * @param moduleCode the code associated with module (e.g "cs4004")
+     * @return a CourseModule object with same moduleCode
+     */
     public static CourseModule getModuleFromCode(String moduleCode){
         if(!checkModuleCode(moduleCode))
             throw new IllegalArgumentException("This module code doesnt exist, it must be created first");
