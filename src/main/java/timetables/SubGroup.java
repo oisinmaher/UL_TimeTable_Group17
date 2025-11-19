@@ -24,7 +24,6 @@ import java.util.Map;
  * Each SubGroup can still contain all students in the parent group.
  */
 public class SubGroup extends Group {
-
     public enum SessionType {
         LAB,
         TUTORIAL

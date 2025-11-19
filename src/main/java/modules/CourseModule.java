@@ -38,33 +38,20 @@ public class CourseModule {
         }   
     }
 
-//    /**
-//     * Creates the course module object
-//     * @param moduleName the name of the module
-//     * @param moduleCode the module code
-//     * @param lecturers the module lecturer
-//     * @param numberOfLecHours the number of lecture hours required
-//     * @param numberOfLabs the number of labs required
-//     * @param numberOfTutorials the number of tutorials required
-//     */
-//    public CourseModule(String moduleName, String moduleCode, String lecturers,
-//                        int numberOfLecHours, int numberOfLabs, int numberOfTutorials) {
-//        moduleCode = moduleCode.toLowerCase();
-//        if(checkUniqueModuleCode(moduleCode)) {
-//            this.moduleName = moduleName;
-//            this.moduleCode = moduleCode;
-//            this.lecturers = new ArrayList<>();
-//            this.numberOfLecHours = numberOfLecHours;
-//            this.numberOfLabs = numberOfLabs;
-//            this.numberOfTutorials = numberOfTutorials;
-//            allModules.put(moduleCode, this);
-//        } else {
-//            throw new IllegalArgumentException("The inputted module code already exists.");
-//        }
-//    }
+    /**
+     * checks if a moduleCode already exists
+     * @param moduleCode the code associated with a module
+     * @return boolean value; true is moduleCode exists, false otherwise
+     */
     public static boolean checkModuleCode(String moduleCode){
         return allModules.containsKey(moduleCode.toLowerCase());
     }
+
+    /**
+     * static method that returns CourseModule object that already exists from its module code
+     * @param moduleCode the code associated with module (e.g "cs4004")
+     * @return a CourseModule object with same moduleCode
+     */
     public static CourseModule getModuleFromCode(String moduleCode){
         if(!checkModuleCode(moduleCode))
             throw new IllegalArgumentException("This module code doesnt exist, it must be created first");
@@ -87,21 +74,11 @@ public class CourseModule {
         return moduleCode;
     }
 
-    /**
-     * Gets the name of the lecturer
-     * @return the name of the lecturer
-     */
-//    public String getLecturers() {
-//        return lecturers;
-//    }
 
     /**
      * Sets the name of the lecturer
      * @param lecturers the name of the module's lecturer
      */
-//    public void setLecturers(String lecturers) {
-//        this.lecturers = lecturers;
-//    }
 
     /**
      * Gets the number of required lecture hours

@@ -6,7 +6,6 @@ import users.Student;
 
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 
 /**
@@ -15,12 +14,11 @@ import java.util.Map;
 public class Group {
 
 
-    private CourseModule module;
-    private CourseYear year;
-    private List<Student> students;
-    private List<Room> rooms;
-    private String groupId;
-
+    private final CourseModule module;
+    private final CourseYear year;
+    private final List<Student> students;
+    private final List<Room> rooms;
+    private final String groupId;
 
     public Group(CourseModule module, CourseYear year, List<Student> students, List<Room> rooms, String groupId){
        if (module == null) {
@@ -36,16 +34,16 @@ public class Group {
         throw new IllegalArgumentException("rooms list can't be null");
     }
         this.module = module;
-        this.year = year;
-        this.students = students;
-        this.rooms = rooms;
-        this.groupId = groupId;
+        this.year = year; 
+        this.students = students; 
+        this.rooms = rooms; 
+        this.groupId = groupId; 
     }
 
     public String getYear() {
         return year.getYearNumber();
     }
-    //public int getYear() {          // I think it's better this way
+    //public int getYear() {          // I think it's better this way 
         //return year.getYearNumber();
    // }
 
@@ -82,12 +80,12 @@ public class Group {
 
     public List<Room> getRooms()
     {
-        return this.rooms;
+        return this.rooms; 
     }
 
     public String getGroupId()
     {
-        return this.groupId;
+        return this.groupId; 
     }
 
 

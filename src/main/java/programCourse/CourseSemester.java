@@ -16,10 +16,20 @@ import java.util.*;
 public final class CourseSemester {
     // Semester id = CourseYearId + "_" + season
     private final String semesterId;
+    // spring/autumn
     private final String season;
     // module code -> Module object.  "cs4404" -> CourseModule Object
     private final Map<String, CourseModule> assignedModules;
     private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
+
+    /**
+     * enum for  2 seasons (probably won't use as I cant really think how cli would even benefit with enums
+     * if you have any idea let me (Oisin) know
+     */
+//    public enum Seasons {
+//        SPRING,
+//        AUTUMN
+//    }
 
     /**
      * Creates a CourseSemester with a name and list of module codes.
@@ -33,6 +43,7 @@ public final class CourseSemester {
             throw new IllegalArgumentException("season is null");
         }
         season = season.toLowerCase();
+        // if neither spring nor autumn
         if (!(season.equals("spring") || season.equals("autumn"))) {
             throw new IllegalArgumentException("Season must be spring or autumn");
         }
@@ -44,21 +55,31 @@ public final class CourseSemester {
     public String getSemesterId(){
         return this.semesterId;
     }
+
+    /**
+     *  Checks the STATIC allSemester map
+     * @param semesterId the semester id will be courseId + season
+     * @return CourseSemester object associated with semester id
+     */
     public CourseSemester getSemesterById(String semesterId){
         if(!allSemesters.containsKey(semesterId)){
             throw new IllegalArgumentException("This semesterId doesnt exist");
         }
         return allSemesters.get(semesterId);
     }
-    // adds a module that already exists (from its code)
-    public void addExistingModule(String moduleName){
-        assignedModules.put(moduleName.toLowerCase(), CourseModule.getModuleFromCode(moduleName));
+
+    /**
+     *  Adds a module that's already been created (if a different course shares same module)
+     * @param moduleCode name of a module (its code)
+     */
+    public void addExistingModule(String moduleCode){
+        assignedModules.put(moduleCode.toLowerCase(), CourseModule.getModuleFromCode(moduleCode));
     }
 
     /** Creates new Course module
-     * CourseMoudle constructor already has a check for existing modules
-     * @param code
-     * @param name
+     * CourseModule constructor already has a check for existing modules
+     * @param code // module code e.g cs4004
+     * @param name // module name e.g Database Systems
      */
     public void addNewModule(String code, String name){
         CourseModule module = new CourseModule(name.toLowerCase(), code);

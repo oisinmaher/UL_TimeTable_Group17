@@ -6,20 +6,19 @@ import java.util.*;
 
 /**
  * Represents a single academic year within a course (e.g. Year 1, Year 2).
- *
+
  * A CourseYear:
  *  - Belongs to a specific CourseFull
  *  - Has a year number (e.g. 1, 2, 3)
  *  - Contains a map of Season -> CourseSemester objects (e.g. Autumn, Spring)
- *
  */
 public final class CourseYear{
 
     // year id is fullCourse.getCode() + "_" + yearNumber
-    private String yearId;
+    private final String yearId;
     private final String yearNumber;
     //private final int yearNumber;
-    private Map<String, CourseSemester> courseSemesters;
+    private final Map<String, CourseSemester> courseSemesters;
     public static Map<String, CourseYear> allCourseYears = new HashMap<>();
 
     /**
@@ -35,17 +34,6 @@ public final class CourseYear{
             throw new IllegalArgumentException("Course cant be null");
         }
         this.yearId = courseFull.getCode() + "_" + yearNumber;
-        if(allCourseYears.containsKey(yearId)){
-            throw new IllegalArgumentException("Course Year already exists: \n " +
-                    allCourseYears.get(yearId));
-        }
-        this.yearNumber = yearNumber;
-        allCourseYears.put(yearId, this);
-        this.courseSemesters = new HashMap<>();
-    }
-    // Passing courseCode (of CourseFull object) as string instead of object (not as safe)
-    public CourseYear(String courseCode, String yearNumber) {
-        this.yearId = courseCode + "_" + yearNumber;
         if(allCourseYears.containsKey(yearId)){
             throw new IllegalArgumentException("Course Year already exists: \n " +
                     allCourseYears.get(yearId));
@@ -140,6 +128,10 @@ public final class CourseYear{
         return result;
     }
 
+    /**
+     * returns the yearId
+     * @return a string of yearId in format courseCode_year (e.g "LM051_2")
+     */
     public String getYearId(){
         return this.yearId;
     }
@@ -159,13 +151,13 @@ public final class CourseYear{
 
     /**
      * Validates the structure of this CourseYear and its semesters.
-     *
+
      * The following checks are performed:
      *  - The year must have at least one semester
      *  - Each semester must have a non-blank name
      *  - Semester names must be unique (case-insensitive)
      *  - Each CourseSemester is validated via its own validate method
-     *
+
      * Any issues found are returned as a list of error messages. An empty list
      * means the year is structurally valid.
      *
