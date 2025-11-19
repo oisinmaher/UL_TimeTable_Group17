@@ -18,13 +18,8 @@ public class Group {
     private final Map<String, Student> studentsInGroup;
     private Teacher teacher;
     private final List<Room> rooms;
-    private final String groupId;
+    private final Map<String, SubGroup> referencedSubGroups;
 
-    // This will map it so if a module has multiple groups you can find which letter
-    // to assign for its next groupId,
-    // (e.g when creating a new group for a module that contains CS4004A, it will return A then you can do 'A'++
-    // to get 'B', assign the group the name cs4004B and update map to B
-    private static Map<String, Character> moduleRecentGroupId = new HashMap<>();
 
     public Group(CourseModule module, CourseYear year){
         if (module == null) {
@@ -36,27 +31,14 @@ public class Group {
         this.module = module;
         this.year = year;
         this.teacher = null;
-        // gets module name
-        String moduleCode = module.getModuleCode().toLowerCase();
-        studentsInGroup = new HashMap<>();
         rooms = new ArrayList<>();
-        // group indicator (a letter a->z)
-        char groupIndicator;
-        // check if this module already has a group
-        if(moduleRecentGroupId.containsKey(moduleCode)){
-            // if it does the map value will be last indicator used (e.g 'a')
-            groupIndicator = moduleRecentGroupId.get(moduleCode);
-            // increases group indicator (example 'a' to 'b')
-            groupIndicator++;
-        }
-        // else it sets it to first value (which will be 'a')
-        else groupIndicator = 'a';
-        // makes group id the moduleCode + groupIndicator (e.g. cs4004a)
-        this.groupId = moduleCode + groupIndicator;
-        // adds / replaces module indicatorCode in the map
-        moduleRecentGroupId.put(moduleCode, groupIndicator);
-    }
+        referencedSubGroups = new HashMap<>();
+        studentsInGroup = new HashMap<>();
 
+    }
+    public void createSubGroup(){
+
+    }
     public String getYear() {
         return year.getYearNumber();
     }

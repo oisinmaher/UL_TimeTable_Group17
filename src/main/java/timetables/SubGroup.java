@@ -28,30 +28,28 @@ public class SubGroup extends Group {
         LAB,
         TUTORIAL
     }
-
     private final SessionType sessionType;
     private final String subGroupId;   // e.g. "LAB-G1", "TUTORIAL-G1"
+    private final Map<String, Student> studentsInGroup;
+
+    // This will map it so if a module has multiple groups you can find which letter
+    // to assign for its next groupId,
+    // (e.g. when creating a new group for a module that contains CS4004A, it will return A then you can do 'A'++
+    // to get 'B', assign the group the name cs4004B and update map to B
+    private static final Map<String, Character> moduleRecentGroupId = new HashMap<>();
 
     /**
      * Constructs a SubGroup for a given module/year/students/rooms and session type.
      *
      * @param module     the module this subgroup belongs to
      * @param year       the course year
-     * @param students   the students in this subgroup
-     * @param rooms      rooms used by this subgroup
-     * @param groupId    the base group id (e.g. "G1")
      * @param sessionType the type of session this subgroup is for (LAB or TUTORIAL)
      */
     public SubGroup(CourseModule module,
-                    CourseYear year,
-                    List<Student> students,
-                    List<Room> rooms,
-                    String groupId,
-                    SessionType sessionType) {
+                    CourseYear year, SessionType sessionType) {
 
         // Call the parent Group constructor
-        super(module, year, students, rooms, groupId);
-
+        super(module, year);
 
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
@@ -59,7 +57,27 @@ public class SubGroup extends Group {
 
         this.sessionType = sessionType;
         // Subgroup ID must start with the type
-        this.subGroupId = sessionType.name() + "-" + groupId;
+        // This gets the correct module code indicator
+        // (could be made its own method idk what the convention for constructors is)
+
+        // gets module name
+        String moduleCode = module.getModuleCode().toLowerCase();
+        studentsInGroup = new HashMap<>();
+        // group indicator (a letter a->z)
+        char groupIndicator;
+        // check if this module already has a group
+        if(moduleRecentGroupId.containsKey(moduleCode)){
+            // if it does the map value will be last indicator used (e.g 'a')
+            groupIndicator = moduleRecentGroupId.get(moduleCode);
+            // increases group indicator (example 'a' to 'b')
+            groupIndicator++;
+        }
+        // else it sets it to first value (which will be 'a')
+        else groupIndicator = 'a';
+        // makes group id the moduleCode + groupIndicator (e.g. cs4004a)
+        this.subGroupId = moduleCode + groupIndicator;
+        // adds / replaces module indicatorCode in the map
+        moduleRecentGroupId.put(moduleCode, groupIndicator);
     }
 
     public SessionType getSessionType() {
