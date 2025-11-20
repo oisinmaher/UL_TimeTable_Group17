@@ -2,6 +2,7 @@ package timetables;
 
 import modules.CourseModule;
 import rooms.Room;
+import users.Student;
 import users.Teacher;
 
 import java.util.*;

@@ -27,7 +27,7 @@ public class TimeTable {
     /**
      * Timetable for an INDIVIDUAL user, won't have overlapping classes in same time
      */
-    public UserTimeTable(User user){
+    public TimeTable(User user){
         schedule = new HashMap<>();
         // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
         this.daysOfWeek = new String[]{"mon", "tue", "wed", "thu", "fri"};
