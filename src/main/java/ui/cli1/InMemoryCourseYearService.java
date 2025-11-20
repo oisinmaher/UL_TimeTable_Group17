@@ -1,8 +1,7 @@
-package ui.cli1;
+package src.main.java.ui.cli1;
 
-import programCourse.CourseFull;
-import programCourse.CourseYear;
-import src.main.java.ui.cli1.CourseYearService;
+import src.main.java.programCourse.CourseFull;
+import src.main.java.programCourse.CourseYear;
 
 public class InMemoryCourseYearService implements CourseYearService{
 

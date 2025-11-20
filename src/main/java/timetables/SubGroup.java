@@ -1,9 +1,6 @@
-package src.main.java.timetables;
+package timetables;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.rooms.Room;
-import src.main.java.users.Student;
+import timetables.Group;
 
 import java.util.HashMap;
 import java.util.List;

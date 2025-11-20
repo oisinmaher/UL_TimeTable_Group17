@@ -1,9 +1,8 @@
-package src.main.java.timetables;
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.*;
-import src.main.java.rooms.Room;
-import src.main.java.users.Student;
-import src.main.java.users.Teacher;
+package timetables;
+
+import modules.CourseModule;
+import rooms.Room;
+import users.Teacher;
 
 import java.util.*;
 

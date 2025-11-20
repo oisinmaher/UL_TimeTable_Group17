@@ -12,7 +12,7 @@ import java.util.*;
  * Each instance of teacher and student will have a unique timetable object
  *
  */
-public class UserTimeTable {
+public class TimeTable {
 
     // Set Contains day of week in 3characters and Times in 24 hour
     // wed1600 is wednesday 4pm, fri0900 is friday 9 am
