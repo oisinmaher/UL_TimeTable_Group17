@@ -4,9 +4,10 @@ import programCourse.CourseFull;
 import programCourse.CourseYear;
 import timetables.TimeSlot;
 
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /** This clas is for students,
@@ -16,11 +17,7 @@ public class Student extends User {
     CourseFull courseFull;
     CourseYear courseYear;
     List<TimeSlot> classTimes = new ArrayList<>();
-
-    public Student(){
-        super("","");
-    }
-
+    private static Map<String, Student> allStudentsEnrolled = new HashMap<>();
     /**
      * @param userId
      * @param name
@@ -39,6 +36,15 @@ public class Student extends User {
         }
         this.courseYear = courseFull.getCourseYear(year);
         classTimes = new ArrayList<>();
+        allStudentsEnrolled.put(userId, this);
+    }
+    public static boolean containsStudentId(String studentId){
+        return allStudentsEnrolled.containsKey(studentId);
+    }
+    public static Student getStudentFromId(String studentId){
+        if(containsStudentId(studentId))
+            return allStudentsEnrolled.get(studentId);
+        else throw new IllegalArgumentException("Student ID: " + studentId + " does not exist");
     }
     public void setName(String name){
         this.name = name;

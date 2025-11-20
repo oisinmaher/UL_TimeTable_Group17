@@ -1,7 +1,7 @@
 package modules;
 
 
-
+import timetables.Group;
 import users.Lecturer;
 
 import java.util.*;
@@ -17,25 +17,28 @@ public class CourseModule {
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
+    private final Group groupAssigned;
     // This will contain all created modules in a class
     static private Map<String, CourseModule> allModules = new HashMap<>();
 
     /**
-     * @param moduleName
-     * @param moduleCode
+     * Constructor for course module
+     * @param moduleName module's name (e.g "Database systems")
+     * @param moduleCode module's code (e.g "cs4004")
      */
     public CourseModule(String moduleName, String moduleCode) {
         if(moduleName == null || moduleCode == null){
             throw new IllegalArgumentException("Parameters cant be null");
         }
         moduleCode = moduleCode.toLowerCase();
-        if(checkUniqueModuleCode(moduleCode)) {
+        if(!containsModuleCode(moduleCode)) {
             this.moduleName = moduleName;
             this.moduleCode = moduleCode;
             allModules.put(moduleCode, this);
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
-        }   
+        }
+        groupAssigned = new Group(this.moduleCode);
     }
 
     /**
@@ -43,7 +46,7 @@ public class CourseModule {
      * @param moduleCode the code associated with a module
      * @return boolean value; true is moduleCode exists, false otherwise
      */
-    public static boolean checkModuleCode(String moduleCode){
+    public static boolean containsModuleCode(String moduleCode){
         return allModules.containsKey(moduleCode.toLowerCase());
     }
 
@@ -53,7 +56,7 @@ public class CourseModule {
      * @return a CourseModule object with same moduleCode
      */
     public static CourseModule getModuleFromCode(String moduleCode){
-        if(!checkModuleCode(moduleCode))
+        if(!containsModuleCode(moduleCode))
             throw new IllegalArgumentException("This module code doesnt exist, it must be created first");
         return allModules.get(moduleCode.toLowerCase());
     }
@@ -63,7 +66,7 @@ public class CourseModule {
      * @return the name of the module
      */
     public String getModuleName() {
-        return moduleName;
+        return this.moduleName;
     }
 
     /**
@@ -71,14 +74,23 @@ public class CourseModule {
      * @return the module code
      */
     public String getModuleCode() {
-        return moduleCode;
+        return this.moduleCode;
     }
 
-
     /**
-     * Sets the name of the lecturer
-     * @param lecturers the name of the module's lecturer
+     * This returns the group assigned to a module
+     * @param moduleCode
+     * @return
      */
+    public Group getGroupAssignedFromModuleCode(String moduleCode){
+        if(containsModuleCode(moduleCode)){
+            return allModules.get(moduleCode).groupAssigned;
+        }
+        else throw new IllegalArgumentException("A group with " + moduleCode + " does not exist");
+    }
+    public Group getGroupAssigned(){
+        return groupAssigned;
+    }
 
     /**
      * Gets the number of required lecture hours
@@ -97,32 +109,32 @@ public class CourseModule {
     }
 
     /**
-     *
-     * @return
+     * returns number of labs this module has
+     * @return number of labs
      */
     public int getNumberOfLabs() {
         return numberOfLabs;
     }
 
     /**
-     *
-     * @param numberOfLabs
+     * sets number of labs this module has
+     * @param numberOfLabs the number of labs
      */
     public void setNumberOfLabs(int numberOfLabs) {
         this.numberOfLabs = numberOfLabs;
     }
 
     /**
-     *
-     * @return
+     * returns number of tutorials this module has
+     * @return number of tutorials
      */
     public int getNumberOfTutorials() {
         return numberOfTutorials;
     }
 
     /**
-     *
-     * @param numberOfTutorials
+     * returns the number of tutorials this module has
+     * @param numberOfTutorials the number of tutorials
      */
     public void setNumberOfTutorials(int numberOfTutorials) {
         this.numberOfTutorials = numberOfTutorials;
@@ -136,20 +148,20 @@ public class CourseModule {
 
     }
 
+
     /**
-     *
-     * @param newModuleCode
-     * @return
+     * static method returns list of all modules that exist
+     * @return list of modules
      */
-    private static boolean checkUniqueModuleCode(String newModuleCode) {
-        return (!allModules.containsKey(newModuleCode));
-    }
-
-
-    public ArrayList<CourseModule> getListOfModules() {
+    public static ArrayList<CourseModule> getListOfModules() {
         return new ArrayList<>(allModules.values());
     }
-    public ArrayList<String> getListOfModuleCodes(){
+
+    /**
+     * static method returns list of all module codes that exist
+     * @return list of modules
+     */
+    public static ArrayList<String> getListOfModuleCodes(){
         return new ArrayList<>(allModules.keySet());
     }
 
