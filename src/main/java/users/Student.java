@@ -4,6 +4,7 @@ import programCourse.CourseFull;
 import programCourse.CourseYear;
 import timetables.TimeSlot;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

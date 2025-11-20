@@ -1,7 +1,6 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.timetables.TimeTable;
+import programCourse.CourseFull;
 
 import java.util.*;
 
@@ -10,28 +9,27 @@ import java.util.*;
  *  It will be quiet similiar to Student but with modules from different courses
  */
 public class Teacher extends User {
-    // Timetable Object
-    TimeTable timeTable;
 
+    public static Map<String, Teacher> allTeachers = new HashMap<>();
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
     List<CourseFull> courseTaught;
 
     // Constructor with base parameters of user
-    public Teacher(String userId, String name) {
-        super(userId, name);
-        this.timeTable = new TimeTable(this);
+    public Teacher(String teacherId, String name) {
+        super(teacherId, name);
         courseTaught = new ArrayList<>();
+        allTeachers.put(this.userId, this);
+    }
+    public String getTeacherId(){
+        return this.userId;
+    }
+    public static boolean checkTeacherId(String teacherId) {
+        return allTeachers.containsKey(teacherId);
     }
 
-    // Constructor but with a pre-made list of Programs (Likely won't use)
-    public Teacher(String name, String userId, List<CourseFull> programsTaught) {
-        super(userId, name);
-        this.timeTable = new TimeTable(this);
-        this.courseTaught = new ArrayList<>();
-    }
-
-    // Returns timetable
-    public TimeTable getTimeTable() {
-        return timeTable;
+    public static Teacher getTeacherFromId(String teacherId) {
+        if(checkTeacherId(teacherId))
+            return allTeachers.get(teacherId);
+        else throw new IllegalArgumentException("This Teacher ID " + teacherId + " does not exist");
     }
 }

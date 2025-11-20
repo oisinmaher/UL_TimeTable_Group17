@@ -74,36 +74,21 @@ public class Main {
 //        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
 //
 //
-//        Scanner sc = new Scanner(System.in);
-//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
-//        ad.run();
+//
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().get(0);
+        CourseYear courseYear = courseFull.getCourseYears().getFirst();
         courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().get(0);
+        CourseSemester semester = courseYear.getSemesters().getFirst();
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
         System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
         System.out.println(courseModule.toString());
+        Scanner sc = new Scanner(System.in);
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        ad.run();
 
-        Student alex = new Student("123", "Alex", "LM121", "1");
-        Student bob = new Student("456", "Bob", "LM121", "1");
-
-        List<Student> students = Arrays.asList(alex, bob);
-
-        StudentCsvDto dto = StudentMapper.flatten(alex);
-        CsvWriterUtil<StudentCsvDto> writer = new CsvWriterUtil<>(
-                Paths.get("C:\\Users\\24354678\\IdeaProjects\\UL_TimeTable_Group17\\src\\main\\resources\\student.csv"), StudentCsvDto.class);
-
-        System.out.println("Writing DTO: " + dto.getStudentId() + ", " + dto.getName());
-        ExportService service = new ExportService();
-        try {
-            service.export(dto, writer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
     }
 }
