@@ -5,7 +5,7 @@ package src.main.java.rooms;
  */
 public abstract class Room
 {
-    protected int maxCapacity; 
+    protected int maxCapacity;  
     private String roomID; 
     protected String roomType;
 
@@ -54,6 +54,7 @@ public abstract class Room
     {
         return this.maxCapacity;
     }
+
 
     /**
      *

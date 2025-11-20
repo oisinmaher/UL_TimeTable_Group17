@@ -1,6 +1,7 @@
 package src.main.java.timetables;
 import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.*;
+import src.main.java.rooms.LectureRoom;
 import src.main.java.rooms.Room;
 import src.main.java.users.Student;
 
@@ -78,6 +79,33 @@ public class Group {
 
     return result;
 }
+
+public Map<String, String> mapGroupIdsToRoomIds()
+{
+    Map<String, String> result = new HashMap<>();
+    List<Room> rooms = getRooms(); 
+    
+     if (groupId == null || rooms == null) {
+        throw new IllegalArgumentException("Lists and IDs cannot be null.");
+    }
+    for(int i = 0; i<rooms.size(); i++)
+    {
+        Room room = rooms.get(i);  
+        if (!(room instanceof LectureRoom)) {
+                throw new IllegalStateException(
+                        "Group " + groupId + " requires LectureRoom but got " + room.getClass().getSimpleName()
+                ); 
+        }
+        if(room.getMaxCapacity()>=students.size())
+        {
+            result.put(groupId, room.getRoomID()); 
+        }
+
+    
+    }
+    return result; 
+
+} 
 
     public List<Room> getRooms()
     {
