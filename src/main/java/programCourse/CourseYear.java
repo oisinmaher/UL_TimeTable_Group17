@@ -1,110 +1,70 @@
-package src.main.java.timetables;
+package src.main.java.programCourse;
 
 import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseFull;
+
 import java.util.*;
 
 /**
- * Represents a single academic year within a program (e.g. Year 1, Year 2).
+ * Represents a single academic year within a course (e.g. Year 1, Year 2).
  *
- * A ProgramYear:
- *  - Belongs to a specific ProgramWithModule
+ * A CourseYear:
+ *  - Belongs to a specific CourseFull
  *  - Has a year number (e.g. 1, 2, 3)
- *  - Contains a list of ProgramSemester objects (e.g. Autumn, Spring)
+ *  - Contains a map of Season -> CourseSemester objects (e.g. Autumn, Spring)
  *
- * It provides behaviours to:
- *  - Retrieve modules by semester
- *  - Retrieve all modules across the year (without duplicates)
- *  - Map semesters to student group IDs
- *  - Validate the structure of the year and its semesters
  */
-public final class ProgramYear {
+public final class CourseYear{
 
-    private final ProgramWithModule programme;
-    private final int yearNumber;
-    private final List<ProgramSemester> semesters;
+    private final String yearNumber;
+    //private final int yearNumber;// suggestion 
+    private final Map<String, CourseSemester> courseSemesters;
 
     /**
-     * Constructs a ProgramYear with a reference to ProgramWithModule,
+     * Constructs a CourseYear with a reference to CourseWithModule,
      * a year number, and a list of semesters.
      *
-     * @param programme  ProgramWithModule this year belongs to (can be null)
      * @param yearNumber the numeric identifier for the year (e.g. 1, 2, 3)
-     * @param semesters  the list of ProgramSemester objects for this year
      *
      * @throws IllegalArgumentException if semesters is null
      */
-    public ProgramYear(ProgramWithModule programme, int yearNumber, List<ProgramSemester> semesters) {
-        if (semesters == null) {
-            throw new IllegalArgumentException("semesters is null");
-        }
-        this.programme = programme;
+    public CourseYear(String yearNumber) {
         this.yearNumber = yearNumber;
-        this.semesters = new ArrayList<>(semesters);
+        this.courseSemesters = new HashMap<>();
     }
 
     /**
-     * Returns the parent program this year belongs to.
-     *
-     * @return the ProgramWithModule instance, or null if not set
-     */
-    public ProgramWithModule getProgramme() {
-        return programme;
-    }
-
-    /**
-     * Returns the numeric year number (e.g. 1 for first year).
-     *
+     * Returns the numeric year number as String (e.g. "1" for first year).
      * @return the year number
      */
-    public int getYearNumber() {
+    public String getYearNumber() {
         return yearNumber;
     }
 
     /**
      * Returns a copy of the list of semesters in this year.
-     *
-     * @return a new List containing the ProgramSemester objects
+     * @return a new List containing the CourseSemester objects
      */
-    public List<ProgramSemester> getSemesters() {
-        return new ArrayList<>(semesters);
+    public List<CourseSemester> getSemesters() {
+        return new ArrayList<>(courseSemesters.values());
     }
 
    /**
      * Returns the list of CourseModule objects for a given semester name in this year.
-     * This now uses ProgramSemester.pickModulesForThisSemester(), which applies
+     * This now uses CourseSemester.pickModulesForThisSemester(), which applies
      * the odd/even last digit rule based on the semester name.
      */
-    public List<CourseModule> modulesForSemester(String semesterName) {
+
+    public List<String> getModuleCodesForSemester(String semesterName){
         if (semesterName == null) {
-            return new ArrayList<>();
+            throw new IllegalArgumentException("Parameters can't be null");
         }
         String target = semesterName.toLowerCase();
-        for (ProgramSemester s : semesters) {
-            if (s.getName().toLowerCase().equals(target)) {
-                return s.pickModulesForThisSemester();
-            }
+        if(!courseSemesters.containsKey(target)){
+            throw new IllegalArgumentException("This semester doesnt exist, it must be created first");
         }
-        return new ArrayList<>();
-    }
-    /**
-     * Returns all CourseModule objects across all semesters in this year,
-     * with duplicates removed. If a module appears in more than one semester,
-     * it will only be included once in the returned list.
-     *
-     * @return a List of unique CourseModule objects for this year
-     */
-    public List<CourseModule> allModules() {
-        List<CourseModule> out = new ArrayList<>();
-        Set<CourseModule> seen = new HashSet<>();
-        for (ProgramSemester s : semesters) {
-            for (CourseModule m : s.getModuleCodes()) {
-                if (!seen.contains(m)) {
-                    seen.add(m);
-                    out.add(m);
-                }
-            }
-        }
-        return out;
+        return courseSemesters.get(semesterName).getModuleCodes();
     }
 
     /**
@@ -115,7 +75,7 @@ public final class ProgramYear {
      *  - value: list of student group IDs (e.g. ["G1A", "G1B"])
      *
      * This method:
-     *  - Validates that the provided semester names exist in this ProgramYear
+     *  - Validates that the provided semester names exist in this CourseYear
      *  - Returns a copy of the mapping
      *
      * @param semesterToGroupIDs a map from semester name to list of student group IDs
@@ -141,7 +101,7 @@ public final class ProgramYear {
     }
 
     /**
-     * Checks whether this ProgramYear contains a semester with the given name.
+     * Checks whether this CourseYear contains a semester with the given name.
      * The comparison is case-insensitive.
      *
      * @param name the semester name to search for
@@ -152,8 +112,8 @@ public final class ProgramYear {
             return false;
         }
         String target = name.toLowerCase();
-        for (ProgramSemester s : semesters) {
-            if (s.getName().toLowerCase().equals(target)) {
+        for (String s : courseSemesters.keySet()) {
+            if (s.equals(target)) {
                 return true;
             }
         }
@@ -161,13 +121,13 @@ public final class ProgramYear {
     }
 
     /**
-     * Validates the structure of this ProgramYear and its semesters.
+     * Validates the structure of this CourseYear and its semesters.
      *
      * The following checks are performed:
      *  - The year must have at least one semester
      *  - Each semester must have a non-blank name
      *  - Semester names must be unique (case-insensitive)
-     *  - Each ProgramSemester is validated via its own validate method
+     *  - Each CourseSemester is validated via its own validate method
      *
      * Any issues found are returned as a list of error messages. An empty list
      * means the year is structurally valid.
@@ -176,28 +136,27 @@ public final class ProgramYear {
      */
     private List<String> validate() {
         List<String> issues = new ArrayList<>();
-        if (semesters.isEmpty()) {
+        if (courseSemesters.isEmpty()) {
             issues.add("Year " + yearNumber + " has no semesters.");
             return issues;
         }
 
         Set<String> seenNames = new HashSet<>();
-        for (ProgramSemester s : semesters) {
+        for (String s : courseSemesters.keySet()) {
             String key;
-            if (s.getName() == null) {
+            if (s == null) {
                 key = "";
             } else {
-                key = s.getName().toLowerCase();
+                key = s.toLowerCase();
             }
 
             if (key.isEmpty()) {
                 issues.add("Year" + yearNumber + "has a semester with a blank name");
             } else if (seenNames.contains(key)) {
-                issues.add("Year " + yearNumber + " has duplicate semester: " + s.getName());
+                issues.add("Year " + yearNumber + " has duplicate semester: " + s.toLowerCase());
             } else {
                 seenNames.add(key);
             }
-            issues.addAll(s.validate(yearNumber));
         }
         return issues;
     }
