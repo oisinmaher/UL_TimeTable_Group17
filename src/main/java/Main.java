@@ -6,7 +6,6 @@ import export.dto.StudentCsvDto;
 import export.mapper.StudentMapper;
 import export.writer.CsvWriterUtil;
 import modules.CourseModule;
-import persistence.StudentCsvStorage;
 import programCourse.*;
 import users.Student;
 
@@ -93,26 +92,6 @@ public class Main {
         Student bob = new Student("456", "Bob", "LM121", "1");
 
         List<Student> students = Arrays.asList(alex, bob);
-/*
-        StudentCsvStorage storage = new StudentCsvStorage();
-
-        try {
-            storage.saveAll(students);
-        } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            List<Student> loadedStudents = storage.loadAll();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (Student student : students) {
-            System.out.println(student.toString());
-        }
-
- */
 
         StudentCsvDto dto = StudentMapper.flatten(alex);
         CsvWriterUtil<StudentCsvDto> writer = new CsvWriterUtil<>(
