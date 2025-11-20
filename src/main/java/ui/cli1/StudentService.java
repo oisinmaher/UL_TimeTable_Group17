@@ -22,12 +22,11 @@ public interface StudentService
 {
 
     /**
-     * Adds a new student to the system
+     * Adds a new student to the system.
+     *
      * @param id the unique identifier for the student
      * @param name the student's name
-     * @param courseCode the code for the course the student is enrolled in
-     * @param year the year that the student is enrolled in
-     * @return true if the student was added successfully, false if the ID already exists
+     * @return true if the student was added successfully; false if the ID already exists
      */
     boolean addStudent(String id, String name, String courseCode, String year);   // Add a new student
 

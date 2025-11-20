@@ -1,9 +1,8 @@
 package ui.cli1;
-
+import users.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import users.*;
 
 public class AdminCommandSession implements UserSession {
 
