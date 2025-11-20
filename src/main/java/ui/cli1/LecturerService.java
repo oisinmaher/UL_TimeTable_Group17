@@ -1,6 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Lecturer;
+import users.Lecturer;
 
 import java.util.List;
 

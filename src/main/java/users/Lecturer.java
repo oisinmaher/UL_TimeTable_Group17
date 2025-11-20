@@ -1,5 +1,5 @@
-package src.main.java.users;
-import src.main.java.programCourse.CourseSemester;
+package users;
+
 
 public class Lecturer extends User{
     String name;

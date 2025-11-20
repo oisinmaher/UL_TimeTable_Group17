@@ -1,6 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Student;
+import users.Student;
 
 import java.util.List;
 
@@ -22,14 +22,16 @@ import java.util.List;
  */
 public interface StudentService 
 {
+
     /**
-     * Adds a new student to the system.
-     *
+     * Adds a new student to the system
      * @param id the unique identifier for the student
      * @param name the student's name
-     * @return true if the student was added successfully; false if the ID already exists
+     * @param courseCode the code for the course the student is enrolled in
+     * @param year the year that the student is enrolled in
+     * @return true if the student was added successfully, false if the ID already exists
      */
-    boolean addStudent(String id, String name);   // Add a new student
+    boolean addStudent(String id, String name, String courseCode, String year);   // Add a new student
 
     /**
      * Removes a student from the system.

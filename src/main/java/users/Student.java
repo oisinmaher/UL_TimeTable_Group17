@@ -1,84 +1,69 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeTable;
+import programCourse.CourseFull;
+import programCourse.CourseYear;
+import timetables.TimeSlot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /** This clas is for students,
-*  It inherits the User class
-*  It will hold the following info
-*  Student name/ id
-*  course Students enrolled in
-*  The students timetable
-*  Admins will use this object to change information on student (e.g TimeTable and yearOfStudy)
+ * It inherits name and year from user class
  */
 public class Student extends User {
-    CourseSemester courseSemester;
+    CourseFull courseFull;
     CourseYear courseYear;
-    TimeTable timeTable;
-    int yearOfStudy;
-
+    List<TimeSlot> classTimes = new ArrayList<>();
+    private static Map<String, Student> allStudentsEnrolled = new HashMap<>();
     /**
-     * @param name
      * @param userId
+     * @param name
+     * @param courseCode
+     * @param year
      */
     // Constructor with just base params of User
-    public Student(String userId, String name) {
+    public Student(String userId, String name, String courseCode, String year) {
         super(userId, name);
-        timeTable = new TimeTable(this);
+        if(!CourseFull.containsCode(courseCode)){
+            throw new IllegalArgumentException("Course Doesnt Exist, it must be made first");
+        }
+        this.courseFull = CourseFull.getCourseFromCode(courseCode);
+        if(!this.courseFull.containsYear(year)){
+            throw new IllegalArgumentException("Course Year Doesnt Exist, it must be made first");
+        }
+        this.courseYear = courseFull.getCourseYear(year);
+        classTimes = new ArrayList<>();
+        allStudentsEnrolled.put(userId, this);
     }
-
-    // Constructor with all info
-    public Student(String name, String userId, int yearOfStudy, CourseSemester courseSemester, CourseYear courseYear) {
-        super(userId, name);
-        this.courseSemester = courseSemester;
-        this.courseYear = courseYear;
-        this.yearOfStudy = yearOfStudy;
-        // passes in the instantiation of this object (current student object)
-        timeTable = new TimeTable(this);
+    public static boolean containsStudentId(String studentId){
+        return allStudentsEnrolled.containsKey(studentId);
     }
-
-    public String getId(){
-        return  this.userId;
+    public static Student getStudentFromId(String studentId){
+        if(containsStudentId(studentId))
+            return allStudentsEnrolled.get(studentId);
+        else throw new IllegalArgumentException("Student ID: " + studentId + " does not exist");
     }
-
-    public void setCourseSemester(CourseSemester courseSemester) {
-        this.courseSemester = courseSemester;
+    public void setName(String name){
+        this.name = name;
     }
-
     public void setCourseYear(CourseYear courseYear) {
         this.courseYear = courseYear;
-    }
-
-    public void setYearOfStudy(int yearOfStudy) {
-        this.yearOfStudy = yearOfStudy;
-    }
-
-    /**
-     * @return
-     */
-    public CourseSemester getCourseSemester(){
-        return this.courseSemester;
     }
     public CourseYear getCourseYear(){
         return this.courseYear;
     }
+    public void setCourseFull(CourseFull courseFull){
+        this.courseFull = courseFull;
+    }
+    public CourseFull getCourseFull(){
+        return this.courseFull;
+    }
 
-    /**
-     * @return
-     */
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }
-
-    public TimeTable getTimeTable() {
-        return timeTable;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
 
 }

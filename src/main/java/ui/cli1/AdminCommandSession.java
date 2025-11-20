@@ -1,8 +1,8 @@
-package src.main.java.ui.cli1;
-import src.main.java.users.*;
+package ui.cli1;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import users.*;
 
 public class AdminCommandSession implements UserSession {
 
@@ -70,17 +70,19 @@ public class AdminCommandSession implements UserSession {
 
     private void cmdAddStudent(String[] args) {
 //        System.out.println("Arguments in function are " + Arrays.toString(args));
-        if (args.length < 2) {
+        if (args.length < 4) {
             System.out.println("Usage: add-student <id> <name>");
             return;
         }
         String id = args[0];
         String name = args[1];
-        for(int i = 2; i < args.length; i++){
+        String course = args[args.length-2];
+        String year = args[args.length-1];
+        for(int i = 2; i < args.length-2; i++){
             name = name + " " + args[i];
         }
 
-        boolean ok = studentService.addStudent(id, name);
+        boolean ok = studentService.addStudent(id, name, course, year);
         if (ok) {
             System.out.println("Student added: " + id);
         } else {

@@ -1,4 +1,4 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
 /**
  * Represents the different categories of users who can interact with the system
