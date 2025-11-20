@@ -38,11 +38,13 @@ public class Student extends User {
         classTimes = new ArrayList<>();
         allStudentsEnrolled.put(userId, this);
     }
-    public static boolean checkStudentId(String studentId){
+    public static boolean containsStudentId(String studentId){
         return allStudentsEnrolled.containsKey(studentId);
     }
     public static Student getStudentFromId(String studentId){
-        return allStudentsEnrolled.get(studentId);
+        if(containsStudentId(studentId))
+            return allStudentsEnrolled.get(studentId);
+        else throw new IllegalArgumentException("Student ID: " + studentId + " does not exist");
     }
     public void setName(String name){
         this.name = name;

@@ -30,7 +30,6 @@ public class SubGroup extends Group {
     }
     private final SessionType sessionType;
     private final String subGroupId;   // e.g. "LAB-G1", "TUTORIAL-G1"
-    private final Map<String, Student> studentsInGroup;
 
     // This will map it so if a module has multiple groups you can find which letter
     // to assign for its next groupId,
@@ -41,15 +40,13 @@ public class SubGroup extends Group {
     /**
      * Constructs a SubGroup for a given module/year/students/rooms and session type.
      *
-     * @param module     the module this subgroup belongs to
-     * @param year       the course year
+     * @param moduleCode     the module this subgroup belongs to
      * @param sessionType the type of session this subgroup is for (LAB or TUTORIAL)
      */
-    public SubGroup(CourseModule module,
-                    CourseYear year, SessionType sessionType) {
+    public SubGroup(String moduleCode, SessionType sessionType) {
 
         // Call the parent Group constructor
-        super(module, year);
+        super(moduleCode);
 
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
@@ -59,10 +56,6 @@ public class SubGroup extends Group {
         // Subgroup ID must start with the type
         // This gets the correct module code indicator
         // (could be made its own method idk what the convention for constructors is)
-
-        // gets module name
-        String moduleCode = module.getModuleCode().toLowerCase();
-        studentsInGroup = new HashMap<>();
         // group indicator (a letter a->z)
         char groupIndicator;
         // check if this module already has a group
@@ -75,48 +68,23 @@ public class SubGroup extends Group {
         // else it sets it to first value (which will be 'a')
         else groupIndicator = 'a';
         // makes group id the moduleCode + groupIndicator (e.g. cs4004a)
-        this.subGroupId = moduleCode + groupIndicator;
+        this.subGroupId = moduleCode + "_" + sessionType + "_" + groupIndicator;
         // adds / replaces module indicatorCode in the map
         moduleRecentGroupId.put(moduleCode, groupIndicator);
     }
 
     public SessionType getSessionType() {
-        return sessionType;
+        return this.sessionType;
     }
+    // DON'T NEED ADD/REMOVE STUDENT METHOD BECAUSE PARENT CLASS HAS IT
 
     /**
      * Returns the subgroup ID for this specific session type.
      * Example: "LAB-G1", "TUTORIAL-G1"
      */
     public String getSubGroupId() {
-        return subGroupId;
+        return this.subGroupId;
     }
-
-    /**
-     * Map each studentId in this subgroup to this subgroup's ID.
-     *
-     * Example:
-     *  24254444 -> "LAB-G1"
-     *  24545667 -> "LAB-G1"
-     */
-    public Map<String, String> mapStudentIdsToSubGroupId() {
-        Map<String, String> result = new HashMap<>();
-
-        for (Student s : getStudents()) {
-            if (s == null) {
-                throw new IllegalStateException("Student list contains null in SubGroup");
-            }
-            result.put(s.getUserId(), subGroupId);
-        }
-
-        return result;
-    }
-
-//    public Map<String,String> mapSubGroupIdToRoomID()// Might have to be it's own class because it has to coordinate with room and its subclasses along with coursemodules
-//    {
-//
-//    }
-
 
 
 
@@ -124,9 +92,9 @@ public class SubGroup extends Group {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        List<Student> students = getStudents();
+        List<String> students = getStudentsId();
         for (int i = 0; i < students.size(); i++) {
-            sb.append(students.get(i).getUserId());
+            sb.append(students.get(i));
             if (i < students.size() - 1) {
                 sb.append(", ");
             }
@@ -136,7 +104,6 @@ public class SubGroup extends Group {
                 "subGroupId='" + subGroupId + '\'' +
                 ", sessionType=" + sessionType +
                 ", module=" + getModuleCode() +
-                ", year=" + getYear() +
                 ", students=[" + sb +
                 "], rooms=" + getRooms() +
                 '}';

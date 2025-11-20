@@ -9,54 +9,46 @@ import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
+ * This and module could be merged into one group, and subgroup will be its own class without inheritance
  */
 public class Group {
 
-
-    private final CourseModule module;
-    private final CourseYear year;
-    private final Map<String, Student> studentsInGroup;
+    protected final CourseModule module;
+    protected final String moduleCode;
+    protected final Map<String, Student> studentsInGroup;
     private Teacher teacher;
     private final List<Room> rooms;
     private final Map<String, SubGroup> referencedSubGroups;
 
-
-    public Group(CourseModule module, CourseYear year){
-        if (module == null) {
-            throw new IllegalArgumentException("module can't be null");
+    public Group(String moduleCode){
+        if (moduleCode == null) {
+            throw new IllegalArgumentException("Module can't be null");
         }
-        if (year == null) {
-            throw new IllegalArgumentException("year can't be null");
-        }
-        this.module = module;
-        this.year = year;
+        this.moduleCode = moduleCode;
+        this.module = CourseModule.getModuleFromCode(moduleCode);
         this.teacher = null;
         rooms = new ArrayList<>();
         referencedSubGroups = new HashMap<>();
         studentsInGroup = new HashMap<>();
-
     }
     public void createSubGroup(){
 
     }
-    public String getYear() {
-        return year.getYearNumber();
-    }
     public void addStudent(String studentId){
-        if(Student.checkStudentId(studentId)){
-            studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
-        }
-        else{
-            System.out.println("Student with id " + studentId + " does not exist");
-        }
+        studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
     }
+    public boolean containsStudent(String studentId){
+        return studentsInGroup.containsKey(studentId);
+    }
+    public void removeStudent(String studentId){
+        if(containsStudent(studentId))
+            studentsInGroup.remove(studentId);
+        else throw new IllegalArgumentException("studentId: " +studentId+" does not exist in this group");
+    }
+
+
     public void setTeacher(String teacherId){
-        if(Teacher.checkTeacherId(teacherId)){
-            this.teacher = Teacher.getTeacherFromId(teacherId);
-        }
-        else{
-            System.out.println("Teacher with id " + teacherId + " does not exist");
-        }
+        this.teacher = Teacher.getTeacherFromId(teacherId);
     }
     public Teacher getTeacherObject() {
         return teacher;
@@ -86,12 +78,10 @@ public class Group {
         return this.rooms; 
     }
 
-    public String getGroupId()
+    public String getGroupModuleCode()
     {
-        return this.groupId; 
+        return this.module.getModuleCode();
     }
-
-
 
     @Override
     public String toString() {
@@ -110,9 +100,7 @@ public class Group {
         }
 
         return "Group{" +
-                "groupId='" + groupId + '\'' +
                 ", module=" + module.getModuleCode() +
-                ", year=" + year.getYearNumber() +
                 ", presiding teacher=" + this.teacher.getTeacherId() +
                 ", students=[" + sb +
                 "], rooms=" + rooms +

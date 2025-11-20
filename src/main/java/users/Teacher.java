@@ -28,6 +28,8 @@ public class Teacher extends User {
     }
 
     public static Teacher getTeacherFromId(String teacherId) {
-        return allTeachers.get(teacherId);
+        if(checkTeacherId(teacherId))
+            return allTeachers.get(teacherId);
+        else throw new IllegalArgumentException("This Teacher ID " + teacherId + " does not exist");
     }
 }
