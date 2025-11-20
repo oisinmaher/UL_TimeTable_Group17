@@ -3,16 +3,16 @@ package src.main.java.users;
 /**
  *
  */
-class User{
+public class User{
     String name;
-    int userId;
+    String userId;
 
     /**
      *
      * @param name
      * @param userId
      */
-    public User(String name, int userId){
+    public User(String userId, String name){
         this.name = name;
         this.userId = userId;
     }
@@ -29,7 +29,7 @@ class User{
      *
      * @return
      */
-    public int getUserId(){
+    public String getUserId(){
         return this.userId;
     }
 

@@ -1,4 +1,6 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
+
+import src.main.java.users.Lecturer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

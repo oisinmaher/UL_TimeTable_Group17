@@ -1,6 +1,7 @@
-package src.main.java.ui.cli;
+package src.main.java.ui.cli1;
 
 import java.util.List;
+import src.main.java.users.Lecturer; 
 
 /**
  * Defines the operations required for managing lecturer data.

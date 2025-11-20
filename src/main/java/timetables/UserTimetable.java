@@ -1,7 +1,7 @@
 package src.main.java.timetables;
 
 import src.main.java.programCourse.CourseFull;
-import src.main.java.users.User;
+import src.main.java.users.User; 
 import java.util.*;
 
 /**
