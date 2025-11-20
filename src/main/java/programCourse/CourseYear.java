@@ -1,6 +1,9 @@
-package programCourse;
+package src.main.java.programCourse;
 
-import modules.CourseModule;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseFull;
+import src.main.java.timetables.TimeSlot;
 
 import java.util.*;
 
@@ -48,7 +51,7 @@ public final class CourseYear{
      * @return the year number
      */
     public String getYearNumber() {
-        return yearNumber;
+        return this.yearNumber;
     }
     /** Create a new course semester and add to mapping **/
     public void addSemester(String season){

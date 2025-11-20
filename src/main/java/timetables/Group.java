@@ -1,8 +1,9 @@
-package timetables;
-import modules.CourseModule;
-import rooms.Room;
-import users.Student;
-import users.Teacher;
+package src.main.java.timetables;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.*;
+import src.main.java.rooms.Room;
+import src.main.java.users.Student;
+import src.main.java.users.Teacher;
 
 import java.util.*;
 
@@ -95,8 +96,7 @@ public class Group {
                 sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
             }
             // deletes last \n
-            if (sb.length() > 0){
-                sb.deleteCharAt(sb.length() - 1);}
+            if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
         }
 
         return "Group{" +

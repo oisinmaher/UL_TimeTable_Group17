@@ -1,16 +1,19 @@
+package src.main.java;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseFull;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseYear;
+import src.main.java.ui.cli1.*;
+//import src.main.java.modules.CourseModule;
+//import src.main.java.rooms.LectureRoom;
+//import src.main.java.rooms.Room;
+//import src.main.java.ui.cli1.AdminCommandSession;
+//import src.main.java.timetables.*;
+//import src.main.java.ui.cli1.InMemoryLecturerService;
+//import src.main.java.ui.cli1.InMemoryStudentService;
+//import src.main.java.ui.cli1.StudentService;
+//import src.main.java.users.Student;
 
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import export.ExportService;
-import export.dto.StudentCsvDto;
-import export.mapper.StudentMapper;
-import export.writer.CsvWriterUtil;
-import modules.CourseModule;
-import programCourse.*;
-import users.Student;
-
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
@@ -74,36 +77,21 @@ public class Main {
 //        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
 //
 //
-//        Scanner sc = new Scanner(System.in);
-//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
-//        ad.run();
+//
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().get(0);
+        CourseYear courseYear = courseFull.getCourseYears().getFirst();
         courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().get(0);
+        CourseSemester semester = courseYear.getSemesters().getFirst();
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
         System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
         System.out.println(courseModule.toString());
+        Scanner sc = new Scanner(System.in);
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        ad.run();
 
-        Student alex = new Student("123", "Alex", "LM121", "1");
-        Student bob = new Student("456", "Bob", "LM121", "1");
-
-        List<Student> students = Arrays.asList(alex, bob);
-
-        StudentCsvDto dto = StudentMapper.flatten(alex);
-        CsvWriterUtil<StudentCsvDto> writer = new CsvWriterUtil<>(
-                Paths.get("C:\\Users\\24354678\\IdeaProjects\\UL_TimeTable_Group17\\src\\main\\resources\\student.csv"), StudentCsvDto.class);
-
-        System.out.println("Writing DTO: " + dto.getStudentId() + ", " + dto.getName());
-        ExportService service = new ExportService();
-        try {
-            service.export(dto, writer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
     }
 }
