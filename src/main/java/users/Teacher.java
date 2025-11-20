@@ -1,6 +1,6 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseFull;
+import programCourse.CourseFull;
 
 import java.util.*;
 
