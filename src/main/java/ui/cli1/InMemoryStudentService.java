@@ -1,11 +1,11 @@
-package ui.cli1;
+package src.main.java.ui.cli1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import users.Student;
+import src.main.java.users.Student;
 
 
 public class InMemoryStudentService implements StudentService

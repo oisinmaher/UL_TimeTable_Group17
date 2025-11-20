@@ -1,8 +1,7 @@
-package modules;
+package src.main.java.modules;
 
-
-import timetables.Group;
-import users.Lecturer;
+import src.main.java.timetables.Group;
+import src.main.java.users.Lecturer;
 
 import java.util.*;
 

@@ -1,6 +1,9 @@
-package programCourse;
+package src.main.java.programCourse;
 
-import modules.CourseModule;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseSemester;
+import src.main.java.programCourse.CourseFull;
+import src.main.java.timetables.TimeSlot;
 
 import java.util.*;
 

@@ -1,8 +1,9 @@
-package timetables;
-import modules.CourseModule;
-import rooms.Room;
-import users.Student;
-import users.Teacher;
+package src.main.java.timetables;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.*;
+import src.main.java.rooms.Room;
+import src.main.java.users.Student;
+import src.main.java.users.Teacher;
 
 import java.util.*;
 
@@ -74,7 +75,7 @@ public class Group {
 
     public List<Room> getRooms()
     {
-        return this.rooms;
+        return this.rooms; 
     }
 
     public String getGroupModuleCode()
