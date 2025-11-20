@@ -1,12 +1,17 @@
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import export.ExportService;
+import export.dto.StudentCsvDto;
+import export.mapper.StudentMapper;
+import export.writer.CsvWriterUtil;
 import modules.CourseModule;
 import persistence.StudentCsvStorage;
 import programCourse.*;
 import users.Student;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
@@ -88,7 +93,7 @@ public class Main {
         Student bob = new Student("456", "Bob", "LM121", "1");
 
         List<Student> students = Arrays.asList(alex, bob);
-
+/*
         StudentCsvStorage storage = new StudentCsvStorage();
 
         try {
@@ -105,6 +110,20 @@ public class Main {
 
         for (Student student : students) {
             System.out.println(student.toString());
+        }
+
+ */
+
+        StudentCsvDto dto = StudentMapper.flatten(alex);
+        CsvWriterUtil<StudentCsvDto> writer = new CsvWriterUtil<>(
+                Paths.get("C:\\Users\\24354678\\IdeaProjects\\UL_TimeTable_Group17\\src\\main\\resources\\student.csv"), StudentCsvDto.class);
+
+        System.out.println("Writing DTO: " + dto.getStudentId() + ", " + dto.getName());
+        ExportService service = new ExportService();
+        try {
+            service.export(dto, writer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }

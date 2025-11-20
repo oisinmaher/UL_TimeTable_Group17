@@ -1,15 +1,2 @@
-NAME,USERID
-Alex,123
-Bob,456
-Alex,123
-Bob,456
-Alex,123
-Bob,456
-Alex,123
-Bob,456
-Alex,123
-Bob,456
-Alex,123
-Bob,456
-Alex,123
-Bob,456
+COURSE_CODE,NAME,STUDENT_ID,YEAR
+lm121,Alex,123,1

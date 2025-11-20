@@ -1,8 +1,8 @@
 package timetables;
 import modules.CourseModule;
-import programCourse.CourseYear;
 import rooms.Room;
 import users.Student;
+import users.Teacher;
 
 import java.util.*;
 
@@ -95,7 +95,8 @@ public class Group {
                 sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
             }
             // deletes last \n
-            if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
+            if (sb.length() > 0){
+                sb.deleteCharAt(sb.length() - 1);}
         }
 
         return "Group{" +
