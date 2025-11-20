@@ -137,14 +137,6 @@ public class CourseModule {
     }
 
     /**
-     *
-     * @param numberOfTutorials
-     */
-    public void createTutorials(int numberOfTutorials) {
-        
-    }
-
-    /**
      * statically checks if module node is unique
      * @param newModuleCode
      * @return
@@ -176,37 +168,6 @@ public class CourseModule {
     public String toString(){
         return moduleCode + " - " + moduleName;
     }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLec() {
-        return moduleCode + " - " + "LEC" + "\n" +
-               lecturers + "\n";
-    }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLab() {
-        return moduleCode + " - " + "LAB" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-    }
-
-    /**
-     *
-     * @return
-     *
-    public String toStringTut() {
-        return moduleCode + " - " + "TUT" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-
-
-    }
-
-     */
 }
 /* 
 public ArrayList<String> getLecturers() {
