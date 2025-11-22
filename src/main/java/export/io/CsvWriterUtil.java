@@ -1,4 +1,4 @@
-package export.writer;
+package export.io;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -22,7 +22,7 @@ public class CsvWriterUtil<T> {
 
     /**
      * Constructor class for the writer
-     * @param path the file path for the CSV
+     * @param path the absolute file path for the CSV
      * @param type the class to be written to the file
      */
     public CsvWriterUtil(Path path, Class<T> type) {
@@ -39,14 +39,22 @@ public class CsvWriterUtil<T> {
      */
     public void write(T object) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
-        //This takes the CSVBindByName and makes the header
+        /*Can use HeaderNameMappingStrategy using CSVBindByName- but this does not take the order into account,
+         but headers are then written.
+        Can also use the CSVBindByPosition and decides the position of the data in the csv,
+         no headers are written - not good.
+        */
+
         HeaderColumnNameMappingStrategy<T> strategy = new HeaderColumnNameMappingStrategy<>();
+
+        //ColumnPositionMappingStrategy<T> strategy = new ColumnPositionMappingStrategy<>();
+
         strategy.setType(type);
 
         try(Writer writer = new FileWriter(path.toString())){
             StatefulBeanToCsv<T> sbc = new StatefulBeanToCsvBuilder<T>(writer)
-                    .withApplyQuotesToAll(false)
                     .withMappingStrategy(strategy)
+                    .withApplyQuotesToAll(false)
                     .withSeparator(',')
                     .build();
 

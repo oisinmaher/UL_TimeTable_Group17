@@ -243,7 +243,7 @@ public class AdminCommandSession implements UserSession {
             System.out.println(courseCode + " does not have any years, you must create them");
         }
         else{
-            System.out.print(courseYears.getFirst());
+            System.out.print(courseYears.get(0));
             for(int i = 1; i < courseYears.size(); i++){
                 System.out.print(", " + courseYears.get(i));
             }

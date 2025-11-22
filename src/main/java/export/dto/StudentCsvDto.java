@@ -1,6 +1,8 @@
 package export.dto;
 
+import com.opencsv.bean.CsvBindAndJoinByPositions;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 
 /**
  * Data Transfer Object for exporting Student objects to CSV.
@@ -9,16 +11,20 @@ import com.opencsv.bean.CsvBindByName;
 public class StudentCsvDto implements CsvDtoInterface{
 
     //This is the header on the CSV file
-    @CsvBindByName(column = "student_id")
+    //@CsvBindByPosition(position = 0)
+    @CsvBindByName
     private String studentId;
 
-    @CsvBindByName(column = "name")
+    //@CsvBindByPosition(position = 1)
+    @CsvBindByName
     private String name;
 
-    @CsvBindByName(column = "course_code")
+    //@CsvBindByPosition(position = 2)
+    @CsvBindByName
     private String courseCode;
 
-    @CsvBindByName(column = "year")
+    //@CsvBindByPosition(position = 3)
+    @CsvBindByName
     private String year;
 
     /**

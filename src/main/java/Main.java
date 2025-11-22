@@ -1,17 +1,7 @@
-
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import export.ExportService;
-import export.dto.StudentCsvDto;
-import export.mapper.StudentMapper;
-import export.writer.CsvWriterUtil;
-
 import modules.CourseModule;
 import programCourse.*;
 import ui.cli1.*;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
@@ -78,13 +68,14 @@ public class Main {
 //
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().getFirst();
+        CourseYear courseYear;
+        courseYear = courseFull.getCourseYears().get(0);
         courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().getFirst();
+        CourseSemester semester = courseYear.getSemesters().get(0);
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
         System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
         System.out.println(courseModule.toString());
         Scanner sc = new Scanner(System.in);
         AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
