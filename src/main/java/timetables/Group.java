@@ -19,6 +19,7 @@ public class Group {
     private Teacher teacher;
     private final List<Room> rooms;
     private final Map<String, SubGroup> referencedSubGroups;
+    private final Map<String, Group> allGroups = new HashMap<>();
 
     public Group(String moduleCode){
         if (moduleCode == null) {
@@ -31,8 +32,8 @@ public class Group {
         referencedSubGroups = new HashMap<>();
         studentsInGroup = new HashMap<>();
     }
-    public void createSubGroup(){
-
+    public void createSubGroup(String sessionType){
+        SubGroup subgroup = new SubGroup(this.moduleCode, sessionType);
     }
     public void addStudent(String studentId){
         studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
@@ -101,7 +102,7 @@ public class Group {
 
         return "Group{" +
                 ", module=" + module.getModuleCode() +
-                ", presiding teacher=" + this.teacher.getTeacherId() +
+                ", presiding teacher=" + this.teacher.getUserId() +
                 ", students=[" + sb +
                 "], rooms=" + rooms +
                 '}';

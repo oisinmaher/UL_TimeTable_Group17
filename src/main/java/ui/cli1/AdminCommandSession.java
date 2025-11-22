@@ -9,16 +9,16 @@ public class AdminCommandSession implements UserSession {
 
     private final Scanner in;
     private final StudentService studentService;
-    private final LecturerService lecturerService;
+    private final TeacherService teacherService;
     private final CourseFullService courseFullService;
     private final CourseYearService courseYearService;
 
     public AdminCommandSession(
-            Scanner in, StudentService studentService, LecturerService lecturerService, CourseFullService courseFullService,
-    CourseYearService courseYearService) {
+            Scanner in, StudentService studentService, TeacherService teacherService, CourseFullService courseFullService,
+            CourseYearService courseYearService) {
         this.in = in;
         this.studentService = studentService;
-        this.lecturerService = lecturerService;
+        this.teacherService = teacherService;
         this.courseFullService = courseFullService;
         this.courseYearService = courseYearService;
     }
@@ -49,11 +49,11 @@ public class AdminCommandSession implements UserSession {
                 case "update-student":
                     cmdUpdateStudent(args);
                     break;
-                case "add-lecturer":
-                    cmdAddLecturer(args);
+                case "add-teacher":
+                    cmdAddTeacher(args);
                     break;
-                case "update-lecturer":
-                    cmdUpdateLecturer(args);
+                case "update-teacher":
+                    cmdUpdateTeacher(args);
                     break;
                 case "add-course-full":
                     cmdAddCourseFull(args);
@@ -70,8 +70,8 @@ public class AdminCommandSession implements UserSession {
                 case "list-students":
                     cmdListStudents();
                     break;
-                case "list-lecturers":
-                    cmdListLecturers();
+                case "list-teachers":
+                    cmdListTeachers();
                     break;
                 case "help":
                     printHelp();
@@ -91,14 +91,14 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  add-student <id> <fullName> <course> <year>");
         System.out.println("  remove-student <id>");
         System.out.println("  update-student <id> <field> <newValue>");
-        System.out.println("  add-lecturer <id> <fullName>");
-        System.out.println("  update-lecturer <id> <field> <newValue>");
+        System.out.println("  add-teacher <id> <fullName>");
+        System.out.println("  update-teacher <id> <field> <newValue>");
         System.out.println("  add-course-full <courseCode> <courseName>");
         System.out.println("  add-course-year <courseCode> <year>");
         System.out.println("  list-courses");
         System.out.println("  list-course-years <courseCode>");
         System.out.println("  list-students");
-        System.out.println("  list-lecturers");
+        System.out.println("  list-teachers");
         System.out.println("  help");
         System.out.println("  exit");
     }
@@ -157,9 +157,9 @@ public class AdminCommandSession implements UserSession {
         }
     }
 
-    private void cmdAddLecturer(String[] args) {
+    private void cmdAddTeacher(String[] args) {
         if (args.length < 2) {
-            System.out.println("Usage: add-lecturer <id> <fullName>");
+            System.out.println("Usage: add-teacher <id> <fullName>");
             return;
         }
         String id = args[0];
@@ -167,17 +167,17 @@ public class AdminCommandSession implements UserSession {
         for(int i = 2; i < args.length; i++){
             name = name + " " + args[i];
         }
-        boolean ok = lecturerService.addLecturer(id, name);
+        boolean ok = teacherService.addTeacher(id, name);
         if (ok) {
-            System.out.println("Lecturer added: " + id);
+            System.out.println("teacher added: " + id);
         } else {
-            System.out.println("Lecturer with id " + id + " already exists.");
+            System.out.println("teacher with id " + id + " already exists.");
         }
     }
 
-    private void cmdUpdateLecturer(String[] args) {
+    private void cmdUpdateTeacher(String[] args) {
         if (args.length < 3) {
-            System.out.println("Usage: update-lecturer <id> <field> <newValue>");
+            System.out.println("Usage: update-teacher <id> <field> <newValue>");
             System.out.println("Fields: fullName");
             return;
         }
@@ -188,11 +188,11 @@ public class AdminCommandSession implements UserSession {
             newValue = newValue + " " + args[i];
         }
 
-        boolean ok = lecturerService.updateLecturerField(id, field, newValue);
+        boolean ok = teacherService.updateTeacherField(id, field, newValue);
         if (ok) {
-            System.out.println("Lecturer " + id + " updated (" + field + ").");
+            System.out.println("Teacher " + id + " updated (" + field + ").");
         } else {
-            System.out.println("Could not update lecturer. Check id/field.");
+            System.out.println("Could not update teacher. Check id/field.");
         }
     }
     private void cmdAddCourseFull(String[] args){
@@ -258,10 +258,10 @@ public class AdminCommandSession implements UserSession {
         }
     }
 
-    private void cmdListLecturers() {
-        System.out.println("Lecturers:");
-        for (Lecturer l : lecturerService.getAllLecturers()) {
-            System.out.println("  " + l);
+    private void cmdListTeachers() {
+        System.out.println("Teachers:");
+        for (Teacher t : teacherService.getAllTeachers()) {
+            System.out.println("  " + t);
         }
     }
 

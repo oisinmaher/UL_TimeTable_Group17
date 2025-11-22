@@ -1,7 +1,7 @@
 package src.main.java.modules;
 
 import src.main.java.timetables.Group;
-import src.main.java.users.Lecturer;
+import src.main.java.users.Teacher;
 
 import java.util.*;
 
@@ -12,13 +12,13 @@ import java.util.*;
 public class CourseModule {
     private final String moduleName;
     private final String moduleCode;
-    private List<Lecturer> lecturers;
+    private List<Teacher> lecturers;
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
     private final Group groupAssigned;
     // This will contain all created modules in a class
-    static private Map<String, CourseModule> allModules = new HashMap<>();
+    static private final Map<String, CourseModule> allModules = new HashMap<>();
 
     /**
      * Constructor for course module

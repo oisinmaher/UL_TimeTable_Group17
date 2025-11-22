@@ -9,7 +9,7 @@ import src.main.java.ui.cli1.*;
 //import src.main.java.rooms.Room;
 //import src.main.java.ui.cli1.AdminCommandSession;
 //import src.main.java.timetables.*;
-//import src.main.java.ui.cli1.InMemoryLecturerService;
+import src.main.java.ui.cli1.InMemoryTeacherService;
 //import src.main.java.ui.cli1.InMemoryStudentService;
 //import src.main.java.ui.cli1.StudentService;
 //import src.main.java.users.Student;
@@ -89,7 +89,7 @@ public class Main {
         CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
         System.out.println(courseModule.toString());
         Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryTeacherService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
         ad.run();
 
 

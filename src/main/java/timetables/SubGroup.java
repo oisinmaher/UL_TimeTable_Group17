@@ -7,6 +7,7 @@ import src.main.java.users.Student;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -24,11 +25,14 @@ import java.util.Map;
  * Each SubGroup can still contain all students in the parent group.
  */
 public class SubGroup extends Group {
-    public enum SessionType {
-        LAB,
-        TUTORIAL
-    }
-    private final SessionType sessionType;
+    // Enum is way too much extra code for cli checks
+    // since we're doing cli (instead of being given a list of options and choosing a,b,c etc.)
+    // there's no reason to use Enum, just have check in constructor for lab/tutorial
+//    public enum SessionType {
+//        LAB,
+//        TUTORIAL
+//    }
+    private final String sessionType;
     private final String subGroupId;   // e.g. "LAB-G1", "TUTORIAL-G1"
 
     // This will map it so if a module has multiple groups you can find which letter
@@ -36,6 +40,8 @@ public class SubGroup extends Group {
     // (e.g. when creating a new group for a module that contains CS4004A, it will return A then you can do 'A'++
     // to get 'B', assign the group the name cs4004B and update map to B
     private static final Map<String, Character> moduleRecentGroupId = new HashMap<>();
+    private static final Map<String, SubGroup> allSubGroups = new HashMap<>();
+
 
     /**
      * Constructs a SubGroup for a given module/year/students/rooms and session type.
@@ -43,13 +49,16 @@ public class SubGroup extends Group {
      * @param moduleCode     the module this subgroup belongs to
      * @param sessionType the type of session this subgroup is for (LAB or TUTORIAL)
      */
-    public SubGroup(String moduleCode, SessionType sessionType) {
+    public SubGroup(String moduleCode, String sessionType) {
 
         // Call the parent Group constructor
         super(moduleCode);
-
+        sessionType = sessionType.toLowerCase();
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
+        }
+        if(!(sessionType.equals("lab") || sessionType.equals("tutorial"))){
+            throw new IllegalArgumentException("Session type has to be either lab or tutorial");
         }
 
         this.sessionType = sessionType;
@@ -71,9 +80,10 @@ public class SubGroup extends Group {
         this.subGroupId = moduleCode + "_" + sessionType + "_" + groupIndicator;
         // adds / replaces module indicatorCode in the map
         moduleRecentGroupId.put(moduleCode, groupIndicator);
+        allSubGroups.put(this.subGroupId, this);
     }
 
-    public SessionType getSessionType() {
+    public String getSessionType() {
         return this.sessionType;
     }
     // DON'T NEED ADD/REMOVE STUDENT METHOD BECAUSE PARENT CLASS HAS IT
