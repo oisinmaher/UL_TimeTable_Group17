@@ -26,7 +26,7 @@ public class DataManager {
     List<CourseYear> programYearsList = new ArrayList<>();
     List<Room> roomsList = new ArrayList<>();
     List<TimeSlot> timeSlotList = new ArrayList<>();
-//    List<TimeTable> timeTableList = new ArrayList<>();
+    List<TimeTable> timeTableList = new ArrayList<>();
     private DataManager() {
     }
     public static DataManager getInstance() {

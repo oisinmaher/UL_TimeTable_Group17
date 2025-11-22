@@ -15,6 +15,7 @@ public class LectureRoom extends Room{
     {
         super(roomID, roomType, maxCapacity); 
     }
+   
 
     /**
      *
@@ -37,6 +38,7 @@ public class LectureRoom extends Room{
         }
          
     }
+
 
     /**
      *
