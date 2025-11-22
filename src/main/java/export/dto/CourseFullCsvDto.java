@@ -2,6 +2,9 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * CourseFull Data transfer object
+ */
 public class CourseFullCsvDto implements CsvDtoInterface{
 
     @CsvBindByName
@@ -14,8 +17,17 @@ public class CourseFullCsvDto implements CsvDtoInterface{
     private String yearNumbers;
 
 
+    /**
+     * No arg-constructor required for CsvToBean
+     */
     public CourseFullCsvDto() { }
 
+    /**
+     * Constructor for DTO
+     * @param courseCode
+     * @param name
+     * @param yearNumbers
+     */
     public CourseFullCsvDto(String courseCode, String name, String yearNumbers) {
         this.courseCode = courseCode;
         this.name = name;

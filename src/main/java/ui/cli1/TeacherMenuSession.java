@@ -1,19 +1,19 @@
 package ui.cli1;
 
-import users.Lecturer;
+import users.Teacher;
 
 import java.util.Scanner;
 
-public class LecturerMenuSession implements UserSession {
+public class TeacherMenuSession implements UserSession {
 
     private final Scanner in;
-    private final LecturerService lecturerService;
-    private final String lecturerId;
+    private final TeacherService teacherService;
+    private final String teacherId;
 
-    public LecturerMenuSession(Scanner in,LecturerService lecturerService,String lecturerId) {
+    public TeacherMenuSession(Scanner in, TeacherService teacherService, String teacherId) {
         this.in = in;
-        this.lecturerService = lecturerService;
-        this.lecturerId = lecturerId;
+        this.teacherService = teacherService;
+        this.teacherId = teacherId;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class LecturerMenuSession implements UserSession {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n=== Lecturer Menu ===");
+            System.out.println("\n=== Teacher Menu ===");
             System.out.println("1. View my details");
             System.out.println("2. Logout");
             System.out.print("Choose an option: ");
@@ -30,9 +30,9 @@ public class LecturerMenuSession implements UserSession {
 
             switch (choice) {
                 case "1":
-                    Lecturer l = lecturerService.findLecturerById(lecturerId);
+                    Teacher l = teacherService.findTeacherById(teacherId);
                     if (l == null) {
-                        System.out.println("Lecturer not found in system.");
+                        System.out.println("teacher not found in system.");
                     } else {
                         System.out.println("Your details: " + l);
                     }

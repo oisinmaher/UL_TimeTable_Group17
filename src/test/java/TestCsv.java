@@ -41,11 +41,6 @@ public class TestCsv {
         AY25ec121Y2sem1.addNewModule("EC102", "Foundations of Econ");
 
         Student student = new Student("123456", "Alex", "EC121", "1");
-
-
-
-        StudentCsvDto studentCsvDto = StudentMapper.flatten(student);
-
  */
 
         String filepath = "D:\\UL Work\\Yr 2 Sem 1\\CS4013 - OOP\\TimetableProject\\UL_TimeTable_Group17\\src\\test\\resources\\csvstudentstest.csv";
@@ -54,10 +49,16 @@ public class TestCsv {
         Path path2 = Paths.get(csvcoursefull);
 
         /*
+
+        //Writing objects to memory
+
+        //Create the data-transfer-object and assign a flattened object
         CourseFullCsvDto courseFullCsvDto = CourseFullMapper.flatten(ec121);
 
+        //Create your writer
         CsvWriterUtil<CourseFullCsvDto> writer = new CsvWriterUtil<>(path2, CourseFullCsvDto.class);
 
+        //Export to csv file
         try{
             exportService.export(courseFullCsvDto, writer);
         }catch (Exception e){
@@ -65,8 +66,7 @@ public class TestCsv {
         }
 
 
-
-
+        StudentCsvDto studentCsvDto = StudentMapper.flatten(student);
         CsvWriterUtil<StudentCsvDto> writer2 = new CsvWriterUtil<>(path, StudentCsvDto.class);
         try {
             exportService.export(studentCsvDto, writer2);
@@ -77,41 +77,47 @@ public class TestCsv {
 
          */
 
+
+
+        //Bringing an object into memory from the csv
+
+        //Create your reader for the csv file
         CsvReaderUtil<CourseFullCsvDto> reader2 = new CsvReaderUtil<>(path2, CourseFullCsvDto.class);
 
+        //where the contents of the csv file will be imported to
         List<CourseFullCsvDto> courseFullCsvDtoList;
 
+        //importing the csv file
         try{
             courseFullCsvDtoList = importService.read(reader2);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        //making the imported flat csv contents back into objects
         List<CourseFull> courseFulls = new ArrayList<>();
         for (CourseFullCsvDto dto : courseFullCsvDtoList) {
             CourseFull crs1 = CourseFullMapper.inflate(dto);
             courseFulls.add(crs1);
         }
+        //you now have a list of objects again
 
 
-
+        //the same process for students
         CsvReaderUtil<StudentCsvDto> reader = new CsvReaderUtil<>(path, StudentCsvDto.class);
-
-
         List<StudentCsvDto> studentCsvDtoList;
         try {
             studentCsvDtoList = importService.read(reader);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
         List<Student> students = new ArrayList<>();
         for (StudentCsvDto dto : studentCsvDtoList) {
             Student st1 = StudentMapper.inflate(dto);
             students.add(st1);
         }
 
+        //performing operations on our read-in objects.
         for(Student s : students) {
             System.out.println(s);
         }
@@ -122,6 +128,7 @@ public class TestCsv {
 
                 System.out.print("," + c.getCourseYears().get(i).getYearNumber());
             }
+            System.out.println();
         }
 
     }

@@ -78,7 +78,7 @@ public class Main {
         CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
         System.out.println(courseModule.toString());
         Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryTeacherService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
         ad.run();
 
 

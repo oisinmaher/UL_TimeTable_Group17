@@ -16,7 +16,13 @@ public class User{
         this.name = name;
         this.userId = userId;
     }
+    public void setName(String name){
+        this.name = name;
+    }
 
+    public void setUserId(String userId){
+        this.userId = userId;
+    }
     /**
      *
      * @return

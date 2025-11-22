@@ -10,26 +10,44 @@ import java.util.*;
  */
 public class Teacher extends User {
 
-    public static Map<String, Teacher> allTeachers = new HashMap<>();
+    private final static Map<String, Teacher> allTeachers = new HashMap<>();
     // List of courses the teacher teaches (e.g LM121, LM051 etc.)
-    List<CourseFull> courseTaught;
+     private final Map<String, CourseModule> coursesTaught;
 
     // Constructor with base parameters of user
     public Teacher(String teacherId, String name) {
         super(teacherId, name);
-        courseTaught = new ArrayList<>();
+        coursesTaught = new HashMap<>();
         allTeachers.put(this.userId, this);
     }
-    public String getTeacherId(){
-        return this.userId;
+
+    public void addCourseToTeacher(String courseCode){
+        courseCode = courseCode.toLowerCase();
+        CourseModule courseModule = CourseModule.getModuleFromCode(courseCode);
+        coursesTaught.put(courseCode, courseModule);
     }
-    public static boolean checkTeacherId(String teacherId) {
+    public void removeCourseFromTeacher(String courseCode){
+        courseCode = courseCode.toLowerCase();
+        if(containsCourse(courseCode)){
+            coursesTaught.remove(courseCode);
+        }
+        else{
+            throw new IllegalArgumentException("Teacher doesnt teach this course");
+        }
+    }
+    private boolean containsCourse(String courseCode){
+        return coursesTaught.containsKey(courseCode);
+    }
+    private static boolean checkTeacherId(String teacherId) {
         return allTeachers.containsKey(teacherId);
     }
-
     public static Teacher getTeacherFromId(String teacherId) {
         if(checkTeacherId(teacherId))
             return allTeachers.get(teacherId);
         else throw new IllegalArgumentException("This Teacher ID " + teacherId + " does not exist");
+    }
+    @Override
+    public String toString(){
+        return getUserId() + ": " + getName();
     }
 }

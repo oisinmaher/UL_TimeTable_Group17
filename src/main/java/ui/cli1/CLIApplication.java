@@ -8,7 +8,7 @@ public class CLIApplication {
         Scanner in = new Scanner(System.in);
 
         StudentService studentService = new InMemoryStudentService();
-        LecturerService lecturerService = new InMemoryLecturerService();
+        TeacherService teacherService = new InMemoryTeacherService();
         CourseFullService courseFullService = new InMemoryCourseFullService();
         CourseYearService courseYearService = new InMemoryCourseYearService();
 
@@ -17,7 +17,7 @@ public class CLIApplication {
         while (running) {
             System.out.println("\n=== UL Timetabling System (Users Focus) ===");
             System.out.println("1. Login as student");
-            System.out.println("2. Login as lecturer");
+            System.out.println("2. Login as teacher");
             System.out.println("3. Login as admin");
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
@@ -34,9 +34,9 @@ public class CLIApplication {
                     break;
 
                 case "2":
-                    System.out.print("Enter lecturer id: ");
-                    String lecturerId = in.nextLine().trim();
-                    session = new LecturerMenuSession(in, lecturerService, lecturerId);
+                    System.out.print("Enter teacher id: ");
+                    String teacherId = in.nextLine().trim();
+                    session = new TeacherMenuSession(in, teacherService, teacherId);
                     break;
 
                 case "3":
@@ -47,7 +47,7 @@ public class CLIApplication {
                         System.out.println("Invalid admin password.");
                         break;
                     }
-                    session = new AdminCommandSession(in, studentService, lecturerService, courseFullService, courseYearService);
+                    session = new AdminCommandSession(in, studentService, teacherService, courseFullService, courseYearService);
                     break;
 
                 case "4":
