@@ -1,6 +1,7 @@
 package export.mapper;
 
 import export.dto.StudentCsvDto;
+import programCourse.CourseFull;
 import users.Student;
 
 /**
@@ -24,12 +25,34 @@ public class StudentMapper implements MapperInterface{
     }
 
     /**
-     * WIP
-     * @param s
-     * @return
+     * Takes a flat student DTO and makes it into a student object
+     * @param s the student sto to inflate
+     * @return a student object
      */
     public static Student inflate(StudentCsvDto s) {
-            return new Student(null, null, null, null);
+
+
+        // 1. Validate course exists
+        if (!CourseFull.containsCode(s.getCourseCode())) {
+            throw new IllegalStateException(
+                    "Cannot inflate Student: CourseFull " + s.getCourseCode() + " does not exist."
+            );
+        }
+
+        CourseFull course = CourseFull.getCourseFromCode(s.getCourseCode());
+
+        // 2. Validate year exists
+        if (!course.containsYear(s.getYear())) {
+            throw new IllegalStateException(
+                    "Cannot inflate Student: CourseYear " + s.getYear() + " does not exist for course " + s.getCourseCode()
+            );
+        }
+        return new Student(
+                    s.getUserId(),
+                    s.getName(),
+                    s.getCourseCode(),
+                    s.getYear()
+            );
     }
 }
 

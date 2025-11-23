@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import com.opencsv.bean.*;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 /**
  * Generic reader class for CSV files.
@@ -37,6 +35,7 @@ public class CsvReaderUtil<T> {
         try {
             Reader reader = new FileReader(path.toFile());
             HeaderColumnNameMappingStrategy<T> strategy = new HeaderColumnNameMappingStrategy<>();
+                    strategy.setType(type);
 
             CsvToBean<T> result = new CsvToBeanBuilder<T>(reader)
                     .withType(type)

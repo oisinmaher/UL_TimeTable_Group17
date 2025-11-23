@@ -6,7 +6,7 @@ import java.util.*;
 
 /** This is the Teacher class
  *  This class inherits User
- *  It will be quiet similiar to Student but with modules from different courses
+ *  It will be quite similar to Student but with modules from different courses
  */
 public class Teacher extends User {
 
