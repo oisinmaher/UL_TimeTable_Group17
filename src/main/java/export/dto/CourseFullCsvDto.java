@@ -2,8 +2,6 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
-import java.util.List;
-
 public class CourseFullCsvDto implements CsvDtoInterface{
 
     @CsvBindByName
