@@ -1,59 +1,65 @@
 package src.main.java.modules;
 
-import java.util.ArrayList;
+import src.main.java.timetables.Group;
+import src.main.java.timetables.TimeSlot;
+import src.main.java.users.Lecturer;
+
+import java.util.*;
 
 /**
  * Course Module
  */
 
 public class CourseModule {
-    private String moduleName;
-    private String moduleCode;
-    private String lecturers;
+    private final String moduleName;
+    private final String moduleCode;
+    private List<Lecturer> lecturers;
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
-
-    // this has to be list of timeSlots, and each timeslot will have list of students
-    static private ArrayList<CourseModule> listOfModules = new ArrayList<CourseModule>();
-
+    private final Group groupAssigned;
+    // This will contain all created modules in a class
+    static private Map<String, CourseModule> allModules = new HashMap<>();
     /**
-     *
-     * @param moduleName
-     * @param moduleCode
+     * Constructor for course module
+     * @param moduleName module's name (e.g "Database systems")
+     * @param moduleCode module's code (e.g "cs4004")
      */
     public CourseModule(String moduleName, String moduleCode) {
-        if(checkUniqueModuleCode(moduleCode)) {
+        if(moduleName == null || moduleCode == null){
+            throw new IllegalArgumentException("Parameters cant be null");
+        }
+        moduleCode = moduleCode.toLowerCase();
+        if(!containsModuleCode(moduleCode)) {
             this.moduleName = moduleName;
             this.moduleCode = moduleCode;
-            listOfModules.add(this);
-        } else {
-            throw new IllegalArgumentException("The inputted module code already exists.");
-        }   
-    }
-
-    /**
-     * Creates the course module object
-     * @param moduleName the name of the module
-     * @param moduleCode the module code
-     * @param lecturers the module lecturer
-     * @param numberOfLecHours the number of lecture hours required
-     * @param numberOfLabs the number of labs required
-     * @param numberOfTutorials the number of tutorials required
-     */
-    public CourseModule(String moduleName, String moduleCode, String lecturers,
-                        int numberOfLecHours, int numberOfLabs, int numberOfTutorials) {
-        if(checkUniqueModuleCode(moduleCode)) {
-            this.moduleName = moduleName;
-            this.moduleCode = moduleCode;
-            this.lecturers = lecturers;
-            this.numberOfLecHours = numberOfLecHours;
-            this.numberOfLabs = numberOfLabs;
-            this.numberOfTutorials = numberOfTutorials;
-            listOfModules.add(this);
+            allModules.put(moduleCode, this);
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
         }
+        groupAssigned = new Group(this.moduleCode);
+    }
+
+
+
+    /**
+     * checks if a moduleCode already exists
+     * @param moduleCode the code associated with a module
+     * @return boolean value; true is moduleCode exists, false otherwise
+     */
+    public static boolean containsModuleCode(String moduleCode){
+        return allModules.containsKey(moduleCode.toLowerCase());
+    }
+
+    /**
+     * static method that returns CourseModule object that already exists from its module code
+     * @param moduleCode the code associated with module (e.g "cs4004")
+     * @return a CourseModule object with same moduleCode
+     */
+    public static CourseModule getModuleFromCode(String moduleCode){
+        if(!containsModuleCode(moduleCode))
+            throw new IllegalArgumentException("This module code doesnt exist, it must be created first");
+        return allModules.get(moduleCode.toLowerCase());
     }
 
     /**
@@ -61,7 +67,7 @@ public class CourseModule {
      * @return the name of the module
      */
     public String getModuleName() {
-        return moduleName;
+        return this.moduleName;
     }
 
     /**
@@ -69,23 +75,22 @@ public class CourseModule {
      * @return the module code
      */
     public String getModuleCode() {
-        return moduleCode;
+        return this.moduleCode;
     }
 
     /**
-     * Gets the name of the lecturer
-     * @return the name of the lecturer
+     * This returns the group assigned to a module
+     * @param moduleCode
+     * @return
      */
-    public String getLecturers() {
-        return lecturers;
+    public Group getGroupAssignedFromModuleCode(String moduleCode){
+        if(containsModuleCode(moduleCode)){
+            return allModules.get(moduleCode).groupAssigned;
+        }
+        else throw new IllegalArgumentException("A group with " + moduleCode + " does not exist");
     }
-
-    /**
-     * Sets the name of the lecturer
-     * @param lecturers the name of the module's lecturer
-     */
-    public void setLecturers(String lecturers) {
-        this.lecturers = lecturers;
+    public Group getGroupAssigned(){
+        return groupAssigned;
     }
 
     /**
@@ -105,32 +110,32 @@ public class CourseModule {
     }
 
     /**
-     *
-     * @return
+     * returns number of labs this module has
+     * @return number of labs
      */
     public int getNumberOfLabs() {
         return numberOfLabs;
     }
 
     /**
-     *
-     * @param numberOfLabs
+     * sets number of labs this module has
+     * @param numberOfLabs the number of labs
      */
     public void setNumberOfLabs(int numberOfLabs) {
         this.numberOfLabs = numberOfLabs;
     }
 
     /**
-     *
-     * @return
+     * returns number of tutorials this module has
+     * @return number of tutorials
      */
     public int getNumberOfTutorials() {
         return numberOfTutorials;
     }
 
     /**
-     *
-     * @param numberOfTutorials
+     * returns the number of tutorials this module has
+     * @param numberOfTutorials the number of tutorials
      */
     public void setNumberOfTutorials(int numberOfTutorials) {
         this.numberOfTutorials = numberOfTutorials;
@@ -144,76 +149,25 @@ public class CourseModule {
 
     }
 
+
     /**
-     *
-     * @param newModuleCode
-     * @return
+     * static method returns list of all modules that exist
+     * @return list of modules
      */
-    private static boolean checkUniqueModuleCode(String newModuleCode) {
-        boolean unique = true;
-        for(CourseModule m : listOfModules) {
-            if(m.moduleCode.equals(newModuleCode)) {
-                return unique = false;
-            }
-        }
-        return unique;
+    public static ArrayList<CourseModule> getListOfModules() {
+        return new ArrayList<>(allModules.values());
     }
 
-
     /**
-     *
-     * @return
+     * static method returns list of all module codes that exist
+     * @return list of modules
      */
-    public ArrayList<String> getListOfModules() {
-        ArrayList<String> listOfModules = new ArrayList<String>();
-        for(int i = 0; i < listOfModules.size(); i++) {
-            listOfModules.add(listOfModules.get(i));
-        }
-        return listOfModules;
+    public static ArrayList<String> getListOfModuleCodes(){
+        return new ArrayList<>(allModules.keySet());
     }
 
     @Override
     public String toString(){
         return moduleCode + " - " + moduleName;
     }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLec() {
-        return moduleCode + " - " + "LEC" + "\n" +
-               lecturers + "\n";
-    }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLab() {
-        return moduleCode + " - " + "LAB" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-    }
-
-    /**
-     *
-     * @return
-     *
-    public String toStringTut() {
-        return moduleCode + " - " + "TUT" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-
-
-    }
-
-     */
 }
-/* 
-public ArrayList<String> getLecturers() {
-        ArrayList<String> listOfLecturers = new ArrayList<String>();
-        for(int i = 0; i < lecturers.size(); i++) {
-            listOfLecturers.add(lecturers.get(i));
-        }
-        return listOfLecturers;
-    }
-*/

@@ -10,33 +10,48 @@ import java.util.List;
  * A TimeSlot is the place in the timetable that keeps the information of each user, room and module at a specific place
  * in the timetable
  */
-public class TimeSlot implements Comparable<TimeSlot>  {
+public class TimeSlot{
+    private String day;
     private String time;
+    private String dayTime;
     //private LectureRoom lectureRoom;
 
-    //these could be replaced by a program object
-    //private CourseModule module;
-    //private List<Student> students;
-
+    private CourseModule module;
+    // group will hold list of students
     private Group group;
 
-    public TimeSlot(String time, Group group){
-        this.time = time;
-        //this.module = module;
-        //this.students = students;
-        //this.lectureRoom = lectureRoom;
+    public TimeSlot(String day, String time, CourseModule module){
+        day = day.toLowerCase();
+        // NEED CHECK FOR IF DAY IS mon tue wed thu fri
 
-        this.group = group;
+        this.day = day;
+        this.time = time;
+        // NEED CHECK IF TIME IS valid 24 hour clock no characters e.g 2240, NOT 22:40 or 2280
+
+        dayTime = day + "" + time;
+//        this.group = new Group(module);
     }
 
     /**
-     * Compares a TimeSlot with another TimeSlot for order based on time
+     * Compares a TimeSlot with another TimeSlot to check if same time
+     * (based on the value returned by toString(), which is dayTime)
      * @param o the object to be compared.
-     * @return a negative integer, zero or a positive integer if the TimeSlot is earlier, the same or after the other
      */
     @Override
-    public int compareTo(TimeSlot o) {
-        return this.time.compareTo(o.time);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        // Check for null and class type
+        if (o == null || getClass() != o.getClass()) return false;
+
+        // Casts the object to TimeSlot
+        TimeSlot that = (TimeSlot) o;
+
+         return this.dayTime.equals(that.dayTime);
+    }
+    @Override
+    public int hashCode(){
+        return this.toString().hashCode();
     }
 
     /**
@@ -45,12 +60,7 @@ public class TimeSlot implements Comparable<TimeSlot>  {
      */
     @Override
     public String toString(){
-        //StringBuilder sb = new StringBuilder();
-        //for(Student s:students ){
-       //     sb.append(s.getUserId()).append(", ");
-       // }
-
-        return "Time:" + time + " Group: " + group;
+        return dayTime;
     }
 
 }

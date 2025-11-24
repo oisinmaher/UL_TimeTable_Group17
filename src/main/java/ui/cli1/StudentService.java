@@ -6,17 +6,15 @@ import java.util.List;
 
 /**
  * Defines the contract for all operations related to managing student data.
- * <p>
- * Using an <b>interface</b> here is the best choice because:
- * <ul>
- *     <li>It separates the <b>behaviour</b> (what the system can do) from the
- *         <b>implementation</b> (how it is done).</li>
- *     <li>It allows you to easily swap between different data storage methods,
+ * Using an interface< here is the best choice because:
+ *
+ *     It separates the behaviour (what the system can do) from the
+ *         implementation (how it is done).
+ *     It allows you to easily swap between different data storage methods,
  *         such as in-memory storage now and CSV-based storage later, without
- *         changing any CLI code.</li>
- *     <li>It keeps the system flexible and supports the addition of future
- *         implementations (e.g., database, JSON, or API-driven storage).</li>
- * </ul>
+ *         changing any CLI code.
+ *     It keeps the system flexible and supports the addition of future
+ *         implementations (e.g., database, JSON, or API-driven storage).
  * All menu sessions and admin commands rely only on this interface, meaning
  * they will continue to work even when you change the underlying data source.
  */
@@ -29,7 +27,7 @@ public interface StudentService
      * @param name the student's name
      * @return true if the student was added successfully; false if the ID already exists
      */
-    boolean addStudent(String id, String name);   // Add a new student
+    boolean addStudent(String id, String name, String courseCode, String year);   // Add a new student
 
     /**
      * Removes a student from the system.

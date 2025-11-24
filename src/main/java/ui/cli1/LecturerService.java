@@ -6,10 +6,8 @@ import java.util.List;
 
 /**
  * Defines the operations required for managing lecturer data.
- * <p>
  * This interface is used for the same reason as {@link StudentService}:
  * it allows the CLI to work independently from the underlying data storage.
- * </p>
  */
 public interface LecturerService
 {

@@ -1,15 +1,20 @@
 package src.main.java;
+import src.main.java.modules.CourseModule;
+import src.main.java.programCourse.CourseFull;
 import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseYear;
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.LectureRoom;
-import src.main.java.rooms.Room;
-import src.main.java.ui.cli1.AdminCommandSession;
-import src.main.java.timetables.*;
-import src.main.java.ui.cli1.InMemoryLecturerService;
-import src.main.java.ui.cli1.InMemoryStudentService;
-import src.main.java.ui.cli1.StudentService;
-import src.main.java.users.Student;
+import src.main.java.timetables.BuildCourseTimetable;
+import src.main.java.timetables.Group;
+import src.main.java.ui.cli1.*;
+//import src.main.java.modules.CourseModule;
+//import src.main.java.rooms.LectureRoom;
+//import src.main.java.rooms.Room;
+//import src.main.java.ui.cli1.AdminCommandSession;
+//import src.main.java.timetables.Group;
+//import src.main.java.ui.cli1.InMemoryLecturerService;
+//import src.main.java.ui.cli1.InMemoryStudentService;
+//import src.main.java.ui.cli1.StudentService;
+//import src.main.java.users.Student;
 
 import java.util.*;
 
@@ -74,9 +79,24 @@ public class Main {
 //        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
 //
 //
-        Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService());
-        ad.run();
+//
+        CourseFull courseFull = new CourseFull("LM121", "Computer Science");
+        courseFull.addCourseYear("1");
+        CourseYear courseYear = courseFull.getCourseYears().getFirst();
+        courseYear.addSemester("spring");
+        CourseSemester semester = courseYear.getSemesters().getFirst();
+        semester.addNewModule("CS4044", "OOP");
+        semester.addNewModule("Cs4011", "game dev");
+//        System.out.println("module codes are " + semester.getModuleCodes());
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
+        Group group = courseModule.getGroupAssigned();
+        group.addTimeSlot("lab", "mon", "1500");
+        group.addTimeSlot("tutorial", "tue", "0900");
+        BuildCourseTimetable.main(new String[0]);
 
+//        System.out.println(courseModule.toString());
+//        Scanner sc = new Scanner(System.in);
+//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+//        ad.run();
     }
 }

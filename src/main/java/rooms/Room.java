@@ -10,20 +10,17 @@ public abstract class Room
     protected String roomType;
 
     /**
-     *
      * @param roomID
      * @param roomType
      * @param maxCapacity
      */
-    public Room(String roomID, String roomType, int maxCapacity){
-        this.roomID = roomID; 
-        this.roomType = roomType; 
-        this.maxCapacity = maxCapacity; 
+    public Room(String roomID, String roomType, int maxCapacity) {
+        this.roomID = roomID;
+        this.roomType = roomType;
+        this.maxCapacity = maxCapacity;
     }
 
-
     /**
-     *
      * @return
      */
     public String getRoomID()
@@ -32,7 +29,6 @@ public abstract class Room
     }
 
     /**
-     *
      * @param roomID
      */
     public void setRoomID(String roomID)
@@ -41,13 +37,11 @@ public abstract class Room
     }
 
     /**
-     *
      * @param maxCapacity
      */
     public abstract void setMaxCapacity(int maxCapacity);
 
     /**
-     *
      * @return
      */
     public int getMaxCapacity()
