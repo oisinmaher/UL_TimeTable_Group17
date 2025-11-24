@@ -1,6 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Lecturer;
+import users.Teacher;
 
 import java.util.List;
 
@@ -36,12 +36,12 @@ public interface LecturerService
      * @param id the lecturer's ID
      * @return the Lecturer object if found; null otherwise
      */
-    Lecturer findLecturerById(String id);   // Get a lecturer by ID
+    Teacher findTeacherById(String id);   // Get a lecturer by ID
 
     /**
      * Retrieves every lecturer stored in the system.
      *
      * @return a list of all lecturers
      */
-    List<Lecturer> getAllLecturers();   // Return all lecturers
+    List<Teacher> getAllTeachers();   // Return all lecturers
 }

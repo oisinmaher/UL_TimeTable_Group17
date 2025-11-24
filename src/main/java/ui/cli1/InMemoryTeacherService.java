@@ -1,6 +1,6 @@
-package src.main.java.ui.cli1;
-
-import src.main.java.users.Teacher;
+package ui.cli1;
+import ui.cli1.TeacherService;
+import users.Teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,6 @@ public class InMemoryTeacherService implements TeacherService {
     private final Map<String, Teacher> teachers = new HashMap<>();
 
     public InMemoryTeacherService() {
-        
         addTeacher("123", "Michael");
         addTeacher("455", "Alan");
     }

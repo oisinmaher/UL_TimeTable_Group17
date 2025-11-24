@@ -1,8 +1,8 @@
 package ui.cli1;
 
 import users.Teacher;
-import TeacherService;
 import java.util.Scanner;
+import ui.cli1.TeacherService;
 
 public class TeacherMenuSession implements UserSession {
 

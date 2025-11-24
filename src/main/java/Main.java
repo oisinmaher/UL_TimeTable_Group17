@@ -1,21 +1,11 @@
-package src.main.java;
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.BuildCourseTimetable;
-import src.main.java.timetables.Group;
-import src.main.java.ui.cli1.*;
-//import src.main.java.modules.CourseModule;
-//import src.main.java.rooms.LectureRoom;
-//import src.main.java.rooms.Room;
-//import src.main.java.ui.cli1.AdminCommandSession;
-//import src.main.java.timetables.Group;
-//import src.main.java.ui.cli1.InMemoryLecturerService;
-//import src.main.java.ui.cli1.InMemoryStudentService;
-//import src.main.java.ui.cli1.StudentService;
-//import src.main.java.users.Student;
+import programCourse.CourseFull;
+import programCourse.CourseYear;
+import programCourse.CourseSemester;
+import modules.CourseModule;
+import timetables.BuildCourseTimetable;
+import timetables.Group;
+import ui.cli1.*;
+import ui.cli1.InMemoryTeacherService;
 
 import java.util.*;
 
@@ -95,9 +85,9 @@ public class Main {
         group.addTimeSlot("tutorial", "tue", "0900");
         BuildCourseTimetable.main(new String[0]);
 
-//        System.out.println(courseModule.toString());
-//        Scanner sc = new Scanner(System.in);
-//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
-//        ad.run();
+        System.out.println(courseModule.toString());
+        Scanner sc = new Scanner(System.in);
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new inMemoryTeacherService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        ad.run();
     }
 }

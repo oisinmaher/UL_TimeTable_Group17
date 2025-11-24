@@ -1,7 +1,8 @@
 package ui.cli1;
 
 import java.util.Scanner;
-
+import ui.cli1.TeacherService;
+import ui.cli1.InMemoryTeacherService;
 public class CLIApplication {
 
     public static void main(String[] args) {

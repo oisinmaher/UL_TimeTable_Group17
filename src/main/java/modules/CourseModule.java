@@ -1,8 +1,8 @@
-package src.main.java.modules;
+package modules;
 
-import src.main.java.timetables.Group;
-import src.main.java.timetables.TimeSlot;
-import src.main.java.users.Lecturer;
+import timetables.Group;
+import  timetables.TimeSlot;
+import users.Teacher;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ import java.util.*;
 public class CourseModule {
     private final String moduleName;
     private final String moduleCode;
-    private List<Lecturer> lecturers;
+    private List<Teacher> lecturers;
     private int numberOfLecHours;
     private int numberOfLabs;
     private int numberOfTutorials;
