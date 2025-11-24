@@ -1,6 +1,6 @@
 package users;
 
-import programCourse.CourseFull;
+import modules.CourseModule;
 
 import java.util.*;
 
