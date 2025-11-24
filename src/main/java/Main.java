@@ -1,13 +1,12 @@
-import programCourse.CourseFull;
-import programCourse.CourseYear;
-import programCourse.CourseSemester;
 import modules.CourseModule;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
 import timetables.BuildCourseTimetable;
 import timetables.Group;
 import ui.cli1.*;
-import ui.cli1.InMemoryTeacherService;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
