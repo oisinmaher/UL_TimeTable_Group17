@@ -1,9 +1,9 @@
-package src.main.java.timetables;
+package timetables;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
+import modules.CourseModule;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
 
 import java.util.ArrayList;
 import java.util.List;
