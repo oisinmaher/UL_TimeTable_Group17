@@ -63,7 +63,7 @@ public final class CourseSemester {
      * @param semesterId the semester id will be courseId + season
      * @return CourseSemester object associated with semester id
      */
-    public CourseSemester getSemesterById(String semesterId){
+    public static CourseSemester getSemesterById(String semesterId){
         if(!allSemesters.containsKey(semesterId)){
             throw new IllegalArgumentException("This semesterId doesnt exist");
         }
@@ -101,6 +101,10 @@ public final class CourseSemester {
      */
     public List<String> getModuleCodes() {
         return new ArrayList<>(assignedModules.keySet());
+    }
+
+    public List<CourseModule> getModuleObjects(){
+        return new ArrayList<>(assignedModules.values());
     }
 
 

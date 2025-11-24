@@ -46,6 +46,10 @@ public final class CourseYear{
         this.courseSemesters = new HashMap<>();
     }
 
+    public static boolean containsCourseYearId(String yearId){
+        return allCourseYears.containsKey(yearId);
+    }
+
     /**
      * Returns the numeric year number as String (e.g. "1" for first year).
      * @return the year number

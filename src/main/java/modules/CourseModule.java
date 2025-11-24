@@ -1,6 +1,7 @@
 package src.main.java.modules;
 
 import src.main.java.timetables.Group;
+import src.main.java.timetables.TimeSlot;
 import src.main.java.users.Lecturer;
 
 import java.util.*;
@@ -19,7 +20,6 @@ public class CourseModule {
     private final Group groupAssigned;
     // This will contain all created modules in a class
     static private Map<String, CourseModule> allModules = new HashMap<>();
-
     /**
      * Constructor for course module
      * @param moduleName module's name (e.g "Database systems")
@@ -39,6 +39,8 @@ public class CourseModule {
         }
         groupAssigned = new Group(this.moduleCode);
     }
+
+
 
     /**
      * checks if a moduleCode already exists
@@ -168,44 +170,4 @@ public class CourseModule {
     public String toString(){
         return moduleCode + " - " + moduleName;
     }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLec() {
-        return moduleCode + " - " + "LEC" + "\n" +
-               lecturers + "\n";
-    }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLab() {
-        return moduleCode + " - " + "LAB" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-    }
-
-    /**
-     *
-     * @return
-     *
-    public String toStringTut() {
-        return moduleCode + " - " + "TUT" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-
-
-    }
-
-     */
 }
-/* 
-public ArrayList<String> getLecturers() {
-        ArrayList<String> listOfLecturers = new ArrayList<String>();
-        for(int i = 0; i < lecturers.size(); i++) {
-            listOfLecturers.add(lecturers.get(i));
-        }
-        return listOfLecturers;
-    }
-*/

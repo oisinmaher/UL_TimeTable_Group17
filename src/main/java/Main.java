@@ -3,12 +3,14 @@ import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.CourseFull;
 import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseYear;
+import src.main.java.timetables.BuildCourseTimetable;
+import src.main.java.timetables.Group;
 import src.main.java.ui.cli1.*;
 //import src.main.java.modules.CourseModule;
 //import src.main.java.rooms.LectureRoom;
 //import src.main.java.rooms.Room;
 //import src.main.java.ui.cli1.AdminCommandSession;
-//import src.main.java.timetables.*;
+//import src.main.java.timetables.Group;
 //import src.main.java.ui.cli1.InMemoryLecturerService;
 //import src.main.java.ui.cli1.InMemoryStudentService;
 //import src.main.java.ui.cli1.StudentService;
@@ -85,13 +87,16 @@ public class Main {
         CourseSemester semester = courseYear.getSemesters().getFirst();
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
-        System.out.println("module codes are " + semester.getModuleCodes());
+//        System.out.println("module codes are " + semester.getModuleCodes());
         CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
-        System.out.println(courseModule.toString());
-        Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
-        ad.run();
+        Group group = courseModule.getGroupAssigned();
+        group.addTimeSlot("lab", "mon", "1500");
+        group.addTimeSlot("tutorial", "tue", "0900");
+        BuildCourseTimetable.main(new String[0]);
 
-
+//        System.out.println(courseModule.toString());
+//        Scanner sc = new Scanner(System.in);
+//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryLecturerService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+//        ad.run();
     }
 }

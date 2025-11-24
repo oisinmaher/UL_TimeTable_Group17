@@ -24,16 +24,12 @@ import java.util.Map;
  * Each SubGroup can still contain all students in the parent group.
  */
 public class SubGroup extends Group {
-    public enum SessionType {
-        LAB,
-        TUTORIAL
-    }
-    private final SessionType sessionType;
-    private final String subGroupId;   // e.g. "LAB-G1", "TUTORIAL-G1"
+    private final String sessionType;
+    private final String subGroupId;   // e.g. "CS4004_LAB-G1", "CS2002_TUTORIAL-G1"
 
-    // This will map it so if a module has multiple groups you can find which letter
+    // This will map it so if a module_sessionType has multiple groups you can find which letter
     // to assign for its next groupId,
-    // (e.g. when creating a new group for a module that contains CS4004A, it will return A then you can do 'A'++
+    // (e.g. when creating a new group for a module that contains CS4004_lab_A, it will return A then you can do 'A'++
     // to get 'B', assign the group the name cs4004B and update map to B
     private static final Map<String, Character> moduleRecentGroupId = new HashMap<>();
 
@@ -43,13 +39,17 @@ public class SubGroup extends Group {
      * @param moduleCode     the module this subgroup belongs to
      * @param sessionType the type of session this subgroup is for (LAB or TUTORIAL)
      */
-    public SubGroup(String moduleCode, SessionType sessionType) {
+    public SubGroup(String moduleCode, String sessionType) {
 
         // Call the parent Group constructor
         super(moduleCode);
 
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
+        }
+        sessionType = sessionType.toLowerCase();
+        if(!(sessionType.equals("lab") || sessionType.equals("tutorial"))){
+            throw new IllegalArgumentException("This session type doesnt exist, choose either lab or tutorial");
         }
 
         this.sessionType = sessionType;
@@ -59,9 +59,9 @@ public class SubGroup extends Group {
         // group indicator (a letter a->z)
         char groupIndicator;
         // check if this module already has a group
-        if(moduleRecentGroupId.containsKey(moduleCode)){
+        if(moduleRecentGroupId.containsKey(moduleCode + "_" + sessionType)){
             // if it does the map value will be last indicator used (e.g 'a')
-            groupIndicator = moduleRecentGroupId.get(moduleCode);
+            groupIndicator = moduleRecentGroupId.get(moduleCode + "_" + sessionType);
             // increases group indicator (example 'a' to 'b')
             groupIndicator++;
         }
@@ -70,10 +70,10 @@ public class SubGroup extends Group {
         // makes group id the moduleCode + groupIndicator (e.g. cs4004a)
         this.subGroupId = moduleCode + "_" + sessionType + "_" + groupIndicator;
         // adds / replaces module indicatorCode in the map
-        moduleRecentGroupId.put(moduleCode, groupIndicator);
+        moduleRecentGroupId.put(moduleCode + "_" + sessionType, groupIndicator);
     }
 
-    public SessionType getSessionType() {
+    public String getSessionType() {
         return this.sessionType;
     }
     // DON'T NEED ADD/REMOVE STUDENT METHOD BECAUSE PARENT CLASS HAS IT
