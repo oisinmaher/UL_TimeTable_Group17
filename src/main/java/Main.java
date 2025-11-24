@@ -87,7 +87,8 @@ public class Main {
 
         System.out.println(courseModule.toString());
         Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new inMemoryTeacherService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        InMemoryTeacherService m = new InMemoryTeacherService();
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
         ad.run();
     }
 }

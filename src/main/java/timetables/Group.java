@@ -166,7 +166,7 @@ public class Group {
 
         return "Group{" +
                 ", module=" + module.getModuleCode() +
-                ", presiding teacher=" + this.teacher.getTeacherId() +
+                ", presiding teacher=" + this.teacher.getUserId() +
                 ", students=[" + sb +
                 "], rooms=" + rooms +
                 '}';
