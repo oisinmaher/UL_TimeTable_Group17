@@ -1,7 +1,6 @@
 package programCourse;
 
-import modules.CourseModule;
-
+import src.main.java.modules.CourseModule;
 import java.util.*;
 
 /**

@@ -1,6 +1,7 @@
 package src.main.java;
 import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.CourseFull;
+import src.main.java.modules.CourseModule;
 import src.main.java.programCourse.CourseSemester;
 import src.main.java.programCourse.CourseYear;
 import src.main.java.timetables.BuildCourseTimetable;
