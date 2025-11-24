@@ -1,7 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseYear;
+import programCourse.*;
 
 import java.util.ArrayList;
 import java.util.List;

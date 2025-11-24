@@ -1,4 +1,4 @@
-package src.main.java.programCourse;
+package programCourse;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class CourseFull {
         courseCode = courseCode.toLowerCase();
         if (courseCodeMapping.containsKey(courseCode))//Added by Yousef 18-11 9:00 to make sure that no one can overwrite this on accident.
         {
-            throw new IllegalStateException("Course code alreay exists \n" + courseCodeMapping.get(courseCode));
+            throw new IllegalStateException("Course code already exists \n" + courseCodeMapping.get(courseCode));
         }
         yearCodeMapping = new HashMap<>();
         this.courseCode = courseCode;

@@ -1,4 +1,4 @@
-package src.main.java.adminPanel1;
+package adminPanel1;
 
 /**
  * This class will read in data from csv files and initialise objects

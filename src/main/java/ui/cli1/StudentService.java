@@ -1,6 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Student;
+import users.Student;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ import java.util.List;
  */
 public interface StudentService 
 {
+
     /**
      * Adds a new student to the system.
      *

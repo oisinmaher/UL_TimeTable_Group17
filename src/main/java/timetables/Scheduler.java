@@ -1,4 +1,4 @@
-package src.main.java.timetables;
+package timetables;
 
 public class Scheduler {
 
