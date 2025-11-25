@@ -38,7 +38,7 @@ public class TimetableWrapperService implements TimetableService {
 
     @Override
     public String getTeacherTimetableAsString(String TeacherId) {
-        List<TimeSlot> slots = UserTimeTable.getLecturerTimeSlots(TeacherId);
+        List<TimeSlot> slots = UserTimeTable.getTeacherTimeSlots(TeacherId);
         if (slots == null || slots.isEmpty()) {
             return "No timetable found for lecturer " + TeacherId + ".";
         }
