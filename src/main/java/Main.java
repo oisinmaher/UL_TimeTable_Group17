@@ -73,13 +73,13 @@ public class Main {
 //
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().getFirst();
+        CourseYear courseYear = courseFull.getCourseYears().get(0);
         courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().getFirst();
+        CourseSemester semester = courseYear.getSemesters().get(0);
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
 //        System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
+        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
         Group group = courseModule.getGroupAssigned();
         group.addTimeSlot("lab", "mon", "1500");
         group.addTimeSlot("tutorial", "tue", "0900");
