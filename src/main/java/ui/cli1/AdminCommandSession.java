@@ -9,17 +9,12 @@ public class AdminCommandSession implements UserSession {
     private final Scanner in;
     private final StudentService studentService;
     private final TeacherService teacherService;
-    private final CourseFullService courseFullService;
-    private final CourseYearService courseYearService;
 
     public AdminCommandSession(
-            Scanner in, StudentService studentService, TeacherService teacherService, CourseFullService courseFullService,
-            CourseYearService courseYearService) {
+            Scanner in, StudentService studentService, TeacherService teacherService) {
         this.in = in;
         this.studentService = studentService;
         this.teacherService = teacherService;
-        this.courseFullService = courseFullService;
-        this.courseYearService = courseYearService;
     }
 
     @Override
