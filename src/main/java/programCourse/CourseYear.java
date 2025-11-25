@@ -1,9 +1,4 @@
-package src.main.java.programCourse;
-
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.timetables.TimeSlot;
+package programCourse;
 
 import java.util.*;
 
@@ -44,6 +39,10 @@ public final class CourseYear{
         this.yearNumber = yearNumber;
         allCourseYears.put(yearId, this);
         this.courseSemesters = new HashMap<>();
+    }
+
+    public static boolean containsCourseYearId(String yearId){
+        return allCourseYears.containsKey(yearId);
     }
 
     /**

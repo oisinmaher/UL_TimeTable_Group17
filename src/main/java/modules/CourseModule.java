@@ -1,9 +1,7 @@
-package src.main.java.modules;
+package modules;
 
-import src.main.java.timetables.Group;
-import src.main.java.users.Teacher;
-
-import java.util.*;
+import timetables.Group;
+import users.Teacher;
 
 /**
  * Course Module
@@ -169,43 +167,4 @@ public class CourseModule {
         return moduleCode + " - " + moduleName;
     }
 
-    /*
-     *
-     * @return
-     *
-    public String toStringLec() {
-        return moduleCode + " - " + "LEC" + "\n" +
-               lecturers + "\n";
-    }
-
-    /*
-     *
-     * @return
-     *
-    public String toStringLab() {
-        return moduleCode + " - " + "LAB" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-    }
-
-    /**
-     *
-     * @return
-     *
-    public String toStringTut() {
-        return moduleCode + " - " + "TUT" + " - " + "labGroup" + "\n" +
-               lecturers + "\n";
-
-
-    }
-
-     */
 }
-/* 
-public ArrayList<String> getLecturers() {
-        ArrayList<String> listOfLecturers = new ArrayList<String>();
-        for(int i = 0; i < lecturers.size(); i++) {
-            listOfLecturers.add(lecturers.get(i));
-        }
-        return listOfLecturers;
-    }
-*/

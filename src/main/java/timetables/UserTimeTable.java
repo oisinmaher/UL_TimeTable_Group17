@@ -1,8 +1,10 @@
-package src.main.java.timetables;
+package timetables;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.users.User;
-import java.util.*;
+import programCourse.CourseFull;
+import users.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is the timetable class

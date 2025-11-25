@@ -1,6 +1,5 @@
-package src.main.java.ui.cli1;
-import src.main.java.users.*;
-
+package ui.cli1;
+import users.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -244,7 +243,7 @@ public class AdminCommandSession implements UserSession {
             System.out.println(courseCode + " does not have any years, you must create them");
         }
         else{
-            System.out.print(courseYears.getFirst());
+            System.out.print(courseYears.get(0));
             for(int i = 1; i < courseYears.size(); i++){
                 System.out.print(", " + courseYears.get(i));
             }

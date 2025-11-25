@@ -1,8 +1,8 @@
-package src.main.java.users;
+package users;
 
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.timetables.TimeSlot;
+import programCourse.CourseFull;
+import programCourse.CourseYear;
+import timetables.TimeSlot;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,20 +1,12 @@
-package src.main.java;
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.ui.cli1.*;
-//import src.main.java.modules.CourseModule;
-//import src.main.java.rooms.LectureRoom;
-//import src.main.java.rooms.Room;
-//import src.main.java.ui.cli1.AdminCommandSession;
-//import src.main.java.timetables.*;
-import src.main.java.ui.cli1.InMemoryTeacherService;
-//import src.main.java.ui.cli1.InMemoryStudentService;
-//import src.main.java.ui.cli1.StudentService;
-//import src.main.java.users.Student;
+import modules.CourseModule;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
+import timetables.BuildCourseTimetable;
+import timetables.Group;
+import ui.cli1.*;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -85,13 +77,17 @@ public class Main {
         CourseSemester semester = courseYear.getSemesters().getFirst();
         semester.addNewModule("CS4044", "OOP");
         semester.addNewModule("Cs4011", "game dev");
-        System.out.println("module codes are " + semester.getModuleCodes());
+//        System.out.println("module codes are " + semester.getModuleCodes());
         CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().getFirst());
+        Group group = courseModule.getGroupAssigned();
+        group.addTimeSlot("lab", "mon", "1500");
+        group.addTimeSlot("tutorial", "tue", "0900");
+        BuildCourseTimetable.main(new String[0]);
+
         System.out.println(courseModule.toString());
         Scanner sc = new Scanner(System.in);
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), new InMemoryTeacherService(), new InMemoryCourseFullService(), new InMemoryCourseYearService());
+        InMemoryTeacherService m = new InMemoryTeacherService();
+        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
         ad.run();
-
-
     }
 }

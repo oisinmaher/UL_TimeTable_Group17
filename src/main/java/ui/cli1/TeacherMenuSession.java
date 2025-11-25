@@ -1,7 +1,6 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Teacher;
-
+import users.Teacher;
 import java.util.Scanner;
 
 public class TeacherMenuSession implements UserSession {
