@@ -4,8 +4,6 @@ import programCourse.CourseFull;
 import timetables.Group;
 import users.Teacher;
 
-import java.util.*;
-
 /**
  * Course Module
  */

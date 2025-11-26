@@ -9,11 +9,13 @@ public class TeacherMenuSession implements UserSession {
     private final Scanner in;
     private final TeacherService teacherService;
     private final String teacherId;
+    private final TimetableService timetableService;
 
-    public TeacherMenuSession(Scanner in, TeacherService teacherService, String teacherId) {
+    public TeacherMenuSession(Scanner in, TeacherService teacherService, String teacherId, TimetableService timetableService) {
         this.in = in;
         this.teacherService = teacherService;
         this.teacherId = teacherId;
+        this.timetableService = timetableService; 
     }
 
     @Override
@@ -23,7 +25,8 @@ public class TeacherMenuSession implements UserSession {
         while (running) {
             System.out.println("\n=== Teacher Menu ===");
             System.out.println("1. View my details");
-            System.out.println("2. Logout");
+            System.out.println("2. View my timetable");
+            System.out.println("3. Logout");
             System.out.print("Choose an option: ");
 
             String choice = in.nextLine().trim();
@@ -38,8 +41,11 @@ public class TeacherMenuSession implements UserSession {
                     }
                     break;
                 case "2":
-                    running = false;
-                    break;
+                    System.out.println();
+                    System.out.println(timetableService.getTeacherTimetableAsString(teacherId));
+                case "3": 
+                running = false; 
+                break;
                 default:
                     System.out.println("Invalid option, try again.");
             }
