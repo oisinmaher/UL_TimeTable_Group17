@@ -4,6 +4,7 @@ import modules.CourseModule;
 import programCourse.CourseYear;
 import rooms.Room;
 import users.Student;
+import users.Teacher;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class SubGroup extends Group {
     private final String sessionType;
     private final String subGroupId;   // e.g. "CS4004_LAB-G1", "CS2002_TUTORIAL-G1"
+    private final Group parentGroup;
+    private Teacher teacher;
 
     // This will map it so if a module_sessionType has multiple groups you can find which letter
     // to assign for its next groupId,
@@ -39,11 +42,12 @@ public class SubGroup extends Group {
      * @param moduleCode     the module this subgroup belongs to
      * @param sessionType the type of session this subgroup is for (LAB or TUTORIAL)
      */
-    public SubGroup(String moduleCode, String sessionType) {
+    public SubGroup(String moduleCode, String sessionType, Group parentGroup) {
 
         // Call the parent Group constructor
         super(moduleCode);
-
+        this.parentGroup = parentGroup;
+        this.teacher = null;
         if (sessionType == null) {
             throw new IllegalArgumentException("sessionType cannot be null");
         }
@@ -86,6 +90,12 @@ public class SubGroup extends Group {
         return this.subGroupId;
     }
 
+    public void setTeacher(String teacherId){
+        this.teacher = Teacher.getTeacherFromId(teacherId);
+    }
+    public Teacher getTeacher(){
+        return this.teacher;
+    }
 
 
     @Override
@@ -101,9 +111,10 @@ public class SubGroup extends Group {
         }
 
         return "SubGroup{" +
-                "subGroupId='" + subGroupId + '\'' +
-                ", sessionType=" + sessionType +
-                ", module=" + getModuleCode() +
+                "subGroupId= " + subGroupId + '\'' +
+                ", sessionType= " + sessionType +
+                ", module= " + getModuleCode() +
+                ", teacher= " + teacher.getName() +
                 ", students=[" + sb +
                 "], rooms=" + getRooms() +
                 '}';

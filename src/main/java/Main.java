@@ -1,13 +1,12 @@
-import programCourse.CourseFull;
-import programCourse.CourseYear;
-import programCourse.CourseSemester;
 import modules.CourseModule;
-import timetables.BuildCourseTimetable;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
+import rooms.LabRoom;
+import rooms.LectureRoom;
 import timetables.Group;
-import ui.cli1.*;
-import ui.cli1.InMemoryTeacherService;
-
-import java.util.*;
+import timetables.TimeSlot;
+import users.Teacher;
 
 public class Main {
     public static void main(String[] args) {
@@ -71,24 +70,47 @@ public class Main {
 //
 //
 //
+//        CourseFull courseFull = new CourseFull("LM121", "Computer Science");
+//        courseFull.addCourseYear("1");
+//        CourseYear courseYear = courseFull.getCourseYears().get(0);
+//        courseYear.addSemester("spring");
+//        CourseSemester semester = courseYear.getSemesters().get(0);
+//        semester.addNewModule("CS4044", "OOP");
+//        semester.addNewModule("Cs4011", "game dev");
+////        System.out.println("module codes are " + semester.getModuleCodes());
+//        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
+//        Group group = courseModule.getGroupAssigned();
+////        SubGroup sg1 = group.createSubGroup("lab");
+////        sg1.add
+////        SubGroup sg2 = group.createSubGroup("tut");
+////        group.addTimeSlot("lab", "mon", "1500");
+////        group.addTimeSlot("tutorial", "tue", "0900");
+//        CourseTimeTable.main(new String[0]);
+//
+//        System.out.println(courseModule.toString());
+//        Scanner sc = new Scanner(System.in);
+//        InMemoryTeacherService m = new InMemoryTeacherService();
+//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
+////        ad.run();
+//        TimeSlot timeSlot = new TimeSlot("tue", "1550", null, null);
+//        System.out.println(timeSlot.getTime());
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
-        courseFull.addCourseYear("1");
-        CourseYear courseYear = courseFull.getCourseYears().get(0);
-        courseYear.addSemester("spring");
-        CourseSemester semester = courseYear.getSemesters().get(0);
-        semester.addNewModule("CS4044", "OOP");
-        semester.addNewModule("Cs4011", "game dev");
-//        System.out.println("module codes are " + semester.getModuleCodes());
-        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
-        Group group = courseModule.getGroupAssigned();
-        group.addTimeSlot("lab", "mon", "1500");
-        group.addTimeSlot("tutorial", "tue", "0900");
-        BuildCourseTimetable.main(new String[0]);
+        CourseYear courseYear = courseFull.addCourseYear("1");
+        CourseSemester courseSemester = courseYear.addSemester("autumn");
+        courseSemester.addNewModule("cs4023", "Operating systems");
+        courseSemester.addNewModule("cs4401", "Database");
+        CourseModule dataBaseModule = courseSemester.getModuleFromCode("cs4401");
+        Group dataBaseGroup = dataBaseModule.getGroupAssigned();
+        CourseModule opsModule = courseSemester.getModuleFromCode("cs4023");
+        Group opsGroup = opsModule.getGroupAssigned();
+        LectureRoom lectureRoom = new LectureRoom("CSG001", "lecture", 100);
+        LabRoom labRoom = new LabRoom("CS3005B", "lab", 100);
+        Teacher teacher = new Teacher("434", "Michael English");
+        Teacher teacher1 = new Teacher("432", "Caoimhe");
+        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId());
+        opsGroup.addClassTimes("tut", "tues", "1205", labRoom.getRoomID(), teacher1.getUserId());
+        opsGroup.addLectureTime("mon", "1200", lectureRoom.getRoomID(), teacher.getUserId());
+        courseFull.getCourseTimeTable().printTimeTable();
 
-        System.out.println(courseModule.toString());
-        Scanner sc = new Scanner(System.in);
-        InMemoryTeacherService m = new InMemoryTeacherService();
-        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
-        ad.run();
     }
 }

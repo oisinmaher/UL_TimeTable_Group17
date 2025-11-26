@@ -21,6 +21,7 @@ public final class CourseSemester {
     // module code -> Module object.  "cs4404" -> CourseModule Object
     private final Map<String, CourseModule> assignedModules;
     private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
+    private CourseFull courseFull;
 
     /**
      * enum for  2 seasons (probably won't use as I cant really think how cli would even benefit with enums
@@ -38,7 +39,7 @@ public final class CourseSemester {
      *
      * NOTE, as of Right now no mutual reference to the CourseYear its assigned
      */
-    public CourseSemester(CourseYear courseYear, String season) {
+    public CourseSemester(CourseYear courseYear, String season, CourseFull courseFull) {
         if (season == null) {
             throw new IllegalArgumentException("season is null");
         }
@@ -51,6 +52,7 @@ public final class CourseSemester {
         this.season = season;
         allSemesters.put(semesterId, this);
         this.assignedModules = new HashMap<>();
+        this.courseFull = courseFull;
     }
     public String getSemesterId(){
         return this.semesterId;
@@ -82,7 +84,7 @@ public final class CourseSemester {
      * @param name // module name e.g Database Systems
      */
     public void addNewModule(String code, String name){
-        CourseModule module = new CourseModule(name.toLowerCase(), code);
+        CourseModule module = new CourseModule(name.toLowerCase(), code, courseFull);
         assignedModules.put(code.toLowerCase(), module);
     }
 
@@ -105,6 +107,10 @@ public final class CourseSemester {
         return new ArrayList<>(assignedModules.values());
     }
 
+    public CourseModule getModuleFromCode(String moduleCode){
+        moduleCode = moduleCode.toLowerCase();
+        return assignedModules.get(moduleCode);
+    }
 
     /**
      * Validates the semester and its modules.

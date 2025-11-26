@@ -1,7 +1,7 @@
 package modules;
 
+import programCourse.CourseFull;
 import timetables.Group;
-import  timetables.TimeSlot;
 import users.Teacher;
 
 import java.util.*;
@@ -11,12 +11,13 @@ import java.util.*;
  */
 
 public class CourseModule {
+    private final CourseFull courseFull;
     private final String moduleName;
     private final String moduleCode;
     private List<Teacher> lecturers;
-    private int numberOfLecHours;
-    private int numberOfLabs;
-    private int numberOfTutorials;
+    private int LecHours;
+    private int labHours;
+    private int tutHours;
     private final Group groupAssigned;
     // This will contain all created modules in a class
     static private Map<String, CourseModule> allModules = new HashMap<>();
@@ -25,7 +26,7 @@ public class CourseModule {
      * @param moduleName module's name (e.g "Database systems")
      * @param moduleCode module's code (e.g "cs4004")
      */
-    public CourseModule(String moduleName, String moduleCode) {
+    public CourseModule(String moduleName, String moduleCode, CourseFull courseFull) {
         if(moduleName == null || moduleCode == null){
             throw new IllegalArgumentException("Parameters cant be null");
         }
@@ -37,7 +38,11 @@ public class CourseModule {
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
         }
-        groupAssigned = new Group(this.moduleCode);
+        this.courseFull = courseFull;
+        groupAssigned = new Group(this, this.courseFull);
+        this.LecHours = 0;
+        this.labHours = 0;
+        this.tutHours = 0;
     }
 
 
@@ -98,63 +103,56 @@ public class CourseModule {
      * @return the number of lecture hours
      */
     public int getLecHours() {
-        return numberOfLecHours;
+        return LecHours;
     }
 
     /**
-     * Sets the number of lecture hours
+     * Sets the number of lecture hours, Group class handles creating/deleting lectures
+     * Group will call this along with getLecHours to increment/decrement by 1
      * @param numberOfLecHours the number of hours required by lecturer
      */
     public void setLecHours(int numberOfLecHours) {
-        this.numberOfLecHours = numberOfLecHours;
+        this.LecHours = numberOfLecHours;
     }
 
     /**
      * returns number of labs this module has
      * @return number of labs
      */
-    public int getNumberOfLabs() {
-        return numberOfLabs;
+    public int getLabHours() {
+        return labHours;
     }
 
     /**
-     * sets number of labs this module has
-     * @param numberOfLabs the number of labs
+     * Sets the number of lab hours, Group class handles creating/deleting labs
+     * Group will call this along with getLabHours to increment/decrement by 1
+     * @param labHours the number of labs
      */
-    public void setNumberOfLabs(int numberOfLabs) {
-        this.numberOfLabs = numberOfLabs;
+    public void setLabHours(int labHours) {
+        this.labHours = labHours;
     }
 
     /**
      * returns number of tutorials this module has
      * @return number of tutorials
      */
-    public int getNumberOfTutorials() {
-        return numberOfTutorials;
+    public int getTutHours() {
+        return tutHours;
     }
-
     /**
-     * returns the number of tutorials this module has
-     * @param numberOfTutorials the number of tutorials
+     * Sets the number of tutorial hours, Group class handles creating/deleting tutorials
+     * Group will call this along with getTutHours to increment/decrement by 1
+     * @param tutHours the new number of tutorials
      */
-    public void setNumberOfTutorials(int numberOfTutorials) {
-        this.numberOfTutorials = numberOfTutorials;
+    public void setTutHours(int tutHours){
+        this.tutHours = tutHours;
     }
-
-    /**
-     *
-     * @param numberOfTutorials
-     */
-    public void createTutorials(int numberOfTutorials) {
-
-    }
-
 
     /**
      * static method returns list of all modules that exist
      * @return list of modules
      */
-    public static ArrayList<CourseModule> getListOfModules() {
+    public static List<CourseModule> getListOfModules() {
         return new ArrayList<>(allModules.values());
     }
 
