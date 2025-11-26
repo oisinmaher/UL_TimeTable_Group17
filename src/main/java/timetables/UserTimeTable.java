@@ -9,12 +9,12 @@ import java.util.*;
 public class UserTimeTable {
     String courseCode;
     User user;
-    TreeMap<String, TimeSlot> classesAtTimes;
+    Map<String, TimeSlot> classesAtTimes;
     final private static Map<String, UserTimeTable> allStudentsTimeTables = new HashMap<>();
 
     public UserTimeTable(User user) {
         this.user = user;
-        classesAtTimes = new TreeMap<>();
+        classesAtTimes = new HashMap<>();
         populateTimeMap(classesAtTimes);
         allStudentsTimeTables.put(user.getUserId(), this);
     }
@@ -24,7 +24,7 @@ public class UserTimeTable {
      *
      * @param classesAtTimes TreeMap that holds all times as key and timeslot objects as values in a list
      */
-    private void populateTimeMap(TreeMap<String, TimeSlot> classesAtTimes) {
+    private void populateTimeMap(Map<String, TimeSlot> classesAtTimes) {
         for (int day = 1; day <= 5; day++) {
             classesAtTimes.put(day + "_09", null);
             for (int time = 10; time <= 17; time++) {

@@ -7,11 +7,11 @@ import java.util.*;
 public class CourseTimeTable {
     CourseFull courseFull;
     String courseCode;
-    TreeMap<String, List<TimeSlot>> classesAtTimes;
+    Map<String, List<TimeSlot>> classesAtTimes;
     public CourseTimeTable(CourseFull courseFull){
         this.courseFull = courseFull;
         this.courseCode = courseFull.getCode();
-        classesAtTimes = new TreeMap<>();
+        classesAtTimes = new HashMap<>();
         populateTimeMap(classesAtTimes);
     }
 
@@ -19,7 +19,7 @@ public class CourseTimeTable {
      * This fills classesAtTimes map with every possible day and time (there's only 45)
      * @param classesAtTimes TreeMap that holds all times as key and timeslot objects as values in a list
      */
-    private void populateTimeMap(TreeMap<String, List<TimeSlot>> classesAtTimes){
+    private void populateTimeMap(Map<String, List<TimeSlot>> classesAtTimes){
         for(int day = 1; day <= 5; day++){
             classesAtTimes.put(day + "_09", new ArrayList<>());
             for(int time = 10; time <= 17; time++){
