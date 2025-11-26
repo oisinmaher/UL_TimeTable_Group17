@@ -8,7 +8,7 @@ import java.util.List;
  * Defines the operations required for managing Teacher data.
  * <p>
  * This interface is used for the same reason as {@link StudentService}:
- * it allows the CLI to work independently from the underlying data storage.
+ * it allows the CLI to work independently of the underlying data storage.
  * </p>
  */
 public interface TeacherService

@@ -1,17 +1,22 @@
 package modules;
 
 import programCourse.CourseFull;
+import timetables.CourseTimeTable;
 import timetables.Group;
+import timetables.TimeSlot;
 import users.Teacher;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Course Module
  */
 
 public class CourseModule {
-    private final CourseFull courseFull;
+    private List<CourseFull> coursesTakingThisModule = new ArrayList<>();
     private final String moduleName;
     private final String moduleCode;
     private List<Teacher> lecturers;
@@ -20,8 +25,7 @@ public class CourseModule {
     private int tutHours;
     private final Group groupAssigned;
     // This will contain all created modules in a class
-    static private final Map<String, CourseModule> allModules = new HashMap<>();
-
+    static private Map<String, CourseModule> allModules = new HashMap<>();
     /**
      * Constructor for course module
      * @param moduleName module's name (e.g "Database systems")
@@ -39,11 +43,20 @@ public class CourseModule {
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
         }
-        this.courseFull = courseFull;
-        groupAssigned = new Group(this, this.courseFull);
+        this.coursesTakingThisModule = new ArrayList<>();
+        this.coursesTakingThisModule.add(courseFull);
+        groupAssigned = new Group(this, this.coursesTakingThisModule);
         this.LecHours = 0;
         this.labHours = 0;
         this.tutHours = 0;
+    }
+
+    public void addCourse(String courseCode){
+        CourseFull courseFull = CourseFull.getCourseFromCode(courseCode);
+        CourseTimeTable courseTimeTable = courseFull.getCourseTimeTable();
+        for(TimeSlot ts : groupAssigned.getTimeSlots()){
+            courseTimeTable.addTimeSlot(ts.getTime(), ts);
+        }
     }
 
     /**
@@ -159,7 +172,7 @@ public class CourseModule {
      * static method returns list of all module codes that exist
      * @return list of modules
      */
-    public static ArrayList<String> getListOfModuleCodes(){
+    public static List<String> getListOfModuleCodes(){
         return new ArrayList<>(allModules.keySet());
     }
 
@@ -167,5 +180,4 @@ public class CourseModule {
     public String toString(){
         return moduleCode + " - " + moduleName;
     }
-
 }

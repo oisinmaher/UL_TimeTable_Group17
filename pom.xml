@@ -7,11 +7,6 @@
   <name>Archetype - UL_TimeTable_Group17</name>
   <url>http://maven.apache.org</url>
 
-    <properties>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
-    </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.opencsv</groupId>
@@ -19,5 +14,21 @@
       <version>5.9</version>
     </dependency>
   </dependencies>
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

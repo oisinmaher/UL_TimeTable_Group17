@@ -1,16 +1,16 @@
 package timetables;
-
 import modules.CourseModule;
-import programCourse.CourseFull;
+import programCourse.*;
 import rooms.Room;
 import users.Student;
 import users.Teacher;
 
+import java.sql.Time;
 import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
- * This and module could be merged into one group, and subgroup will be its own class without inheritance
+ *
  */
 public class Group {
 
@@ -21,17 +21,20 @@ public class Group {
     private final Map<String, Room> rooms;
     private final Map<String, TimeSlot> referencedTimeSlots;
     protected Set<String> usedTimes;
+    protected Set<TimeSlot> allTimeSlots;
     protected Map<String, TimeSlot> lecturesTimes;
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
-    protected CourseFull courseFull;
+    protected List<CourseFull> coursesTakingThisModule;
 
-    public Group(CourseModule courseModule, CourseFull courseFull){
+    public Group(CourseModule courseModule, List<CourseFull> coursesTakingThisModule){
         if (courseModule == null) {
             throw new IllegalArgumentException("Module can't be null");
         }
         this.module = courseModule;
         this.moduleCode = courseModule.getModuleCode().toLowerCase();
+        this.allTimeSlots = new HashSet<>();
+        this.coursesTakingThisModule = coursesTakingThisModule;
         this.lecturer = null;
         rooms = new HashMap<>();
         referencedTimeSlots = new HashMap<>();
@@ -40,34 +43,21 @@ public class Group {
         this.labsTimes = new HashMap<>();
         this.tutorialsTimes = new HashMap<>();
         this.usedTimes = new HashSet<>();
-        this.courseFull = courseFull;
     }
-
+    public Set<TimeSlot> getTimeSlots(){
+        return allTimeSlots;
+    }
     public void addLectureTime(String day, String time, String roomId, String teacherId){
-        TimeSlot timeSlot = new TimeSlot(day, time, module, courseFull, this, "Lecture", roomId, teacherId);
+        TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
            throw new IllegalArgumentException("This timeslot is already taken");
         }
         int prevLecHours = module.getLecHours();
         module.setLecHours(prevLecHours + 1);
         usedTimes.add(timeSlot.getTime());
+        allTimeSlots.add(timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
-    }
-    public List<TimeSlot> getTimeSlots(String typeOfClass){
-        typeOfClass = typeOfClass.toLowerCase();
-        if(typeOfClass.equals("lecture")){
-            return new ArrayList<>(lecturesTimes.values());
-        }
-        else if(typeOfClass.equals("lab")){
-            return new ArrayList<>(labsTimes.values());
-        }
-        else if(typeOfClass.equals("tutorial")){
-            return new ArrayList<>(tutorialsTimes.values());
-        }
-        else{
-            throw new IllegalArgumentException(typeOfClass + " isn't a type of class \nPlease choose lecture, lab, or tutorial");
-        }
     }
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module
@@ -79,29 +69,47 @@ public class Group {
     public void addClassTimes(String typeOfClass, String day, String time, String roomId, String teacherId){
         typeOfClass = typeOfClass.toLowerCase();
         if(typeOfClass.equals("lab")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, courseFull, this, "Lab", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lab", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }
             int prevLabHours = module.getLabHours();
             module.setLabHours(prevLabHours+1);
             usedTimes.add(timeSlot.getTime());
+            allTimeSlots.add(timeSlot);
             labsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
         else if(typeOfClass.equals("tutorial") || typeOfClass.equals("tut")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, courseFull, this, "Tutorial", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Tutorial", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }
             int prevTutHours = module.getTutHours();
             module.setTutHours(prevTutHours + 1);
             usedTimes.add(timeSlot.getTime());
+            allTimeSlots.add(timeSlot);
             tutorialsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
         else{
             throw new IllegalArgumentException("This type of class doesnt exist, \n please chose lab or tutorial");
+        }
+    }
+
+    public List<TimeSlot> getTimeSlots(String typeOfClass){
+        typeOfClass = typeOfClass.toLowerCase();
+        if(typeOfClass.equals("lecture")){
+            return new ArrayList<>(lecturesTimes.values());
+        }
+        else if(typeOfClass.equals("lab")){
+            return new ArrayList<>(labsTimes.values());
+        }
+        else if(typeOfClass.equals("tutorial") || typeOfClass.equals("tut")){
+            return new ArrayList<>(tutorialsTimes.values());
+        }
+        else{
+            throw new IllegalArgumentException(typeOfClass + " isn't a type of class \nPlease choose lecture, lab, or tutorial");
         }
     }
     public void addStudent(String studentId){
@@ -163,7 +171,7 @@ public class Group {
                 sb.append(s.getUserId()).append(" ").append(s.getName()).append("\n");
             }
             // deletes last \n
-            //if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
+            if (!sb.isEmpty()) sb.deleteCharAt(sb.length() - 1);
         }
 
         return "Group{" +

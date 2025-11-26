@@ -1,67 +1,84 @@
 package timetables;
 
 import programCourse.CourseFull;
+import users.Student;
 import users.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-/**
- * This class is the timetable class
- * It's a map with Days And Time (string format) as key that contains Group objects as value
- * Only TimeSlots that have associated group at that time will be in the map
- * For example if a student didn't have any classes at 10am on Tuesday there would not be a Tuesday 10am String in the map
- * Each instance of teacher and student will have a unique timetable object
- *
- */
 public class UserTimeTable {
-
-    // Set Contains day of week in 3characters and Times in 24 hour
-    // wed1600 is wednesday 4pm, fri0900 is friday 9 am
-    Map<String, Group> schedule = new HashMap<>();
-    String[] daysOfWeek;
-    // This variable will be used if its a persons timetable (e.g student/teacher)
+    String courseCode;
     User user;
-    // This variable will be used if it's a program timetable (e.g a course timetable consisting of all labs and lectures)
-    CourseFull course;
+    Map<String, TimeSlot> classesAtTimes;
+    final private static Map<String, UserTimeTable> allStudentsTimeTables = new HashMap<>();
 
+    public UserTimeTable(User user) {
+        this.user = user;
+        classesAtTimes = new HashMap<>();
+        populateTimeMap(classesAtTimes);
+        allStudentsTimeTables.put(user.getUserId(), this);
+    }
 
     /**
-     * Timetable for an INDIVIDUAL user, won't have overlapping classes in same time
+     * This fills classesAtTimes map with every possible day and time (there's only 45)
+     *
+     * @param classesAtTimes TreeMap that holds all times as key and timeslot objects as values in a list
      */
-    public UserTimeTable(User user){
-        schedule = new HashMap<>();
-        // Array of days of week (so it can loop through instead of hardcoding 5 put statements)
-        this.daysOfWeek = new String[]{"mon", "tue", "wed", "thu", "fri"};
-        this.user = user;
-
+    private void populateTimeMap(Map<String, TimeSlot> classesAtTimes) {
+        for (int day = 1; day <= 5; day++) {
+            classesAtTimes.put(day + "_09", null);
+            for (int time = 10; time <= 17; time++) {
+                classesAtTimes.put(day + "_" + time, null);
+            }
+        }
     }
 
-    public Map<String, Group> getTimeTableMapping() {
-        // Returns map that contains each day of timetable and it's associated groups
-        return schedule;
+    public static UserTimeTable getUserTimetable(String userId) {
+        return allStudentsTimeTables.get(userId);
     }
-    public boolean checkTime(String time){
-        // checks if a time is occupied
-        return schedule.containsKey(time);
-    }
-    public Group getGroupAtTime(String time){
-        // gets the group a student in a certain time
-        return schedule.get(time);
+
+    public boolean containsTimeSlot(String dayTime) {
+        return classesAtTimes.get(dayTime) != null;
     }
 
     /**
      *
-     * @return
      */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for(String dayTime : schedule.keySet()){
-            sb.append(dayTime + schedule.get(dayTime));
+    public void addTimeSlot(String dayTime, TimeSlot timeSlot) {
+        if (containsTimeSlot(dayTime)) {
+            throw new IllegalArgumentException("This user already has a module at this time");
         }
-        return sb.toString();
+        classesAtTimes.put(dayTime, timeSlot);
+    }
+
+    public List<TimeSlot> getTimeSlots() {
+        return new ArrayList<>(classesAtTimes.values());
+    }
+
+    /**
+     * Prints Timetable for this user in corrected order, (can and most likely will be replaced with toString())
+     */
+    public void printTimeTable() {
+        for (int day = 1; day <= 5; day++) {
+            String dayTime;
+            String dayFull = TimeSlot.getDayFromNumber(day);
+            System.out.println("######################");
+            System.out.println("Day of Week " + dayFull);
+            System.out.println("######################");
+            for (int time = 9; time <= 17; time++) {
+                dayTime = time > 9 ? day + "_" + time : day + "_09";
+                String timeFull = TimeSlot.getTimeFromShortened(time);
+                TimeSlot timeSlot = classesAtTimes.get(dayTime);
+                System.out.println("----------------------");
+                System.out.println(timeFull);
+                if (timeSlot == null) {
+                    System.out.println("Free Period");
+                } else {
+                    System.out.println(timeSlot);
+                }
+            }
+        }
+        System.out.print("----------------------\n\n");
     }
 }
 

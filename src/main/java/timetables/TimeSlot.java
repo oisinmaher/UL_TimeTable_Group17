@@ -4,6 +4,8 @@ import programCourse.CourseFull;
 import rooms.Room;
 import users.Student;
 import users.Teacher;
+import users.User;
+
 import java.util.*;
 
 /**
@@ -18,25 +20,43 @@ public class TimeSlot{
     private Room room;
     private String classType;
     private CourseModule module;
-    private CourseFull courseFull;
+    List<CourseFull> coursesTakingThisModule;
     private Group group;
     static List<String> daysOfWeek = new ArrayList<>(Arrays.asList("mon","tue","wed","thu","fri"));
     static Set<String> validTimes = new HashSet<>(Arrays.asList("08","09","10","11","12","13","14","15","16","17"));
 
-    public TimeSlot(String day, String time, CourseModule module, CourseFull courseFull, Group group, String classType, String roomId, String teacherId){
+    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, Group group, String classType, String roomId, String teacherId){
         this.dayTime = toCorrectTimeFormat(day, time);
         this.module = module;
-        this.courseFull = courseFull;
+        this.coursesTakingThisModule = coursesTakingThisModule;
         this.group = group;
         this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
+        this.students = new HashMap<>();
+        UserTimeTable teacherTimeTable = teacher.getUserTimeTable();
+        teacherTimeTable.addTimeSlot(dayTime, this);
         this.room = Room.getRoomFromId(roomId);
-        courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
+        for(CourseFull courseFull : coursesTakingThisModule)
+            courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
         this.classType = classType;
     }
 
-    public void setTeacher(Teacher teacher){
-        this.teacher = teacher;
+    public void addStudent(String studentId){
+        Student student = Student.getStudentFromId(studentId);
+        if(students.containsKey(studentId)){
+            throw new IllegalArgumentException("Student with id " + studentId + " already exists");
+        }
+        students.put(studentId, student);
+        UserTimeTable userTimeTable = student.getUserTimeTable();
+        userTimeTable.addTimeSlot(this.dayTime, this);
+    }
+    public void addStudents(List<String> studentIds){
+        for(String studentId : studentIds){
+            addStudent(studentId);
+        }
+    }
+    public boolean containsStudent(String studentId){
+        return students.containsKey(studentId);
     }
     public void setRoom(Room room){
         this.room = room;
@@ -107,7 +127,7 @@ public class TimeSlot{
      */
     @Override
     public String toString(){
-        return module.toString() + " " + room.toString() + " " + teacher.toString();
+        return "Module Code: " + module.toString() + " Class type: " + classType + " Room: " + room.toString() + " Teacher Name: " + teacher.toString();
     }
 
 }
