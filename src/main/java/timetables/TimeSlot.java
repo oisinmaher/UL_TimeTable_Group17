@@ -20,15 +20,15 @@ public class TimeSlot{
     private Room room;
     private String classType;
     private CourseModule module;
-    private CourseFull courseFull;
+    List<CourseFull> coursesTakingThisModule;
     private Group group;
     static List<String> daysOfWeek = new ArrayList<>(Arrays.asList("mon","tue","wed","thu","fri"));
     static Set<String> validTimes = new HashSet<>(Arrays.asList("08","09","10","11","12","13","14","15","16","17"));
 
-    public TimeSlot(String day, String time, CourseModule module, CourseFull courseFull, Group group, String classType, String roomId, String teacherId){
+    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, Group group, String classType, String roomId, String teacherId){
         this.dayTime = toCorrectTimeFormat(day, time);
         this.module = module;
-        this.courseFull = courseFull;
+        this.coursesTakingThisModule = coursesTakingThisModule;
         this.group = group;
         this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
@@ -36,15 +36,11 @@ public class TimeSlot{
         UserTimeTable teacherTimeTable = teacher.getUserTimeTable();
         teacherTimeTable.addTimeSlot(dayTime, this);
         this.room = Room.getRoomFromId(roomId);
-        courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
+        for(CourseFull courseFull : coursesTakingThisModule)
+            courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
         this.classType = classType;
     }
 
-//    public void changeTeacher(String teacherId){
-//        Teacher oldTeacher = Teacher.getTeacherFromId(teacherId);
-//        Teacher newTeacher = Teacher.getTeacherFromId(teacherId);
-//        oldTeacher.getTimeTable().removeTime(this.dayTime);
-//    }
     public void addStudent(String studentId){
         Student student = Student.getStudentFromId(studentId);
         if(students.containsKey(studentId)){

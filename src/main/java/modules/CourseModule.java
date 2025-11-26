@@ -1,7 +1,9 @@
 package modules;
 
 import programCourse.CourseFull;
+import timetables.CourseTimeTable;
 import timetables.Group;
+import timetables.TimeSlot;
 import users.Teacher;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Map;
  */
 
 public class CourseModule {
-    private final CourseFull courseFull;
+    private List<CourseFull> coursesTakingThisModule = new ArrayList<>();
     private final String moduleName;
     private final String moduleCode;
     private List<Teacher> lecturers;
@@ -41,14 +43,21 @@ public class CourseModule {
         } else {
             throw new IllegalArgumentException("The inputted module code already exists.");
         }
-        this.courseFull = courseFull;
-        groupAssigned = new Group(this, this.courseFull);
+        this.coursesTakingThisModule = new ArrayList<>();
+        this.coursesTakingThisModule.add(courseFull);
+        groupAssigned = new Group(this, this.coursesTakingThisModule);
         this.LecHours = 0;
         this.labHours = 0;
         this.tutHours = 0;
     }
 
-
+    public void addCourse(String courseCode){
+        CourseFull courseFull = CourseFull.getCourseFromCode(courseCode);
+        CourseTimeTable courseTimeTable = courseFull.getCourseTimeTable();
+        for(TimeSlot ts : groupAssigned.getTimeSlots()){
+            courseTimeTable.addTimeSlot(ts.getTime(), ts);
+        }
+    }
 
     /**
      * checks if a moduleCode already exists
