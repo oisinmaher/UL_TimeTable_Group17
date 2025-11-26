@@ -1,6 +1,7 @@
 package timetables;
 
 import modules.CourseModule;
+import programCourse.CourseFull;
 import rooms.Room;
 import users.Student;
 import users.Teacher;
