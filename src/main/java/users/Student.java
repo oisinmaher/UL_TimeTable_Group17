@@ -3,6 +3,7 @@ package users;
 import programCourse.CourseFull;
 import programCourse.CourseYear;
 import timetables.TimeSlot;
+import timetables.UserTimeTable;
 
 import java.util.ArrayList;
 import java.util.HashMap;

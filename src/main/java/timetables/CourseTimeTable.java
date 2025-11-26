@@ -39,7 +39,7 @@ public class CourseTimeTable {
             String dayTime;
             String dayFull = TimeSlot.getDayFromNumber(day);
             System.out.println("######################");
-            System.out.println("Day of Week + " + dayFull);
+            System.out.println("Day of Week " + dayFull);
             System.out.println("######################");
             for(int time = 9; time <= 17; time++){
                 dayTime = time > 9 ? day + "_" + time : day + "_09";

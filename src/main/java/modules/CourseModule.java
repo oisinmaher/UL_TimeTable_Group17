@@ -4,6 +4,11 @@ import programCourse.CourseFull;
 import timetables.Group;
 import users.Teacher;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Course Module
  */
@@ -158,7 +163,7 @@ public class CourseModule {
      * static method returns list of all module codes that exist
      * @return list of modules
      */
-    public static ArrayList<String> getListOfModuleCodes(){
+    public static List<String> getListOfModuleCodes(){
         return new ArrayList<>(allModules.keySet());
     }
 

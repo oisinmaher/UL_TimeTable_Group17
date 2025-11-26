@@ -29,7 +29,7 @@ public class TimetableWrapperService implements TimetableService {
 
     @Override
     public String getStudentTimetableAsString(String studentId) {
-        List<TimeSlot> slots = UserTimeTable.getStudentTimeSlots(studentId);
+        List<TimeSlot> slots = UserTimeTable.getUserTimetable(studentId).getTimeSlots();
         if (slots == null || slots.isEmpty()) {
             return "No timetable found for student " + studentId + ".";
         }
@@ -38,7 +38,7 @@ public class TimetableWrapperService implements TimetableService {
 
     @Override
     public String getTeacherTimetableAsString(String TeacherId) {
-        List<TimeSlot> slots = UserTimeTable.getTeacherTimeSlots(TeacherId);
+        List<TimeSlot> slots = UserTimeTable.getUserTimetable(TeacherId).getTimeSlots();
         if (slots == null || slots.isEmpty()) {
             return "No timetable found for lecturer " + TeacherId + ".";
         }
@@ -55,7 +55,7 @@ public class TimetableWrapperService implements TimetableService {
         sb.append("---------------------------------\n");
 
         List<TimeSlot> copy = new ArrayList<>(slots);
-        Collections.sort(copy); // TimeSlot should implement Comparable<TimeSlot>
+//        Collections.sort(copy); // TimeSlot should implement Comparable<TimeSlot>
 
         for (TimeSlot slot : copy) {
             sb.append(slot).append("\n");

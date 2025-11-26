@@ -4,6 +4,8 @@ import programCourse.CourseFull;
 import rooms.Room;
 import users.Student;
 import users.Teacher;
+import users.User;
+
 import java.util.*;
 
 /**
@@ -30,13 +32,35 @@ public class TimeSlot{
         this.group = group;
         this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
+        this.students = new HashMap<>();
+        UserTimeTable teacherTimeTable = teacher.getUserTimeTable();
+        teacherTimeTable.addTimeSlot(dayTime, this);
         this.room = Room.getRoomFromId(roomId);
         courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
         this.classType = classType;
     }
 
-    public void setTeacher(Teacher teacher){
-        this.teacher = teacher;
+//    public void changeTeacher(String teacherId){
+//        Teacher oldTeacher = Teacher.getTeacherFromId(teacherId);
+//        Teacher newTeacher = Teacher.getTeacherFromId(teacherId);
+//        oldTeacher.getTimeTable().removeTime(this.dayTime);
+//    }
+    public void addStudent(String studentId){
+        Student student = Student.getStudentFromId(studentId);
+        if(students.containsKey(studentId)){
+            throw new IllegalArgumentException("Student with id " + studentId + " already exists");
+        }
+        students.put(studentId, student);
+        UserTimeTable userTimeTable = student.getUserTimeTable();
+        userTimeTable.addTimeSlot(this.dayTime, this);
+    }
+    public void addStudents(List<String> studentIds){
+        for(String studentId : studentIds){
+            addStudent(studentId);
+        }
+    }
+    public boolean containsStudent(String studentId){
+        return students.containsKey(studentId);
     }
     public void setRoom(Room room){
         this.room = room;
@@ -107,7 +131,7 @@ public class TimeSlot{
      */
     @Override
     public String toString(){
-        return module.toString() + " " + room.toString() + " " + teacher.toString();
+        return "Module Code: " + module.toString() + " Class type: " + classType + " Room: " + room.toString() + " Teacher Name: " + teacher.toString();
     }
 
 }

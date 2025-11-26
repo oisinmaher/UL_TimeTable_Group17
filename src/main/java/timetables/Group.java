@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
- * This and module could be merged into one group, and subgroup will be its own class without inheritance
+ *
  */
 public class Group {
 
@@ -54,21 +54,6 @@ public class Group {
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
     }
-    public List<TimeSlot> getTimeSlots(String typeOfClass){
-        typeOfClass = typeOfClass.toLowerCase();
-        if(typeOfClass.equals("lecture")){
-            return new ArrayList<>(lecturesTimes.values());
-        }
-        else if(typeOfClass.equals("lab")){
-            return new ArrayList<>(labsTimes.values());
-        }
-        else if(typeOfClass.equals("tutorial")){
-            return new ArrayList<>(tutorialsTimes.values());
-        }
-        else{
-            throw new IllegalArgumentException(typeOfClass + " isn't a type of class \nPlease choose lecture, lab, or tutorial");
-        }
-    }
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module
      *
@@ -102,6 +87,22 @@ public class Group {
         }
         else{
             throw new IllegalArgumentException("This type of class doesnt exist, \n please chose lab or tutorial");
+        }
+    }
+
+    public List<TimeSlot> getTimeSlots(String typeOfClass){
+        typeOfClass = typeOfClass.toLowerCase();
+        if(typeOfClass.equals("lecture")){
+            return new ArrayList<>(lecturesTimes.values());
+        }
+        else if(typeOfClass.equals("lab")){
+            return new ArrayList<>(labsTimes.values());
+        }
+        else if(typeOfClass.equals("tutorial") || typeOfClass.equals("tut")){
+            return new ArrayList<>(tutorialsTimes.values());
+        }
+        else{
+            throw new IllegalArgumentException(typeOfClass + " isn't a type of class \nPlease choose lecture, lab, or tutorial");
         }
     }
     public void addStudent(String studentId){

@@ -48,6 +48,6 @@ public class Teacher extends User {
     }
     @Override
     public String toString(){
-        return getUserId() + ": " + getName();
+        return getName();
     }
 }
