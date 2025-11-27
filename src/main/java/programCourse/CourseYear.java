@@ -15,6 +15,7 @@ public final class CourseYear{
     // year id is fullCourse.getCode() + "_" + yearNumber
     private final String yearId;
     private final String yearNumber;
+    private final CourseFull courseFull;
     //private final int yearNumber;
     private final Map<String, CourseSemester> courseSemesters;
     public static Map<String, CourseYear> allCourseYears = new HashMap<>();
@@ -37,6 +38,7 @@ public final class CourseYear{
                     allCourseYears.get(yearId));
         }
         this.yearNumber = yearNumber;
+        this.courseFull = courseFull;
         allCourseYears.put(yearId, this);
         this.courseSemesters = new HashMap<>();
     }
@@ -53,9 +55,10 @@ public final class CourseYear{
         return this.yearNumber;
     }
     /** Create a new course semester and add to mapping **/
-    public void addSemester(String season){
-        CourseSemester courseSemester = new CourseSemester(this, season.toLowerCase());
+    public CourseSemester addSemester(String season){
+        CourseSemester courseSemester = new CourseSemester(this, season.toLowerCase(), courseFull);
         courseSemesters.put(season.toLowerCase(), courseSemester);
+        return courseSemester;
     }
     /**
      * Checks whether this CourseYear contains a semester with the given name.

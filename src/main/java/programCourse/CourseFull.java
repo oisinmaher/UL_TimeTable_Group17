@@ -1,5 +1,7 @@
 package programCourse;
 
+import timetables.CourseTimeTable;
+
 import java.util.*;
 
 /**
@@ -20,6 +22,7 @@ public class CourseFull {
     private final String name;
     private static final Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't ba any data leaks.
     private final Map<String, CourseYear> yearCodeMapping;
+    private final CourseTimeTable courseTimeTable;
 
     /**
      * Constructs a CourseFull object by assigning the course code,
@@ -43,6 +46,7 @@ public class CourseFull {
         this.courseCode = courseCode;
         this.name = capitalizeName(name);
         courseCodeMapping.put(courseCode, this);
+        this.courseTimeTable = new CourseTimeTable(this);
     }
 
     /**
@@ -65,7 +69,7 @@ public class CourseFull {
      * creates a courseYear and adds it to this object's yearCodeMapping map
      * @param year the course's year ("1", "2")
      */
-    public void addCourseYear(String year){
+    public CourseYear addCourseYear(String year){
         if(year == null || year.isEmpty())//18-11 Yousef 9:00
         {
             throw new IllegalArgumentException("Year can't be null"); 
@@ -76,6 +80,7 @@ public class CourseFull {
         }
         CourseYear courseYearTemp = new CourseYear(this, year);
         yearCodeMapping.put(year, courseYearTemp);
+        return courseYearTemp;
     }
 
     /**
@@ -132,6 +137,9 @@ public class CourseFull {
             list.add("Code: " + entry.getKey() + ", Name: " + entry.getValue().getName());
         }
         return list;
+    }
+    public CourseTimeTable getCourseTimeTable(){
+        return this.courseTimeTable;
     }
 
     /**

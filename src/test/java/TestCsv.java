@@ -1,9 +1,11 @@
 import export.ExportService;
 import export.ImportService;
 import export.dto.CourseFullCsvDto;
+import export.dto.CourseYearCsvDto;
 import export.dto.StudentCsvDto;
 import export.io.CsvReaderUtil;
 import export.mapper.CourseFullMapper;
+import export.mapper.CourseYearMapper;
 import export.mapper.StudentMapper;
 import export.io.CsvWriterUtil;
 import modules.CourseModule;
@@ -25,7 +27,7 @@ public class TestCsv {
         ExportService exportService = new ExportService();
         ImportService importService = new ImportService();
 
-/*
+
         CourseFull ec121 = new CourseFull("EC121", "Bcom Econ");
         ec121.addCourseYear("1");
         ec121.addCourseYear("2");
@@ -41,14 +43,15 @@ public class TestCsv {
         AY25ec121Y2sem1.addNewModule("EC102", "Foundations of Econ");
 
         Student student = new Student("123456", "Alex", "EC121", "1");
- */
 
-        String filepath = "D:\\UL Work\\Yr 2 Sem 1\\CS4013 - OOP\\TimetableProject\\UL_TimeTable_Group17\\src\\test\\resources\\csvstudentstest.csv";
+
+        String filepath = "C:\\Users\\24354678\\OneDrive - University of Limerick\\Documents\\UL_TimeTable_Group17\\src\\test\\resources\\csvstudentstest.csv";
         Path path = Paths.get(filepath);
-        String csvcoursefull = "D:\\UL Work\\Yr 2 Sem 1\\CS4013 - OOP\\TimetableProject\\UL_TimeTable_Group17\\src\\test\\resources\\csvcoursefull.csv";
+        String csvcoursefull = "C:\\Users\\24354678\\OneDrive - University of Limerick\\Documents\\UL_TimeTable_Group17\\src\\test\\resources\\csvcoursefull.csv";
         Path path2 = Paths.get(csvcoursefull);
+        String csvcourseyear ="C:\\Users\\24354678\\OneDrive - University of Limerick\\Documents\\UL_TimeTable_Group17\\src\\test\\resources\\csvcourseyear";
+        Path path3 = Paths.get(csvcourseyear);
 
-        /*
 
         //Writing objects to memory
 
@@ -65,6 +68,13 @@ public class TestCsv {
             throw new RuntimeException(e);
         }
 
+        CourseYearCsvDto courseYearCsvDto = CourseYearMapper.flatten(AY25ec121Year1);
+        CsvWriterUtil<CourseYearCsvDto> writer3 = new CsvWriterUtil<>(path3, CourseYearCsvDto.class);
+        try{
+            exportService.export(courseYearCsvDto, writer3);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         StudentCsvDto studentCsvDto = StudentMapper.flatten(student);
         CsvWriterUtil<StudentCsvDto> writer2 = new CsvWriterUtil<>(path, StudentCsvDto.class);
@@ -75,7 +85,7 @@ public class TestCsv {
         }
 
 
-         */
+
 
 
 
