@@ -1,6 +1,5 @@
 package export.mapper;
 
-import export.dto.CourseFullCsvDto;
 import export.dto.CourseYearCsvDto;
 import programCourse.CourseFull;
 import programCourse.CourseSemester;
@@ -18,13 +17,25 @@ public class CourseYearMapper implements MapperInterface {
             semesters.add(s.toString());
         }
 
-        String years = String.join(",", semesters);
+        String semester = String.join(",", semesters);
 
         return new CourseYearCsvDto(
                 y.getYearId(),
                 y.getYearNumber(),
-                years
+                semester
         );
     }
 
+
+    public static CourseYear inflate(CourseFull c, CourseYearCsvDto y){
+        CourseYear year = new CourseYear(c, y.getYearNumber());
+
+        String[] semesters = y.getCourseSemesters().split(",");
+
+        for(String s : semesters){
+            year.addSemester(s);
+        }
+
+        return year;
+    }
 }

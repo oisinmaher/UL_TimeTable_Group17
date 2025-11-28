@@ -153,6 +153,10 @@ public class Group {
         return new ArrayList<>(this.rooms.values());
     }
 
+    public List<CourseFull> getCoursesTakingThisModule(){
+        return this.coursesTakingThisModule;
+    }
+
 
     public CourseModule getCourseModule(){
         return this.module;
@@ -178,7 +182,7 @@ public class Group {
                 ", module=" + moduleCode +
                 ", presiding teacher=" + this.lecturer.getUserId() +
                 ", students=[" + sb +
-                "], rooms=" + rooms +
+                "], rooms=" + getRooms() +
                 '}';
     }
 

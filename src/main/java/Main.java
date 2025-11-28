@@ -103,7 +103,7 @@ public class Main {
         courseSemester.addNewModule("cs4401", "Database");
 
         CourseModule dataBaseModule = courseSemester.getModuleFromCode("cs4401");
-        Group dataBaseGroup = dataBaseModule.getGroupAssigned();
+        Group dataBaseGroup = dataBaseModule.getGroupAssigned(); //group created ; added empty group made above
         CourseModule opsModule = courseSemester.getModuleFromCode("cs4023");
         Group opsGroup = opsModule.getGroupAssigned();
 
@@ -115,7 +115,7 @@ public class Main {
         Student student = new Student("24377112", "Oisin", "LM121", "1");
         Student student2 = new Student("424234", "Yousef", "LM121", "1");
         Student student3 = new Student("4322545", "Alex", "LM121", "1");
-        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId());
+        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId()); //adding times
         opsGroup.addClassTimes("tut", "tues", "1205", labRoom.getRoomID(), teacher1.getUserId());
         opsGroup.addLectureTime("mon", "1200", lectureRoom.getRoomID(), teacher.getUserId());
 
@@ -125,7 +125,7 @@ public class Main {
         opsSlot.addStudent("424234");
         dbSlot.addStudent("24377112");
 
-        student.getUserTimeTable().printTimeTable();
-//        courseFull.getCourseTimeTable().printTimeTable();
+        //student.getUserTimeTable().printTimeTable();
+            courseFull.getCourseTimeTable().printTimeTable();
     }
 }
