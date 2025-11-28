@@ -1,13 +1,13 @@
-package src.main.java;
-import src.main.java.programCourse.CourseSemester;
-import src.main.java.programCourse.CourseYear;
-import src.main.java.modules.CourseModule;
-import src.main.java.rooms.LectureRoom;
-import src.main.java.rooms.Room;
-import src.main.java.timetables.*;
-import src.main.java.users.Student;
-
-import java.util.*;
+import modules.CourseModule;
+import programCourse.CourseFull;
+import programCourse.CourseSemester;
+import programCourse.CourseYear;
+import rooms.LabRoom;
+import rooms.LectureRoom;
+import timetables.Group;
+import timetables.TimeSlot;
+import users.Student;
+import users.Teacher;
 
 public class Main {
     public static void main(String[] args) {
@@ -69,19 +69,63 @@ public class Main {
 //
 //        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
 //
-//        List<ProgramYear> lm0512526 = Arrays.asList(AY2025Y1);
 //
-//        ProgramWithModule lm051 = new ProgramWithModule("LM051", "BSc Computer Systems", lm0512526);
 //
-//        Group lm051AY24 = new Group(2025, group1a, oop, lm051Rooms);
+//        CourseFull courseFull = new CourseFull("LM121", "Computer Science");
+//        courseFull.addCourseYear("1");
+//        CourseYear courseYear = courseFull.getCourseYears().get(0);
+//        courseYear.addSemester("spring");
+//        CourseSemester semester = courseYear.getSemesters().get(0);
+//        semester.addNewModule("CS4044", "OOP");
+//        semester.addNewModule("Cs4011", "game dev");
+////        System.out.println("module codes are " + semester.getModuleCodes());
+//        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
+//        Group group = courseModule.getGroupAssigned();
+////        SubGroup sg1 = group.createSubGroup("lab");
+////        sg1.add
+////        SubGroup sg2 = group.createSubGroup("tut");
+////        group.addTimeSlot("lab", "mon", "1500");
+////        group.addTimeSlot("tutorial", "tue", "0900");
+//        CourseTimeTable.main(new String[0]);
 //
-//        TimeTable timeTable = new TimeTable();
-//        TimeSlot monday9am = new TimeSlot("1100", lm051AY24);
-//
-//        timeTable.addTimeSlot("Monday", monday9am);
-//
-//        System.out.println(timeTable);
+//        System.out.println(courseModule.toString());
+//        Scanner sc = new Scanner(System.in);
+//        InMemoryTeacherService m = new InMemoryTeacherService();
+//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
+////        ad.run();
+//        TimeSlot timeSlot = new TimeSlot("tue", "1550", null, null);
+//        System.out.println(timeSlot.getTime());
+        CourseFull courseFull = new CourseFull("LM121", "Computer Science");
+        CourseYear courseYear = courseFull.addCourseYear("1");
 
+        CourseSemester courseSemester = courseYear.addSemester("autumn");
+        courseSemester.addNewModule("cs4023", "Operating systems");
+        courseSemester.addNewModule("cs4401", "Database");
 
+        CourseModule dataBaseModule = courseSemester.getModuleFromCode("cs4401");
+        Group dataBaseGroup = dataBaseModule.getGroupAssigned();
+        CourseModule opsModule = courseSemester.getModuleFromCode("cs4023");
+        Group opsGroup = opsModule.getGroupAssigned();
+
+        LectureRoom lectureRoom = new LectureRoom("CSG001", "lecture", 100);
+        LabRoom labRoom = new LabRoom("CS3005B", "lab", 100);
+
+        Teacher teacher = new Teacher("434", "Michael English");
+        Teacher teacher1 = new Teacher("432", "Caoimhe");
+        Student student = new Student("24377112", "Oisin", "LM121", "1");
+        Student student2 = new Student("424234", "Yousef", "LM121", "1");
+        Student student3 = new Student("4322545", "Alex", "LM121", "1");
+        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId());
+        opsGroup.addClassTimes("tut", "tues", "1205", labRoom.getRoomID(), teacher1.getUserId());
+        opsGroup.addLectureTime("mon", "1200", lectureRoom.getRoomID(), teacher.getUserId());
+
+        TimeSlot dbSlot = dataBaseGroup.getTimeSlots("lab").get(0);
+        TimeSlot opsSlot = opsGroup.getTimeSlots("tut").get(0);
+        opsSlot.addStudent("24377112");
+        opsSlot.addStudent("424234");
+        dbSlot.addStudent("24377112");
+
+        student.getUserTimeTable().printTimeTable();
+//        courseFull.getCourseTimeTable().printTimeTable();
     }
 }

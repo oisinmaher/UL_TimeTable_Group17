@@ -1,4 +1,4 @@
-package src.main.java.rooms;
+package rooms;
 
 /**
  * LabRoom class.
