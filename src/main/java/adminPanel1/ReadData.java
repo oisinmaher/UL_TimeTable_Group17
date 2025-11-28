@@ -78,8 +78,8 @@ public class ReadData {
         List<CourseSemesterCsvDto> semesterCsvDtos = courseSemesterReader.readAll();
         for (CourseSemesterCsvDto courseSemesterDto : semesterCsvDtos) {
             String semesterId = courseSemesterDto.getSemesterId();
-            String courseCode = semesterId.substring(0, 4);
-            String yearId = semesterId.substring(8, 8);
+            String courseCode = semesterId.substring(0, 5);
+            String yearId = semesterId.substring(0, 8);
 
             CourseFull course = coursesMap.get(courseCode);
             CourseYear year = CourseYear.getCourseYear(yearId);
@@ -88,6 +88,10 @@ public class ReadData {
 
         //Yet to add...
         //Read in course modules
+
+        //Read in groups
+
+        //Read in timeslots
 
 
     }
