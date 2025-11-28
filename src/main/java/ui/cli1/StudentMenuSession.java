@@ -1,9 +1,9 @@
-package src.main.java.ui.cli1;
+package ui.cli1;
 
-import src.main.java.users.Student;
+import users.Student;
 
 import java.util.Scanner;
-import src.main.java.users.Student;
+
 /**
  * Represents the menu-based CLI session for a student user.
  * <p>
@@ -17,18 +17,23 @@ public class StudentMenuSession implements UserSession {
 
     private final Scanner in;
     private final StudentService studentService;
+    private final TimetableService timetableService;
     private final String studentId;
 
     /**
-     * Constructs a new student menu session.
      *
-     * @param in the input scanner used to read user choices
-     * @param studentService the service used to retrieve student information
-     * @param studentId the ID of the student currently logged in
+     * @param in the Scanner that this menu uses
+     * @param studentService allows for operations on student data
+     * @param timetableService timetable views
+     * @param studentId student ID number
      */
-    public StudentMenuSession(Scanner in, StudentService studentService, String studentId) {
+    public StudentMenuSession(Scanner in,
+                              StudentService studentService,
+                              TimetableService timetableService,
+                              String studentId) {
         this.in = in;
         this.studentService = studentService;
+        this.timetableService = timetableService;
         this.studentId = studentId;
     }
 
@@ -47,7 +52,8 @@ public class StudentMenuSession implements UserSession {
         while (running) {
             System.out.println("\n=== Student Menu ===");
             System.out.println("1. View my details");
-            System.out.println("2. Logout");
+            System.out.println("2. View my timetable");
+            System.out.println("3. Logout");
             System.out.print("Choose an option: ");
 
             String choice = in.nextLine().trim();
@@ -64,7 +70,10 @@ public class StudentMenuSession implements UserSession {
                     break;
 
                 case "2":
-                    // Exit the session
+                    System.out.println();
+                    System.out.println(timetableService.getStudentTimetableAsString(studentId));
+                    break;
+                case "3":
                     running = false;
                     break;
 

@@ -1,8 +1,6 @@
-package src.main.java.programCourse;
+package programCourse;
 
-import src.main.java.modules.CourseModule;
-import src.main.java.programCourse.CourseFull;
-import src.main.java.programCourse.CourseYear;
+import modules.CourseModule;
 import java.util.*;
 
 /**
@@ -13,48 +11,123 @@ import java.util.*;
  *  - Contains a list of CourseModule objects
  *  - Can validate its modules
  *  - Can select a subset of modules based on the semester rules
+ *  - Is NOT mutually referred to the CourseYear
  */
 public final class CourseSemester {
+    // Semester id = CourseYearId + "_" + season
+    private final String semesterId;
+    // spring/autumn
+    private final String season;
+    // module code -> Module object.  "cs4404" -> CourseModule Object
+    private final Map<String, CourseModule> assignedModules;
+    private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
+    private CourseFull courseFull;
 
-    private final String name;
-    private final List<CourseModule> moduleCodes;
+    /**
+     * enum for  2 seasons (probably won't use as I cant really think how cli would even benefit with enums
+     * if you have any idea let me (Oisin) know
+     */
+//    public enum Seasons {
+//        SPRING,
+//        AUTUMN
+//    }
 
     /**
      * Creates a CourseSemester with a name and list of module codes.
+     * @param season the name of the semester (e.g. "Autumn")
+     * @param courseFull university course (e.g. "Computer Systems")
+     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if spring or autumn is not inputted
      *
-     * @param name        the name of the semester (e.g. "Autumn")
-     * @param moduleCodes list of CourseModule objects assigned to this semester
-     *
-     * @throws IllegalArgumentException if name or moduleCodes is null
+     * NOTE, as of Right now no mutual reference to the CourseYear its assigned
      */
-    public CourseSemester(String name, List<CourseModule> moduleCodes) {
-        if (name == null) {
-            throw new IllegalArgumentException("name is null");
+    public CourseSemester(CourseYear courseYear, String season, CourseFull courseFull) {
+        if (season == null) {
+            throw new IllegalArgumentException("season is null");
         }
-        if (moduleCodes == null) {
-            throw new IllegalArgumentException("moduleCodes is null");
+        season = season.toLowerCase();
+        // if neither spring nor autumn
+        if (!(season.equals("spring") || season.equals("autumn"))) {
+            throw new IllegalArgumentException("Season must be spring or autumn");
         }
-
-        this.name = name;
-        this.moduleCodes = new ArrayList<>(moduleCodes);
+        this.semesterId = courseYear.getYearId() + "_" + season;
+        this.season = season;
+        allSemesters.put(semesterId, this);
+        this.assignedModules = new HashMap<>();
+        this.courseFull = courseFull;
     }
 
     /**
-     * Returns the name of the semester.
-     *
-     * @return semester name as a String
+     * Gets the semesterId in the form "CourseYearId_season"
+     * @return semesterId
      */
-    public String getName() {
-        return this.name;
+    public String getSemesterId(){
+        return this.semesterId;
+    }
+
+    /**
+     * Checks the STATIC allSemester map
+     * @param semesterId the semester id will be courseId + season
+     * @throws IllegalArgumentException if list of semesters doesn't have the given semesterId
+     * @return CourseSemester object associated with semester id
+     */
+    public static CourseSemester getSemesterById(String semesterId){
+        if(!allSemesters.containsKey(semesterId)){
+            throw new IllegalArgumentException("This semesterId doesn't exist");
+        }
+        return allSemesters.get(semesterId);
+    }
+
+    /**
+     * Adds a module that's already been created (if a different course shares same module)
+     * @param moduleCode the code of a module
+     */
+    public void addExistingModule(String moduleCode){
+        assignedModules.put(moduleCode.toLowerCase(), CourseModule.getModuleFromCode(moduleCode));
+    }
+
+    /**
+     * Creates new Course module
+     * CourseModule constructor already has a check for existing modules
+     * @param code // module code e.g cs4004
+     * @param name // module name e.g Database Systems
+     */
+    public void addNewModule(String code, String name){
+        CourseModule module = new CourseModule(name.toLowerCase(), code, courseFull);
+        assignedModules.put(code.toLowerCase(), module);
+    }
+
+    /**
+     * @return semester season as a String
+     */
+    public String getSeason() {
+        return this.season;
     }
 
     /**
      * Returns a defensive copy of the list of modules assigned to this semester.
-     *
      * @return list of CourseModule objects
      */
-    public List<CourseModule> getModuleCodes() {
-        return new ArrayList<>(moduleCodes);
+    public List<String> getModuleCodes() {
+        return new ArrayList<>(assignedModules.keySet());
+    }
+
+    /**
+     * Gets the list of course modules from assignedModules
+     * @return list of course module objects
+     */
+    public List<CourseModule> getModuleObjects(){
+        return new ArrayList<>(assignedModules.values());
+    }
+
+    /**
+     * Gets the course module given a module code
+     * @param moduleCode a modules code
+     * @return Course module object
+     */
+    public CourseModule getModuleFromCode(String moduleCode){
+        moduleCode = moduleCode.toLowerCase();
+        return assignedModules.get(moduleCode);
     }
 
     /**
@@ -65,22 +138,21 @@ public final class CourseSemester {
      *  - Semester has at least one module
      *  - All module codes are non-null and non-blank
      *  - No duplicate module codes in this semester
-     *
      * @param yearNumber the academic year number this semester belongs to
      * @return list of validation error messages, empty if no issues
      */
     public List<String> validate(int yearNumber) {
         List<String> issues = new ArrayList<>();
 
-        if (name.isEmpty()) {
+        if (season.isEmpty()) {
             issues.add("Year" + yearNumber + " has a semester with a blank name");
         }
-        if (moduleCodes.isEmpty()) {
+        if (assignedModules.isEmpty()) {
             issues.add("Year" + yearNumber + " has no modules listed");
         }
 
         Set<String> seen = new HashSet<>();
-        for (CourseModule m : moduleCodes) {
+        for (CourseModule m : assignedModules.values()) {
             if (m == null || m.getModuleCode().isEmpty()) {
                 issues.add("Year" + yearNumber + " has a blank module code");
             } else if (seen.contains(m.getModuleCode())) {
@@ -92,80 +164,40 @@ public final class CourseSemester {
         return issues;
     }
 
+    /** hashing for sets, might not use /
     /**
-     * Selects a subset of modules for this semester based on the UL rules:
-     *
-     *  - Autumn/Fall → modules ending in an ODD digit (1,3,5,7,9)
-     *  - Spring      → modules ending in an EVEN digit (0,2,4,6,8)
-     *  - Summer      → currently returns ALL modules
-     *
-     * If the semester name does not match Autumn/Fall, Spring, or Summer,
-     * an exception is thrown.
-     *
-     * @return list of CourseModule objects that match the semester's filtering rules
-     *
-     * @throws IllegalArgumentException if the semester name is not recognised
+     * check if two semesterIds are equal
+     * @param o an Object
+     * @return true if equal, false otherwise
      */
-    public List<CourseModule> pickModulesForThisSemester() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseSemester that = (CourseSemester) o;
+        return this.getSemesterId().equals(that.getSemesterId());
+    }
 
-        List<CourseModule> selected = new ArrayList<>();
-
-        String sem = name.toLowerCase();
-
-        for (CourseModule module : moduleCodes) {
-
-            String code = module.getModuleCode();
-            if (code == null || code.isEmpty()) {
-                continue;
-            }
-
-            char lastChar = code.charAt(code.length() - 1);
-
-            if (!Character.isDigit(lastChar)) {
-                continue;
-            }
-
-            // FIXED: the braces in your original code prevented this from compiling
-            int lastDigit = Character.getNumericValue(lastChar);  // ✔ Correct position
-
-            if (sem.contains("autumn") || sem.contains("fall")) {
-                // Pick odd-ending module codes
-                if (lastDigit % 2 == 1) {
-                    selected.add(module);
-                }
-            }
-            else if (sem.contains("spring")) {
-                // Pick even-ending module codes
-                if (lastDigit % 2 == 0) {
-                    selected.add(module);
-                }
-            }
-            else if (sem.contains("summer")) {
-                // Summer gets all modules (as per your current rule)
-                selected.add(module);
-            }
-            else {
-                throw new IllegalArgumentException(
-                    "Invalid semester: '" + name + "'. Only Autumn/Fall and Spring are supported."
-                );
-            }
-        }
-
-        return selected;
+    /**
+     * Gets hashCode of semesterId
+     * @return hashCode as an int
+     */
+    @Override
+    public int hashCode(){
+        return this.getSemesterId().hashCode();
     }
 
     /**
      * Converts the semester to a readable string format:
      * e.g. "Autumn: CS1011, MA4001"
-     *
      * @return formatted string representation of this semester
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(name).append(": ");
-        for (int i = 0; i < moduleCodes.size(); i++) {
-            sb.append(moduleCodes.get(i));
-            if (i < moduleCodes.size() - 1) sb.append(", ");
+        StringBuilder sb = new StringBuilder(season).append(": ");
+        for (int i = 0; i < assignedModules.size(); i++) {
+            sb.append(assignedModules.get(i));
+            if (i < assignedModules.size() - 1) sb.append(", ");
         }
         return sb.toString();
     }
