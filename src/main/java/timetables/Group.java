@@ -26,6 +26,7 @@ public class Group {
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
     protected List<CourseFull> coursesTakingThisModule;
+    private final static Map<String, Group> allGroups = new HashMap<>();
 
     public Group(CourseModule courseModule, List<CourseFull> coursesTakingThisModule){
         if (courseModule == null) {
@@ -43,6 +44,7 @@ public class Group {
         this.labsTimes = new HashMap<>();
         this.tutorialsTimes = new HashMap<>();
         this.usedTimes = new HashSet<>();
+        allGroups.put(moduleCode, this);
     }
     public Set<TimeSlot> getTimeSlots(){
         return allTimeSlots;
@@ -58,6 +60,10 @@ public class Group {
         allTimeSlots.add(timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
+    }
+
+    public static Map<String, Group> getAllGroups(){
+        return allGroups;
     }
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module

@@ -85,6 +85,10 @@ public abstract class Room
         return this.maxCapacity;
     }
 
+    public static Map<String, Room> getAllRooms(){
+        return allRooms;
+    }
+
     /**
      *
      * @param roomType

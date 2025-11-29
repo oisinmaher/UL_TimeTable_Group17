@@ -24,6 +24,7 @@ public class CourseSemesterMapper implements MapperInterface{
 
 
     public static CourseSemester inflate(CourseYear y, CourseFull c, CourseSemesterCsvDto s){
+
         CourseSemester cs = new CourseSemester(y, s.getSeason(),c);
         for (String code:s.getModuleCodes().split(",")){
             cs.addExistingModule(code);

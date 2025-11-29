@@ -3,10 +3,11 @@ package adminPanel1;
 import export.dto.*;
 import export.io.CsvReaderUtil;
 import export.mapper.*;
+import modules.CourseModule;
 import programCourse.CourseFull;
-import programCourse.CourseSemester;
 import programCourse.CourseYear;
 import rooms.Room;
+import timetables.Group;
 import users.Student;
 import users.Teacher;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class reads in data from csv files and initialise objects
+ * This class reads in data from csv files and initialises objects
  * The data are strings so it creates new objects
  * The order of reading in matters
  * for example Student have TimeTable variable, and TimeTable has Student variable
@@ -88,11 +89,32 @@ public class ReadData {
 
         //Yet to add...
         //Read in course modules
+        Path courseModulesPath = Paths.get(getClass().getClassLoader().getResource("resources/CourseModuleData.csv").toURI());
+        CsvReaderUtil<CourseModuleCsvDto> courseModulesReader = new CsvReaderUtil<>(courseModulesPath, CourseModuleCsvDto.class);
+        List<CourseModuleCsvDto> courseModulesCsvDtos = courseModulesReader.readAll();
+        for (CourseModuleCsvDto courseModuleCsvDto : courseModulesCsvDtos) {
+            CourseFull course = coursesMap.get(courseModuleCsvDto.getCode().substring(0, 5));
+            CourseModuleMapper.inflate(course, courseModuleCsvDto);
+        }
 
         //Read in groups
+        Path groupsPath = Paths.get(getClass().getClassLoader().getResource("resources/GroupData.csv").toURI());
+        CsvReaderUtil<GroupCsvDto> groupsReader = new CsvReaderUtil<>(groupsPath, GroupCsvDto.class);
+        List<GroupCsvDto> groupsCsvDtos = groupsReader.readAll();
+        for (GroupCsvDto groupCsvDto : groupsCsvDtos) {
+            Group group = GroupMapper.inflate(groupCsvDto);
+        }
 
         //Read in timeslots
+        Path timeSlotsPath = Paths.get(getClass().getClassLoader().getResource("resources/TimeSlotData.csv").toURI());
+        CsvReaderUtil<TimeSlotCsvDto> timeSlotReader = new CsvReaderUtil<>(timeSlotsPath, TimeSlotCsvDto.class);
+        List<TimeSlotCsvDto> timeSlotCsvDtos = timeSlotReader.readAll();
+        for (TimeSlotCsvDto ts : timeSlotCsvDtos){
+            Map<String, CourseModule> moduleMap = CourseModule.getModuleMap();
+            Map<String, Student> students = Student.getAllStudentsEnrolled();
 
+            TimeSlotMapper.inflate(ts, moduleMap, coursesMap, students);
+        }
 
     }
 }

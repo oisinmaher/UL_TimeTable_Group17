@@ -36,7 +36,7 @@ public class TimeSlotMapper implements MapperInterface{
     }
 
 
-    public TimeSlot inflate(TimeSlotCsvDto csvDto, Map<String, CourseModule> moduleCodes, Map<String,
+    public static TimeSlot inflate(TimeSlotCsvDto csvDto, Map<String, CourseModule> moduleCodes, Map<String,
             CourseFull> courseFulls, Map<String, Student> studentIds){
 
         String[] timeSplit = csvDto.getDayTime().split("_");

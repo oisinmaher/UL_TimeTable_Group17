@@ -51,7 +51,7 @@ public class GroupMapper implements MapperInterface{
 
     }
 
-    public Group inflate(GroupCsvDto groupCsvDto) {
+    public static Group inflate(GroupCsvDto groupCsvDto) {
 
         CourseModule module = CourseModule.getModuleFromCode(groupCsvDto.getModuleCode());
 

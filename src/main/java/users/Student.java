@@ -47,6 +47,10 @@ public class Student extends User {
             return allStudentsEnrolled.get(studentId);
         else throw new IllegalArgumentException("Student ID: " + studentId + " does not exist");
     }
+
+    public static Map<String, Student> getAllStudentsEnrolled(){
+        return allStudentsEnrolled;
+    }
     public void setName(String name){
         this.name = name;
     }

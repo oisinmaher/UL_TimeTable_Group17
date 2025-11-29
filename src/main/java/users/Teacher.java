@@ -45,6 +45,11 @@ public class Teacher extends User {
             return allTeachers.get(teacherId);
         else throw new IllegalArgumentException("This Teacher ID " + teacherId + " does not exist");
     }
+
+    public static Map<String, Teacher> getAllTeachers(){
+        return allTeachers;
+    }
+
     @Override
     public String toString(){
         return getName();
