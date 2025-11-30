@@ -23,6 +23,7 @@ public class CourseFull {
     private static final Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't be any data leaks.
     private final Map<String, CourseYear> yearCodeMapping;
     private final CourseTimeTable courseTimeTable;
+    private static Map<String, CourseFull> allCourseFulls = new HashMap<>();
 
     /**
      * Constructs a CourseFull object by assigning the course code,
@@ -46,6 +47,7 @@ public class CourseFull {
         this.name = capitalizeName(name);
         courseCodeMapping.put(courseCode, this);
         this.courseTimeTable = new CourseTimeTable(this);
+        allCourseFulls.put(courseCode, this);
     }
 
     /**
@@ -62,6 +64,10 @@ public class CourseFull {
                 lowerCase[i] -= asciiDif;
         }
         return new String(lowerCase);
+    }
+
+    public static Map<String, CourseFull> getAllCourseFulls() {
+        return allCourseFulls;
     }
 
     /**

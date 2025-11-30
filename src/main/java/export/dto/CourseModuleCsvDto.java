@@ -10,11 +10,23 @@ public class CourseModuleCsvDto implements CsvDtoInterface{
     @CsvBindByName
     private String name;
 
+    @CsvBindByName
+    private int LecHours;
+
+    @CsvBindByName
+    private int LabHours;
+
+    @CsvBindByName
+    private int TutHours;
+
     public CourseModuleCsvDto() {}
 
-    public CourseModuleCsvDto(String code, String name) {
+    public CourseModuleCsvDto(String code, String name, int LecHours, int LabHours, int TutHours) {
         this.code = code;
         this.name = name;
+        this.LecHours = LecHours;
+        this.LabHours = LabHours;
+        this.TutHours = TutHours;
     }
 
     public String getCode() {
@@ -29,5 +41,26 @@ public class CourseModuleCsvDto implements CsvDtoInterface{
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getLecHours() {
+        return LecHours;
+    }
+    public void setLecHours(int lecHours) {
+        LecHours = lecHours;
+    }
+
+    public int getLabHours() {
+        return LabHours;
+    }
+    public void setLabHours(int labHours) {
+        LabHours = labHours;
+    }
+
+    public int getTutHours() {
+        return TutHours;
+    }
+    public void setTutHours(int tutHours) {
+        TutHours = tutHours;
     }
 }

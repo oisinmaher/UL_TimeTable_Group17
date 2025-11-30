@@ -18,7 +18,7 @@ public class CsvReaderUtil<T> {
 
     /**
      * Constructor class for the reader
-     * @param path the absolute file path of the CSV
+     * @param path the file path of the CSV
      * @param type the class to be read
      */
     public CsvReaderUtil(Path path, Class<T> type) {

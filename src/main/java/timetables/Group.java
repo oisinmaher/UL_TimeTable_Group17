@@ -1,4 +1,5 @@
 package timetables;
+import adminPanel1.DataManager;
 import modules.CourseModule;
 import programCourse.*;
 import rooms.Room;
@@ -35,6 +36,7 @@ public class Group {
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
     protected List<CourseFull> coursesTakingThisModule;
+    private final static Map<String, Group> allGroups = new HashMap<>();
 
     /**
      * Constructor that creates the group of students taking a module
@@ -58,12 +60,14 @@ public class Group {
         this.labsTimes = new HashMap<>();
         this.tutorialsTimes = new HashMap<>();
         this.usedTimes = new HashSet<>();
+        allGroups.put(moduleCode, this);
     }
 
     /**
      * Gets all the TimeSlots of the students taking a module
      * @return set of all TimeSlots
      */
+
     public Set<TimeSlot> getTimeSlots(){
         return allTimeSlots;
     }
@@ -77,6 +81,17 @@ public class Group {
      * @param teacherId the teachers ID number
      * @throws IllegalArgumentException if the given dayTime already has a TimeSlot
      */
+
+    public static Set<TimeSlot> getEveryTimeSlots() {
+        Set<TimeSlot> allTimeSlots = new HashSet<>();
+        for(Group g : DataManager.groups.values()){
+            allTimeSlots.addAll(g.getTimeSlots("lecture"));
+            allTimeSlots.addAll(g.getTimeSlots("lab"));
+            allTimeSlots.addAll(g.getTimeSlots("tutorial"));
+        }
+        return allTimeSlots;
+    }
+
     public void addLectureTime(String day, String time, String roomId, String teacherId){
         TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
@@ -88,6 +103,10 @@ public class Group {
         allTimeSlots.add(timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
+    }
+
+    public static Map<String, Group> getAllGroups(){
+        return allGroups;
     }
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module.
@@ -188,7 +207,11 @@ public class Group {
      * @param teacherId teacher ID number
      */
     public void setTeacher(String teacherId){
-        this.lecturer = Teacher.getTeacherFromId(teacherId);
+        if (teacherId != null && !teacherId.isEmpty()) {
+            this.lecturer = Teacher.getTeacherFromId(teacherId); // use existing object
+        } else {
+            this.lecturer = null;
+        }
     }
 
     /**
@@ -240,10 +263,18 @@ public class Group {
         return new ArrayList<>(this.rooms.values());
     }
 
+
     /**
      * Gets the module from which this group are a part of.
      * @return the module of this group of students
      */
+
+    public List<CourseFull> getCoursesTakingThisModule(){
+        return this.coursesTakingThisModule;
+    }
+
+
+
     public CourseModule getCourseModule(){
         return this.module;
     }
@@ -272,7 +303,7 @@ public class Group {
                 ", module=" + moduleCode +
                 ", presiding teacher=" + this.lecturer.getUserId() +
                 ", students=[" + sb +
-                "], rooms=" + rooms +
+                "], rooms=" + getRooms() +
                 '}';
     }
 

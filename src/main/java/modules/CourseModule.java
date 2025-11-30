@@ -104,6 +104,10 @@ public class CourseModule {
         return this.moduleName;
     }
 
+    public static Map<String, CourseModule> getModuleMap(){
+        return allModules;
+    }
+
     /**
      * Gets the code of the module
      * @return the module code
