@@ -84,9 +84,9 @@ public class Main {
         }
 
         //student.getUserTimeTable().printTimeTable();
-        //DataManager.courseFulls.get("lm121").getCourseTimeTable().printTimeTable();
+        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
 
-        DataManager.students.get("424234").getUserTimeTable().printTimeTable();
+        //DataManager.students.get("424234").getUserTimeTable().printTimeTable();
 
     }
 }
