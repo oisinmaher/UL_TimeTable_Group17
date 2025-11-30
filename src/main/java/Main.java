@@ -77,16 +77,14 @@ public class Main {
         */
 
         ReadData rd = new ReadData();
-        try {
             rd.importAll();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
 
         //student.getUserTimeTable().printTimeTable();
-        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
+        //DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
 
         //DataManager.students.get("424234").getUserTimeTable().printTimeTable();
+
+
 
     }
 }

@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class WriteData {
 
-    public void writeAll() throws URISyntaxException {
+    public void writeAll(){
 
         ExportService exportService = new ExportService();
 
