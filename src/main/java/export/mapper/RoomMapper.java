@@ -19,9 +19,9 @@ public class RoomMapper implements MapperInterface{
 
     public static Room inflate(RoomCsvDto roomCsvDto) {
 
-        if (roomCsvDto.getType().equals("lab")) {
+        if (roomCsvDto.getType().equalsIgnoreCase("lab")) {
             return new LabRoom(roomCsvDto.getRoomId(), roomCsvDto.getType(), roomCsvDto.getCapacity());
-        }else if (roomCsvDto.getType().equals("lecture")) {
+        }else if (roomCsvDto.getType().equalsIgnoreCase("lecture")) {
             return new LectureRoom(roomCsvDto.getRoomId(), roomCsvDto.getType(), roomCsvDto.getCapacity());
         }
         throw new IllegalArgumentException("Unknown room type: " + roomCsvDto.getType());

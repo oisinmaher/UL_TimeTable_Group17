@@ -1,12 +1,11 @@
 package adminPanel1;
+import modules.CourseModule;
 import programCourse.*;
 import rooms.*;
 import timetables.*;
 import users.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is a singleton class, meaning it will only have a single instance of it.
@@ -26,7 +25,10 @@ public class DataManager {
         public static Map<String, Teacher> teachers = Teacher.getAllTeachers();
         public static Map<String, Group> groups = Group.getAllGroups();
         public static Map<String, CourseFull> courseFulls = CourseFull.getAllCourseFulls();
-
+        public static Map<String, CourseYear> courseYears = CourseYear.getAllCourseYears();
+        public static Map<String, CourseSemester> courseSemesters = CourseSemester.getAllSemesters();
+        public static Map<String, CourseModule> courseModules = CourseModule.getModuleMap();
+        public static Set<TimeSlot> timeSlots = Group.getEveryTimeSlots();
 
 
     private DataManager() {

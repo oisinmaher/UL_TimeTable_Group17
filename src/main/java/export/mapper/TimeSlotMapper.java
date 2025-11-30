@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TimeSlotMapper implements MapperInterface{
 
-    public TimeSlotCsvDto flatten(TimeSlot ts){
+    public static TimeSlotCsvDto flatten(TimeSlot ts){
         String timeSlotId = ts.getTime() + "_" + ts.getModule() + "_" + ts.getClassType();
 
         String students = String.join(",",ts.getStudents().keySet());

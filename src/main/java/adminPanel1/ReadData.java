@@ -31,7 +31,7 @@ public class ReadData {
     public void importAll() throws URISyntaxException {
 
         //Read in rooms
-        Path roomPath = Paths.get(getClass().getClassLoader().getResource("resources/RoomData.csv").toURI());
+        Path roomPath = Paths.get("src/main/data/RoomData.csv");
         CsvReaderUtil<RoomCsvDto> roomReader = new CsvReaderUtil<>(roomPath, RoomCsvDto.class);
         List<RoomCsvDto> roomDtos = roomReader.readAll();
         for (RoomCsvDto roomDto : roomDtos) {
@@ -39,57 +39,34 @@ public class ReadData {
         }
 
         //Read in teachers
-        Path teacherPath = Paths.get(getClass().getClassLoader().getResource("resources/TeacherData.csv").toURI());
+        Path teacherPath = Paths.get("src/main/data/TeacherData.csv");
         CsvReaderUtil<TeacherCsvDto> teacherReader = new CsvReaderUtil<>(teacherPath, TeacherCsvDto.class);
         List<TeacherCsvDto> teacherDtos = teacherReader.readAll();
         for (TeacherCsvDto teacherDto : teacherDtos) {
             Teacher teacher = TeacherMapper.inflate(teacherDto);
         }
 
-        //Read in students
-        Path studentPath = Paths.get(getClass().getClassLoader().getResource("resources/StudentData.csv").toURI());
-        CsvReaderUtil<StudentCsvDto> studentReader = new CsvReaderUtil<>(studentPath, StudentCsvDto.class);
-        List<StudentCsvDto> studentCsvDtos = studentReader.readAll();
-        for (StudentCsvDto studentCsvDto : studentCsvDtos) {
-            Student student = StudentMapper.inflate(studentCsvDto);
-        }
-
         //Read in courseFulls
-        Path courseFullPath = Paths.get(getClass().getClassLoader().getResource("resources/CourseFullData.csv").toURI());
+        Path courseFullPath = Paths.get("src/main/data/CourseFullData.csv");
         CsvReaderUtil<CourseFullCsvDto> courseFullReader = new CsvReaderUtil<>(courseFullPath, CourseFullCsvDto.class);
         List<CourseFullCsvDto> courseFullDtos = courseFullReader.readAll();
         Map<String, CourseFull> coursesMap = new HashMap<>();
         for (CourseFullCsvDto courseFullDto : courseFullDtos) {
             CourseFull course = CourseFullMapper.inflate(courseFullDto);
-            coursesMap.put(course.getName(), course);
+            coursesMap.put(course.getCode(), course);
         }
 
         //Read in courseYears
-        Path courseYearPath = Paths.get(getClass().getClassLoader().getResource("resources/CourseYearData.csv").toURI());
+        Path courseYearPath = Paths.get("src/main/data/CourseYearData.csv");
         CsvReaderUtil<CourseYearCsvDto> courseYearReader = new CsvReaderUtil<>(courseYearPath, CourseYearCsvDto.class);
         List<CourseYearCsvDto> courseYearCsvDtos = courseYearReader.readAll();
         for (CourseYearCsvDto courseYearDto : courseYearCsvDtos) {
-            CourseFull course = coursesMap.get(courseYearDto.getYearId().substring(0, 4));
+            CourseFull course = coursesMap.get(courseYearDto.getYearId().substring(0, 5));
             CourseYearMapper.inflate(course, courseYearDto);
         }
 
-        //Read in courseSemesters
-        Path courseSemesterPath = Paths.get(getClass().getClassLoader().getResource("resources/CourseSemesterData.csv").toURI());
-        CsvReaderUtil<CourseSemesterCsvDto> courseSemesterReader = new CsvReaderUtil<>(courseSemesterPath, CourseSemesterCsvDto.class);
-        List<CourseSemesterCsvDto> semesterCsvDtos = courseSemesterReader.readAll();
-        for (CourseSemesterCsvDto courseSemesterDto : semesterCsvDtos) {
-            String semesterId = courseSemesterDto.getSemesterId();
-            String courseCode = semesterId.substring(0, 5);
-            String yearId = semesterId.substring(0, 8);
-
-            CourseFull course = coursesMap.get(courseCode);
-            CourseYear year = CourseYear.getCourseYear(yearId);
-            CourseSemesterMapper.inflate(year, course, courseSemesterDto);
-        }
-
-        //Yet to add...
         //Read in course modules
-        Path courseModulesPath = Paths.get(getClass().getClassLoader().getResource("resources/CourseModuleData.csv").toURI());
+        Path courseModulesPath = Paths.get("src/main/data/CourseModuleData.csv");
         CsvReaderUtil<CourseModuleCsvDto> courseModulesReader = new CsvReaderUtil<>(courseModulesPath, CourseModuleCsvDto.class);
         List<CourseModuleCsvDto> courseModulesCsvDtos = courseModulesReader.readAll();
         for (CourseModuleCsvDto courseModuleCsvDto : courseModulesCsvDtos) {
@@ -97,8 +74,30 @@ public class ReadData {
             CourseModuleMapper.inflate(course, courseModuleCsvDto);
         }
 
+        //Read in courseSemesters
+        Path courseSemesterPath = Paths.get("src/main/data/CourseSemesterData.csv");
+        CsvReaderUtil<CourseSemesterCsvDto> courseSemesterReader = new CsvReaderUtil<>(courseSemesterPath, CourseSemesterCsvDto.class);
+        List<CourseSemesterCsvDto> semesterCsvDtos = courseSemesterReader.readAll();
+        for (CourseSemesterCsvDto courseSemesterDto : semesterCsvDtos) {
+            String semesterId = courseSemesterDto.getSemesterId();
+            String courseCode = semesterId.substring(0, 5);
+            String yearNumber = semesterId.substring(0,7);
+
+            CourseFull course = coursesMap.get(courseCode);
+            CourseYear year = CourseYear.getCourseYear(yearNumber);
+            CourseSemesterMapper.inflate(year, course, courseSemesterDto);
+        }
+
+        //Read in students
+        Path studentPath = Paths.get("src/main/data/StudentData.csv");
+        CsvReaderUtil<StudentCsvDto> studentReader = new CsvReaderUtil<>(studentPath, StudentCsvDto.class);
+        List<StudentCsvDto> studentCsvDtos = studentReader.readAll();
+        for (StudentCsvDto studentCsvDto : studentCsvDtos) {
+            Student student = StudentMapper.inflate(studentCsvDto);
+        }
+
         //Read in groups
-        Path groupsPath = Paths.get(getClass().getClassLoader().getResource("resources/GroupData.csv").toURI());
+        Path groupsPath = Paths.get("src/main/data/GroupData.csv");
         CsvReaderUtil<GroupCsvDto> groupsReader = new CsvReaderUtil<>(groupsPath, GroupCsvDto.class);
         List<GroupCsvDto> groupsCsvDtos = groupsReader.readAll();
         for (GroupCsvDto groupCsvDto : groupsCsvDtos) {
@@ -106,7 +105,7 @@ public class ReadData {
         }
 
         //Read in timeslots
-        Path timeSlotsPath = Paths.get(getClass().getClassLoader().getResource("resources/TimeSlotData.csv").toURI());
+        Path timeSlotsPath = Paths.get("src/main/data/TimeSlotData.csv");
         CsvReaderUtil<TimeSlotCsvDto> timeSlotReader = new CsvReaderUtil<>(timeSlotsPath, TimeSlotCsvDto.class);
         List<TimeSlotCsvDto> timeSlotCsvDtos = timeSlotReader.readAll();
         for (TimeSlotCsvDto ts : timeSlotCsvDtos){

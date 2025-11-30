@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GroupMapper implements MapperInterface{
 
-    public GroupCsvDto flatten(Group group) {
+    public static GroupCsvDto flatten(Group group) {
         List<String> students = new ArrayList<>();
         for (Student s : group.getStudentsObject()) {
             students.add(s.getUserId());

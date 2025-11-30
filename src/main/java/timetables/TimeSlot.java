@@ -39,6 +39,7 @@ public class TimeSlot{
         for(CourseFull courseFull : coursesTakingThisModule)
             courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
         this.classType = classType;
+
     }
 
     public void addStudent(String studentId){

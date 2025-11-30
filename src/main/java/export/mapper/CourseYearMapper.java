@@ -28,7 +28,9 @@ public class CourseYearMapper implements MapperInterface {
 
 
     public static CourseYear inflate(CourseFull c, CourseYearCsvDto y){
-        CourseYear year = new CourseYear(c, y.getYearNumber());
+        String yearNum = y.getYearNumber();
+
+        CourseYear year = c.getCourseYear(yearNum);
 
         String[] semesters = y.getCourseSemesters().split(",");
 

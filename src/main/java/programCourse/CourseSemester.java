@@ -112,6 +112,10 @@ public final class CourseSemester {
         return assignedModules.get(moduleCode);
     }
 
+    public static Map<String, CourseSemester> getAllSemesters(){
+        return allSemesters;
+    }
+
     /**
      * Validates the semester and its modules.
      *

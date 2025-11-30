@@ -1,4 +1,5 @@
 package timetables;
+import adminPanel1.DataManager;
 import modules.CourseModule;
 import programCourse.*;
 import rooms.Room;
@@ -46,9 +47,22 @@ public class Group {
         this.usedTimes = new HashSet<>();
         allGroups.put(moduleCode, this);
     }
+
     public Set<TimeSlot> getTimeSlots(){
+
         return allTimeSlots;
     }
+
+    public static Set<TimeSlot> getEveryTimeSlots() {
+        Set<TimeSlot> allTimeSlots = new HashSet<>();
+        for(Group g : DataManager.groups.values()){
+            allTimeSlots.addAll(g.getTimeSlots("lecture"));
+            allTimeSlots.addAll(g.getTimeSlots("lab"));
+            allTimeSlots.addAll(g.getTimeSlots("tutorial"));
+        }
+        return allTimeSlots;
+    }
+
     public void addLectureTime(String day, String time, String roomId, String teacherId){
         TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){

@@ -5,7 +5,7 @@ import users.Teacher;
 
 public class TeacherMapper implements MapperInterface{
 
-    public TeacherCsvDto flatten(Teacher teacher) {
+    public static TeacherCsvDto flatten(Teacher teacher) {
         return new TeacherCsvDto(
                 teacher.getUserId(),
                 teacher.getName()
