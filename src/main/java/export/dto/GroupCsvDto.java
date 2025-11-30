@@ -11,23 +11,16 @@ public class GroupCsvDto implements CsvDtoInterface{
     private String courseCode;
 
     @CsvBindByName
-    private String studentsInGroup;
-
-    @CsvBindByName
     private String teacher;
 
     @CsvBindByName
     private String rooms;
 
-    @CsvBindByName
-    private String usedTimes;
-
     public GroupCsvDto() {}
 
-    public GroupCsvDto(String moduleCode, String courseCode, String studentsInGroup, String teacher, String rooms, String usedTimes) {
+    public GroupCsvDto(String moduleCode, String courseCode, String teacher, String rooms) {
         this.moduleCode = moduleCode;
         this.courseCode = courseCode;
-        this.studentsInGroup = studentsInGroup;
         this.teacher = teacher;
         this.rooms = rooms;
     }
@@ -46,13 +39,6 @@ public class GroupCsvDto implements CsvDtoInterface{
         this.courseCode = courseCode;
     }
 
-    public String getStudentsInGroup() {
-        return studentsInGroup;
-    }
-    public void setStudentsInGroup(String studentsInGroup) {
-        this.studentsInGroup = studentsInGroup;
-    }
-
     public String getTeacher() {
         return teacher;
     }
@@ -68,10 +54,4 @@ public class GroupCsvDto implements CsvDtoInterface{
         this.rooms = rooms;
     }
 
-    public String getUsedTimes() {
-        return usedTimes;
-    }
-    public void setUsedTimes(String usedTimes) {
-        this.usedTimes = usedTimes;
-    }
 }

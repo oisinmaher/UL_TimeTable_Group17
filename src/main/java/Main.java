@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 public class Main {
     public static void main(String[] args) {
 
-        /*
+/*
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         CourseYear courseYear = courseFull.addCourseYear("1");
 
@@ -51,8 +51,7 @@ public class Main {
         opsSlot.addStudent("424234");
         dbSlot.addStudent("24377112");
 
-        //student.getUserTimeTable().printTimeTable();
-            courseFull.getCourseTimeTable().printTimeTable();
+
 
 
         DataManager.students.put(student.getUserId(), student);
@@ -66,8 +65,8 @@ public class Main {
         DataManager.timeSlots.add(dbSlot);
         DataManager.groups.put("1B", dataBaseGroup);
         DataManager.timeSlots.add(opsSlot);
-        DataManager.teachers.put(teacher.getName(), teacher);
-        DataManager.teachers.put(teacher1.getName(), teacher1);
+        DataManager.teachers.put(teacher.getUserId(), teacher);
+        DataManager.teachers.put(teacher1.getUserId(), teacher1);
 
         WriteData wd = new WriteData();
         try {
@@ -84,7 +83,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        //student.getUserTimeTable().printTimeTable();
+        //DataManager.courseFulls.get("lm121").getCourseTimeTable().printTimeTable();
 
+        DataManager.students.get("424234").getUserTimeTable().printTimeTable();
 
     }
 }

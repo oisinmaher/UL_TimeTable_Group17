@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TimeSlotMapper implements MapperInterface{
+public class TimeSlotMapper implements MapperInterface {
 
-    public static TimeSlotCsvDto flatten(TimeSlot ts){
-        String timeSlotId = ts.getTime() + "_" + ts.getModule() + "_" + ts.getClassType();
+    public static TimeSlotCsvDto flatten(TimeSlot ts) {
+        //String timeSlotId = ts.getTime() + "_" + ts.getModule() + "_" + ts.getClassType();
 
-        String students = String.join(",",ts.getStudents().keySet());
+        String students = String.join(",", ts.getStudents().keySet());
 
         List<String> courseCodes = new ArrayList<>();
-        for(CourseFull courseCode : ts.getCoursesTakingThisModule()){
+        for (CourseFull courseCode : ts.getCoursesTakingThisModule()) {
             courseCodes.add(courseCode.getCode());
         }
         String cc = String.join(",", courseCodes);
@@ -37,7 +37,7 @@ public class TimeSlotMapper implements MapperInterface{
 
 
     public static TimeSlot inflate(TimeSlotCsvDto csvDto, Map<String, CourseModule> moduleCodes, Map<String,
-            CourseFull> courseFulls, Map<String, Student> studentIds){
+            CourseFull> courseFulls, Map<String, Student> studentIds) {
 
         String[] timeSplit = csvDto.getDayTime().split("_");
 
@@ -49,7 +49,7 @@ public class TimeSlotMapper implements MapperInterface{
 
         List<CourseFull> courseFullList = new ArrayList<>();
         String[] courses = csvDto.getCourseCodes().split(",");
-        for(String courseCode : courses){
+        for (String courseCode : courses) {
             CourseFull course = courseFulls.get(courseCode);
             courseFullList.add(course);
         }
@@ -58,7 +58,7 @@ public class TimeSlotMapper implements MapperInterface{
         CourseModule module = CourseModule.getModuleFromCode(csvDto.getModuleCode());
         Group group = module.getGroupAssigned();
 
-        return new TimeSlot(
+        TimeSlot timeSlot = new TimeSlot(
                 dayWord,
                 timeLong,
                 module,
@@ -69,6 +69,18 @@ public class TimeSlotMapper implements MapperInterface{
                 csvDto.getTeacherId()
         );
 
+        //Add students from CSV to the timeslot
+        String studentIdsCsv = csvDto.getStudentIds();
+        if (studentIdsCsv != null && !studentIdsCsv.isBlank()) {
+            String[] studentIdArray = studentIdsCsv.split(",");
+            for (String studentId : studentIdArray) {
+                studentId = studentId.trim();
+                if (!studentId.isEmpty()) {
+                    timeSlot.addStudent(studentId);
+                }
+            }
+        }
+        return timeSlot;
 
     }
 }

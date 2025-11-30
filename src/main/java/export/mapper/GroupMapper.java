@@ -16,11 +16,6 @@ import java.util.List;
 public class GroupMapper implements MapperInterface{
 
     public static GroupCsvDto flatten(Group group) {
-        List<String> students = new ArrayList<>();
-        for (Student s : group.getStudentsObject()) {
-            students.add(s.getUserId());
-        }
-        String studentIds = String.join(",", students);
 
         List<String> rooms = new ArrayList<>();
         for (TimeSlot ts : group.getTimeSlots()) {
@@ -43,10 +38,8 @@ public class GroupMapper implements MapperInterface{
         return new GroupCsvDto(
                 group.getCourseModule().getModuleCode(),
                 courses,
-                studentIds,
                 group.getTeacherObject().getUserId(),
-                roomIds,
-                usedTimes
+                roomIds
         );
 
     }
@@ -57,12 +50,10 @@ public class GroupMapper implements MapperInterface{
 
         Group group = new Group(module, new ArrayList<>());
 
-        String[] students = groupCsvDto.getStudentsInGroup().split(",");
-        for(String studentId : students){
-            group.addStudent(studentId);
+        String teacherId = groupCsvDto.getTeacher();
+        if (teacherId != null && !teacherId.isEmpty()) {
+            group.setTeacher(teacherId);
         }
-
-        group.setTeacher(groupCsvDto.getTeacher());
 
         String[] courseFulls = groupCsvDto.getCourseCode().split(",");
         for(String courseCode : courseFulls){

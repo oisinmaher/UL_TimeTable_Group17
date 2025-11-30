@@ -67,6 +67,13 @@ public class Student extends User {
         return this.courseFull;
     }
 
+    public UserTimeTable getUserTimeTable() {
+        if (userTimeTable == null) {
+            userTimeTable = new UserTimeTable(this);
+        }
+        return userTimeTable;
+    }
+
     public String toString(){
         return "Name: " + name + " ID: " + userId;
     }

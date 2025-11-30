@@ -1,5 +1,6 @@
 package export.mapper;
 
+import adminPanel1.DataManager;
 import export.dto.TeacherCsvDto;
 import users.Teacher;
 
@@ -13,9 +14,15 @@ public class TeacherMapper implements MapperInterface{
     }
 
     public static Teacher inflate(TeacherCsvDto teacherCsvDto) {
-        return new Teacher(
-                teacherCsvDto.getTeacherId(),
-                teacherCsvDto.getTeacherName()
-        );
+        String id = teacherCsvDto.getTeacherId();
+
+        if(DataManager.teachers.containsKey(id)){
+            return DataManager.teachers.get(id);
+        }
+
+        Teacher t = new Teacher(id, teacherCsvDto.getTeacherName());
+        DataManager.teachers.put(id,t);
+        return t;
+
     }
 }

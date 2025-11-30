@@ -105,7 +105,7 @@ public class ReadData {
         }
 
         //Read in timeslots
-        Path timeSlotsPath = Paths.get("src/main/data/TimeSlotData.csv");
+        Path timeSlotsPath = Paths.get("src/main/data/TimeSlotsData.csv");
         CsvReaderUtil<TimeSlotCsvDto> timeSlotReader = new CsvReaderUtil<>(timeSlotsPath, TimeSlotCsvDto.class);
         List<TimeSlotCsvDto> timeSlotCsvDtos = timeSlotReader.readAll();
         for (TimeSlotCsvDto ts : timeSlotCsvDtos){

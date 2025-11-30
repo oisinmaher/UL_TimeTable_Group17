@@ -146,7 +146,11 @@ public class Group {
 
 
     public void setTeacher(String teacherId){
-        this.lecturer = Teacher.getTeacherFromId(teacherId);
+        if (teacherId != null && !teacherId.isEmpty()) {
+            this.lecturer = Teacher.getTeacherFromId(teacherId); // use existing object
+        } else {
+            this.lecturer = null;
+        }
     }
     public Teacher getTeacherObject() {
         return lecturer;

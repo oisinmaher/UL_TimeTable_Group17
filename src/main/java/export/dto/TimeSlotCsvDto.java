@@ -3,8 +3,8 @@ package export.dto;
 import com.opencsv.bean.CsvBindByName;
 
 public class TimeSlotCsvDto implements CsvDtoInterface {
-    @CsvBindByName
-    private String timeSlotId;
+    //@CsvBindByName
+    //private String timeSlotId;
 
     @CsvBindByName
     private String moduleCode;
