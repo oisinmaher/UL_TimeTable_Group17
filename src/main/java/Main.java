@@ -12,12 +12,9 @@ import timetables.TimeSlot;
 import users.Student;
 import users.Teacher;
 
-import java.net.URISyntaxException;
-
 public class Main {
     public static void main(String[] args) {
 
-/*
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         CourseYear courseYear = courseFull.addCourseYear("1");
 
@@ -68,23 +65,23 @@ public class Main {
         DataManager.teachers.put(teacher.getUserId(), teacher);
         DataManager.teachers.put(teacher1.getUserId(), teacher1);
 
-        WriteData wd = new WriteData();
-        try {
-            wd.writeAll();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        */
 
-        ReadData rd = new ReadData();
-        try {
-            rd.importAll();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+//        WriteData wd = new WriteData();
+//        try {
+//            wd.writeAll();
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        ReadData rd = new ReadData();
+//        try {
+//            rd.importAll();
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
 
         //student.getUserTimeTable().printTimeTable();
-        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
+//        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
 
         //DataManager.students.get("424234").getUserTimeTable().printTimeTable();
 

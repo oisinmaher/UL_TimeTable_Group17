@@ -32,7 +32,7 @@ public class User{
     public User getUser(String userId){
         if(containsUser(userId))
             return allUsers.get(userId);
-        throw new IllegalArgumentException("This user doesnt exist");
+        throw new IllegalArgumentException("This user doesn't exist");
     }
 
 

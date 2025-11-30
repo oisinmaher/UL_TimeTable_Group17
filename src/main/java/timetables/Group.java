@@ -49,7 +49,6 @@ public class Group {
     }
 
     public Set<TimeSlot> getTimeSlots(){
-
         return allTimeSlots;
     }
 
