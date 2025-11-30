@@ -23,7 +23,7 @@ public final class CourseSemester {
     private static final Map<String, CourseSemester> allSemesters = new HashMap<>();
     private CourseFull courseFull;
 
-    /**
+    /*
      * enum for  2 seasons (probably won't use as I cant really think how cli would even benefit with enums
      * if you have any idea let me (Oisin) know
      */
@@ -110,6 +110,10 @@ public final class CourseSemester {
     public CourseModule getModuleFromCode(String moduleCode){
         moduleCode = moduleCode.toLowerCase();
         return assignedModules.get(moduleCode);
+    }
+
+    public static Map<String, CourseSemester> getAllSemesters(){
+        return allSemesters;
     }
 
     /**

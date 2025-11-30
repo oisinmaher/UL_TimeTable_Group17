@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.List;
+
 import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
@@ -31,13 +33,15 @@ public class CsvWriterUtil<T> {
     }
 
     /**
-     * Writes a single Java object to a CSV file
-     * @param object the object that will be written to the CSV
+     * Writes all Java objects to a CSV file
+     * @param objects the objects that will be written to the CSV
      * @throws IOException if there is a problem with the i/o of the file
      * @throws CsvRequiredFieldEmptyException if a required field in the bean is missing
      * @throws CsvDataTypeMismatchException if a field cannot be converted to csv
      */
-    public void write(T object) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+
+    //Changed to list of generic objects as we now write all at once
+    public void writeAll(List<T> objects) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
         /*Can use HeaderNameMappingStrategy using CSVBindByName- but this does not take the order into account,
          but headers are then written.
@@ -58,7 +62,7 @@ public class CsvWriterUtil<T> {
                     .withSeparator(',')
                     .build();
 
-            sbc.write(object);
+            sbc.write(objects);
         }
     }
 }

@@ -43,8 +43,12 @@ public final class CourseYear{
         this.courseSemesters = new HashMap<>();
     }
 
-    public static boolean containsCourseYearId(String yearId){
-        return allCourseYears.containsKey(yearId);
+    public static Map<String, CourseYear> getAllCourseYears(){
+        return allCourseYears;
+    }
+
+    public static CourseYear getCourseYear(String yearId){
+        return allCourseYears.get(yearId);
     }
 
     /**

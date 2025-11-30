@@ -1,3 +1,6 @@
+import adminPanel1.DataManager;
+import adminPanel1.ReadData;
+import adminPanel1.WriteData;
 import modules.CourseModule;
 import programCourse.CourseFull;
 import programCourse.CourseSemester;
@@ -9,92 +12,12 @@ import timetables.TimeSlot;
 import users.Student;
 import users.Teacher;
 
+import java.net.URISyntaxException;
+
 public class Main {
     public static void main(String[] args) {
-//        CourseModule oop = new CourseModule("OOP", "CS4013");
-//        CourseModule swTest = new CourseModule("SW Testing", "CS4004");
-//        CourseModule os = new CourseModule("Operating Systems", "CS4023");
-//        CourseModule swReq = new CourseModule("SW Requirements", "CS4178");
-//        oop.setLecHours(6);
-//        LectureRoom csg001 = new LectureRoom("CSG-001", " ", 100);
-//        LectureRoom d1050 = new LectureRoom("D-1050", "", 150);
-//
-//        d1050.setRoomType("Lecture rooms.room");
-//        csg001.setRoomType("Lecture rooms.Room");
-//
-//        Set<Room> lm051Rooms = new HashSet<Room>();
-//        lm051Rooms.add(d1050);
-//        lm051Rooms.add(csg001);
-//
-//        //Test code (uses Strings instead of modules and room object)
-//        Student student = new Student("Oisin", 24377112, 121);
-//        student.addClassToTimeTable("OOP", "Lecture", "CSG001", "Tuesday 1PM");
-//        student.displayTimeTable();
-//
-//        List<Student> group1a = Arrays.asList(student);
-//
-//
-//
-//
-//
-//        List<CourseModule> year1Sem1Modules = Arrays.asList(oop, swTest);
-//        List<CourseModule> year1Sem2Modules = Arrays.asList(os);
-//        List<CourseModule> year2Sem1Modules = Arrays.asList(os, swReq);
-//
-//        ProgramWithCourseModule.ProgramSemester semester1 = new ProgramWithCourseModule.ProgramSemester("Autumn", year1Sem1Modules);
-//        ProgramWithCourseModule.ProgramSemester semester2 = new ProgramWithCourseModule.ProgramSemester("Spring", year1Sem2Modules  );
-//        ProgramWithCourseModule.ProgramSemester semester3 = new ProgramWithCourseModule.ProgramSemester("Autumn", year2Sem1Modules);
-//
-//
-//        List<ProgramWithCourseModule.ProgramSemester> year1Semesters = Arrays.asList(semester1, semester2);
-//        List<ProgramWithCourseModule.ProgramSemester> year2Semesters = Arrays.asList(semester3);
-//        ProgramWithCourseModule.ProgramYear year1 = new ProgramWithCourseModule.ProgramYear(null, 1, year1Semesters);
-//        ProgramWithCourseModule.ProgramYear year2 = new ProgramWithCourseModule.ProgramYear(null, 2, year2Semesters);
-//
-//        List<ProgramWithCourseModule.ProgramYear> allYears = Arrays.asList(year1, year2);
-//        ProgramWithCourseModule compSciProgram = new ProgramWithCourseModule("BSc", "Computer Systems", allYears);
-//
-//        System.out.println("Year1 modules: " + year1.allModules());
-//        System.out.println("Year2 Modules: " + year2.allModules() );
-//        System.out.println("Autumn semester: " + year1.modulesForSemester("Autumn"));
-//        System.out.println("Spring Semester: " + year1.modulesForSemester("Spring"));
-//        System.out.println("Autumn Semester: " + year2.modulesForSemester("Autumn"));
-//
-//        System.out.println(semester1);
-//        System.out.println(semester2);
-//
-//        ProgramSemester lm0512526Sem1 = new ProgramSemester("lm051AY25Sem1", year1Sem1Modules);
-//        ProgramSemester lm0512526Sem2 = new ProgramSemester("lm051AY25Sem1", year1Sem2Modules);
-//
-//
-//        ProgramYear AY2025Y1 = new ProgramYear(null, 1, Arrays.asList(lm0512526Sem1, lm0512526Sem2));
-//
-//
-//
-//        CourseFull courseFull = new CourseFull("LM121", "Computer Science");
-//        courseFull.addCourseYear("1");
-//        CourseYear courseYear = courseFull.getCourseYears().get(0);
-//        courseYear.addSemester("spring");
-//        CourseSemester semester = courseYear.getSemesters().get(0);
-//        semester.addNewModule("CS4044", "OOP");
-//        semester.addNewModule("Cs4011", "game dev");
-////        System.out.println("module codes are " + semester.getModuleCodes());
-//        CourseModule courseModule = CourseModule.getModuleFromCode(semester.getModuleCodes().get(0));
-//        Group group = courseModule.getGroupAssigned();
-////        SubGroup sg1 = group.createSubGroup("lab");
-////        sg1.add
-////        SubGroup sg2 = group.createSubGroup("tut");
-////        group.addTimeSlot("lab", "mon", "1500");
-////        group.addTimeSlot("tutorial", "tue", "0900");
-//        CourseTimeTable.main(new String[0]);
-//
-//        System.out.println(courseModule.toString());
-//        Scanner sc = new Scanner(System.in);
-//        InMemoryTeacherService m = new InMemoryTeacherService();
-//        AdminCommandSession ad = new AdminCommandSession(sc, new InMemoryStudentService(), m, new InMemoryCourseFullService(), new InMemoryCourseYearService());
-////        ad.run();
-//        TimeSlot timeSlot = new TimeSlot("tue", "1550", null, null);
-//        System.out.println(timeSlot.getTime());
+
+/*
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         CourseYear courseYear = courseFull.addCourseYear("1");
 
@@ -103,7 +26,7 @@ public class Main {
         courseSemester.addNewModule("cs4401", "Database");
 
         CourseModule dataBaseModule = courseSemester.getModuleFromCode("cs4401");
-        Group dataBaseGroup = dataBaseModule.getGroupAssigned();
+        Group dataBaseGroup = dataBaseModule.getGroupAssigned(); //group created ; added empty group made above
         CourseModule opsModule = courseSemester.getModuleFromCode("cs4023");
         Group opsGroup = opsModule.getGroupAssigned();
 
@@ -115,9 +38,12 @@ public class Main {
         Student student = new Student("24377112", "Oisin", "LM121", "1");
         Student student2 = new Student("424234", "Yousef", "LM121", "1");
         Student student3 = new Student("4322545", "Alex", "LM121", "1");
-        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId());
+        dataBaseGroup.addClassTimes("lab", "mon", "1500", labRoom.getRoomID(), teacher.getUserId()); //adding times
         opsGroup.addClassTimes("tut", "tues", "1205", labRoom.getRoomID(), teacher1.getUserId());
         opsGroup.addLectureTime("mon", "1200", lectureRoom.getRoomID(), teacher.getUserId());
+
+        opsGroup.setTeacher("434");
+        dataBaseGroup.setTeacher("432");
 
         TimeSlot dbSlot = dataBaseGroup.getTimeSlots("lab").get(0);
         TimeSlot opsSlot = opsGroup.getTimeSlots("tut").get(0);
@@ -125,7 +51,42 @@ public class Main {
         opsSlot.addStudent("424234");
         dbSlot.addStudent("24377112");
 
-        student.getUserTimeTable().printTimeTable();
-//        courseFull.getCourseTimeTable().printTimeTable();
+
+
+
+        DataManager.students.put(student.getUserId(), student);
+        DataManager.courseFulls.put(courseFull.getCode(), courseFull);
+        DataManager.courseYears.put(courseYear.getYearId(), courseYear);
+        DataManager.rooms.put(labRoom.getRoomID(), labRoom);
+        DataManager.rooms.put(lectureRoom.getRoomID(), lectureRoom);
+        DataManager.courseSemesters.put(courseSemester.getSemesterId(), courseSemester);
+        DataManager.courseModules.put(dataBaseModule.getModuleCode(), dataBaseModule);
+        DataManager.courseModules.put(opsModule.getModuleCode(),opsModule);
+        DataManager.timeSlots.add(dbSlot);
+        DataManager.groups.put("1B", dataBaseGroup);
+        DataManager.timeSlots.add(opsSlot);
+        DataManager.teachers.put(teacher.getUserId(), teacher);
+        DataManager.teachers.put(teacher1.getUserId(), teacher1);
+
+        WriteData wd = new WriteData();
+        try {
+            wd.writeAll();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        */
+
+        ReadData rd = new ReadData();
+        try {
+            rd.importAll();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
+        //student.getUserTimeTable().printTimeTable();
+        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
+
+        //DataManager.students.get("424234").getUserTimeTable().printTimeTable();
+
     }
 }

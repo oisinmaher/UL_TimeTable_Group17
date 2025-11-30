@@ -31,8 +31,6 @@ public class StudentMapper implements MapperInterface{
      */
     public static Student inflate(StudentCsvDto s) {
 
-
-        // 1. Validate course exists
         if (!CourseFull.containsCode(s.getCourseCode())) {
             throw new IllegalStateException(
                     "Cannot inflate Student: CourseFull " + s.getCourseCode() + " does not exist."
@@ -41,7 +39,6 @@ public class StudentMapper implements MapperInterface{
 
         CourseFull course = CourseFull.getCourseFromCode(s.getCourseCode());
 
-        // 2. Validate year exists
         if (!course.containsYear(s.getYear())) {
             throw new IllegalStateException(
                     "Cannot inflate Student: CourseYear " + s.getYear() + " does not exist for course " + s.getCourseCode()

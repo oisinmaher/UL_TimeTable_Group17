@@ -1,4 +1,5 @@
 package timetables;
+import adminPanel1.DataManager;
 import modules.CourseModule;
 import programCourse.*;
 import rooms.Room;
@@ -26,6 +27,7 @@ public class Group {
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
     protected List<CourseFull> coursesTakingThisModule;
+    private final static Map<String, Group> allGroups = new HashMap<>();
 
     public Group(CourseModule courseModule, List<CourseFull> coursesTakingThisModule){
         if (courseModule == null) {
@@ -43,10 +45,24 @@ public class Group {
         this.labsTimes = new HashMap<>();
         this.tutorialsTimes = new HashMap<>();
         this.usedTimes = new HashSet<>();
+        allGroups.put(moduleCode, this);
     }
+
     public Set<TimeSlot> getTimeSlots(){
+
         return allTimeSlots;
     }
+
+    public static Set<TimeSlot> getEveryTimeSlots() {
+        Set<TimeSlot> allTimeSlots = new HashSet<>();
+        for(Group g : DataManager.groups.values()){
+            allTimeSlots.addAll(g.getTimeSlots("lecture"));
+            allTimeSlots.addAll(g.getTimeSlots("lab"));
+            allTimeSlots.addAll(g.getTimeSlots("tutorial"));
+        }
+        return allTimeSlots;
+    }
+
     public void addLectureTime(String day, String time, String roomId, String teacherId){
         TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
@@ -58,6 +74,10 @@ public class Group {
         allTimeSlots.add(timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
+    }
+
+    public static Map<String, Group> getAllGroups(){
+        return allGroups;
     }
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module
@@ -126,7 +146,11 @@ public class Group {
 
 
     public void setTeacher(String teacherId){
-        this.lecturer = Teacher.getTeacherFromId(teacherId);
+        if (teacherId != null && !teacherId.isEmpty()) {
+            this.lecturer = Teacher.getTeacherFromId(teacherId); // use existing object
+        } else {
+            this.lecturer = null;
+        }
     }
     public Teacher getTeacherObject() {
         return lecturer;
@@ -151,6 +175,10 @@ public class Group {
     public List<Room> getRooms()
     {
         return new ArrayList<>(this.rooms.values());
+    }
+
+    public List<CourseFull> getCoursesTakingThisModule(){
+        return this.coursesTakingThisModule;
     }
 
 
@@ -178,7 +206,7 @@ public class Group {
                 ", module=" + moduleCode +
                 ", presiding teacher=" + this.lecturer.getUserId() +
                 ", students=[" + sb +
-                "], rooms=" + rooms +
+                "], rooms=" + getRooms() +
                 '}';
     }
 

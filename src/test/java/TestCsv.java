@@ -43,9 +43,9 @@ public class TestCsv {
         Student student = new Student("123456", "Alex", "EC121", "1");
  */
 
-        String filepath = "C:\\Users\\24354678\\OneDrive - University of Limerick\\Documents\\UL_TimeTable_Group17\\src\\test\\resources\\csvstudentstest.csv";
+        String filepath = "D:\\UL Work\\Yr 2 Sem 1\\CS4013 - OOP\\TimetableProject\\UL_TimeTable_Group17\\src\\test\\resources\\csvstudentstest.csv";
         Path path = Paths.get(filepath);
-        String csvcoursefull = "C:\\Users\\24354678\\OneDrive - University of Limerick\\Documents\\UL_TimeTable_Group17\\src\\test\\resources\\csvcoursefull.csv";
+        String csvcoursefull = "D:\\UL Work\\Yr 2 Sem 1\\CS4013 - OOP\\TimetableProject\\UL_TimeTable_Group17\\src\\test\\resources\\csvcoursefull.csv";
         Path path2 = Paths.get(csvcoursefull);
 
         /*

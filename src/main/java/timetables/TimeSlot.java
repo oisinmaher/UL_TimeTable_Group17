@@ -39,6 +39,7 @@ public class TimeSlot{
         for(CourseFull courseFull : coursesTakingThisModule)
             courseFull.getCourseTimeTable().addTimeSlot(dayTime, this);
         this.classType = classType;
+
     }
 
     public void addStudent(String studentId){
@@ -62,10 +63,34 @@ public class TimeSlot{
         this.room = room;
     }
 
+    public CourseModule getModule() {
+        return module;
+    }
+
+    public Map<String, Student> getStudents() {
+        return students;
+    }
+
+    public List<CourseFull> getCoursesTakingThisModule() {
+        return coursesTakingThisModule;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
     /**
      * This converts monday 1600 to 1_16, where 1 represents day (monday is 1st day of week) and 16 (represents 16:00)
      * This is useful because we can put all times in a single treeset that will be able to easily sort based
-     * on the strings lexographical size
+     * on the strings lexicographical size
      * @param day
      * @param time
      * @return
