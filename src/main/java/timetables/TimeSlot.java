@@ -29,7 +29,8 @@ public class TimeSlot{
     static Set<String> validTimes = new HashSet<>(Arrays.asList("09","10","11","12","13","14","15","16","17"));
 
     /**
-     * Constructor
+     * Constructor that adds this TimeTable to the teachers timetable and to the timetables
+     * of the courses involved
      * @param day the day of the week
      * @param time the time of day
      * @param module a CourseModule object

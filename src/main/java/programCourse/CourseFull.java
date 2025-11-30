@@ -30,6 +30,7 @@ public class CourseFull {
      * @param courseCode  the course identifier (e.g. "LM121")
      * @param name  the course name displayed to users ("computer science")
      * @throws IllegalArgumentException if any argument is null
+     * @throws IllegalArgumentException if the given course code is already associated with a course
      */
     public CourseFull(String courseCode, String name) {
         // Validate inputs
@@ -118,7 +119,7 @@ public class CourseFull {
 
     /**
      * returns courseYear object associated with year
-     * @param yearKey earKey is just a string on its own "1", "2", etc
+     * @param yearKey yearKey is just a string on its own "1", "2", etc
      * @return courseYear object
      */
     public CourseYear getCourseYear(String yearKey){

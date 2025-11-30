@@ -8,13 +8,14 @@ import java.util.*;
  *  This class inherits User
  *  It will be quite similar to Student but with modules from different courses
  *  Contains:
- *      - Map
+ *      - Map of teacher ID to Teacher objects (allTeachers)
+ *      - Map of module code to CourseModule objects (modulesTaught)
  */
 public class Teacher extends User {
 
     private final static Map<String, Teacher> allTeachers = new HashMap<>();
-    // List of courses the teacher teaches (e.g. LM121, LM051 etc.)
-    private final Map<String, CourseModule> coursesTaught;
+    // List of modules the teacher teaches (e.g. CS4141, CS4416 etc.)
+    private final Map<String, CourseModule> modulesTaught;
 
     /**
      * Constructor with base parameters of user
@@ -23,41 +24,43 @@ public class Teacher extends User {
      */
     public Teacher(String teacherId, String name) {
         super(teacherId, name);
-        coursesTaught = new HashMap<>();
+        modulesTaught = new HashMap<>();
         allTeachers.put(this.userId, this);
     }
 
     /**
      * Adds modules to a map of modules that this teacher teaches
-     * @param courseCode code of a university course
+     * @param moduleCode code of a module
      */
-    public void addCourseToTeacher(String courseCode){
-        courseCode = courseCode.toLowerCase();
-        CourseModule courseModule = CourseModule.getModuleFromCode(courseCode);
-        coursesTaught.put(courseCode, courseModule);
+    public void addModuleToTeacher(String moduleCode){
+        moduleCode = moduleCode.toLowerCase();
+        CourseModule courseModule = CourseModule.getModuleFromCode(moduleCode);
+        modulesTaught.put(moduleCode, courseModule);
     }
 
     /**
-     *
-     * @param courseCode
+     * Removes a module from the modules that the teacher teaches
+     * @param moduleCode code of a module
+     * @throws IllegalArgumentException if the given module code does not match with any of
+     *                                  the current modules that the teacher teaches
      */
-    public void removeCourseFromTeacher(String courseCode){
-        courseCode = courseCode.toLowerCase();
-        if(containsCourse(courseCode)){
-            coursesTaught.remove(courseCode);
+    public void removeModuleFromTeacher(String moduleCode){
+        moduleCode = moduleCode.toLowerCase();
+        if(containsModule(moduleCode)){
+            modulesTaught.remove(moduleCode);
         }
         else{
-            throw new IllegalArgumentException("Teacher doesn't teach this course");
+            throw new IllegalArgumentException("Teacher doesn't teach this module");
         }
     }
 
     /**
-     *
-     * @param courseCode
-     * @return
+     * Checks if this teacher teaches a certain module, given by the module code
+     * @param moduleCode code of a module
+     * @return true if the teacher teaches this module, false otherwise
      */
-    private boolean containsCourse(String courseCode){
-        return coursesTaught.containsKey(courseCode);
+    private boolean containsModule(String moduleCode){
+        return modulesTaught.containsKey(moduleCode);
     }
 
     /**

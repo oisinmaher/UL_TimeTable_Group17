@@ -36,7 +36,7 @@ public final class CourseSemester {
      * Creates a CourseSemester with a name and list of module codes.
      * @param season the name of the semester (e.g. "Autumn")
      * @param courseFull university course (e.g. "Computer Systems")
-     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if season is null
      * @throws IllegalArgumentException if spring or autumn is not inputted
      *
      * NOTE, as of Right now no mutual reference to the CourseYear its assigned
@@ -46,7 +46,6 @@ public final class CourseSemester {
             throw new IllegalArgumentException("season is null");
         }
         season = season.toLowerCase();
-        // if neither spring nor autumn
         if (!(season.equals("spring") || season.equals("autumn"))) {
             throw new IllegalArgumentException("Season must be spring or autumn");
         }

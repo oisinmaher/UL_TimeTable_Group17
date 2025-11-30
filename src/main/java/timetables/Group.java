@@ -184,7 +184,7 @@ public class Group {
     }
 
     /**
-     * Sets the teacher/lecturer of this module with a given teacher ID
+     * Sets the teacher/lecturer of this module group with a given teacher ID
      * @param teacherId teacher ID number
      */
     public void setTeacher(String teacherId){
@@ -192,7 +192,7 @@ public class Group {
     }
 
     /**
-     * Gets the teacher/lecturer of this module
+     * Gets the teacher/lecturer of this module group
      * @return Teacher object
      */
     public Teacher getTeacherObject() {
@@ -200,7 +200,7 @@ public class Group {
     }
 
     /**
-     * Gets the name of the teacher of this module
+     * Gets the name of the teacher of this module group
      * @return teachers name / String indicating that this module has no teacher
      */
     public String getTeacherName(){
