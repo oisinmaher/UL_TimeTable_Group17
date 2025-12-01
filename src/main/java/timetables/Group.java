@@ -72,7 +72,7 @@ public class Group {
         module.setLecHours(prevLecHours + 1);
         usedTimes.add(timeSlot.getTime());
         allTimeSlots.add(timeSlot);
-        allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
+        allTimeSlotsMap.put(moduleCode + "_lec_" + timeSlot.getTime(), timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
     }
@@ -98,7 +98,7 @@ public class Group {
             module.setLabHours(prevLabHours+1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
-            allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_lab_" + timeSlot.getTime(), timeSlot);
             labsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
@@ -111,7 +111,7 @@ public class Group {
             module.setTutHours(prevTutHours + 1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
-            allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_tut_" + timeSlot.getTime(), timeSlot);
             tutorialsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
@@ -119,7 +119,8 @@ public class Group {
             throw new IllegalArgumentException("This type of class doesnt exist, \n please chose lab or tutorial");
         }
     }
-    public TimeSlot getTimeSlotFromTime(String day, String time){
+    public TimeSlot getTimeSlotFromTime(String day, String time, String classType){
+        classType = classType.substring(0,3).toLowerCase();
         String daytime = TimeSlot.toCorrectTimeFormat(day, time);
         return allTimeSlotsMap.get(moduleCode + "_" + daytime);
     }

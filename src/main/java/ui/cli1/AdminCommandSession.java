@@ -129,7 +129,7 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  create-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
         System.out.println("  add-existing-module <courseCode> <courseYear> <semester> <moduleCode>");
         System.out.println("  add-timeslot <moduleCode> <day> <time> <room> <teacher>");
-        System.out.println("  add-student-to-timeslot <moduleCode> <day> <time> <studentId>");
+        System.out.println("  add-student-to-timeslot <moduleCode> <typeOfClass> <day> <time> <studentId>");
         System.out.println("  create-room <roomID> <roomType> <maxCapacity>");
         System.out.println("  list-courses");
         System.out.println("  list-course-years <courseCode>");
@@ -336,16 +336,17 @@ public class AdminCommandSession implements UserSession {
     //    / CourseFull, CourseYear, CourseSemester, ModuleCode, day, time, studentId
     private void cmdAddStudentToTime(String[] args) {
         if (args.length != 4) {
-            System.out.println("Usage: add-student-to-timeslot <moduleCode> <day> <time> <studentId>");
+            System.out.println("Usage: add-student-to-timeslot <moduleCode> <typeOfClass> <day> <time> <studentId>");
             return;
         }
         String moduleCode = args[0];
-        String day = args[1];
-        String time = args[2];
-        String studentId = args[3];
+        String typeOfClass = args[1];
+        String day = args[2];
+        String time = args[3];
+        String studentId = args[4];
         CourseModule module = CourseModule.getModuleFromCode(moduleCode);
         Group group = module.getGroupAssigned();
-        TimeSlot ts = group.getTimeSlotFromTime(day, time);
+        TimeSlot ts = group.getTimeSlotFromTime(day, time, typeOfClass);
         ts.addStudent(studentId);
     }
 
