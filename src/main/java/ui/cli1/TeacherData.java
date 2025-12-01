@@ -14,8 +14,10 @@ public class TeacherData {
     public Map<String, Teacher> getTeachers() {
         return DataManager.teachers;
     }
+
+
     void save(){
         WriteData writer = new WriteData();
-        writer.writeAll();
+        writer.writeTeachers();
     }
 }

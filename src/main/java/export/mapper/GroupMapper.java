@@ -29,6 +29,10 @@ public class GroupMapper {
 
         List<String> courseCodes = new ArrayList<>();
         for(CourseFull cf : group.getCoursesTakingThisModule()){
+            if (cf == null) {
+                throw new IllegalStateException("Group contains NULL CourseFull! Module=" +
+                        group.getCourseModule().getModuleCode());
+            }
             courseCodes.add(cf.getCode());
         }
         String courses = String.join(",", courseCodes);

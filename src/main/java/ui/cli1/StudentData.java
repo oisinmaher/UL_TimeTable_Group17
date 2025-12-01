@@ -20,6 +20,6 @@ public class StudentData {
 
     void save(){
             WriteData writer = new WriteData();
-            writer.writeAll();
+            writer.writeStudents();
     }
 }

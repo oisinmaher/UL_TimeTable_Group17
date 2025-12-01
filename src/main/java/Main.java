@@ -15,7 +15,7 @@ import users.Teacher;
 public class Main {
     public static void main(String[] args) {
 
-/*
+
         CourseFull courseFull = new CourseFull("LM121", "Computer Science");
         CourseYear courseYear = courseFull.addCourseYear("1");
 
@@ -65,13 +65,13 @@ public class Main {
         DataManager.timeSlots.add(opsSlot);
         DataManager.teachers.put(teacher.getUserId(), teacher);
         DataManager.teachers.put(teacher1.getUserId(), teacher1);
-*/
+
 
         WriteData wd = new WriteData();
             wd.writeAll();
 
-        ReadData rd = new ReadData();
-            rd.importAll();
+    //    ReadData rd = new ReadData();
+    //        rd.importAll();
 
         //student.getUserTimeTable().printTimeTable();
         //DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();

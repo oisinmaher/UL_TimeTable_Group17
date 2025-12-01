@@ -1,5 +1,6 @@
 package modules;
 
+import adminPanel1.DataManager;
 import programCourse.CourseFull;
 import timetables.CourseTimeTable;
 import timetables.Group;
@@ -46,6 +47,7 @@ public class CourseModule {
         this.coursesTakingThisModule = new ArrayList<>();
         this.coursesTakingThisModule.add(courseFull);
         groupAssigned = new Group(this, this.coursesTakingThisModule);
+        DataManager.groups.put(this.moduleCode, groupAssigned);
         this.LecHours = 0;
         this.labHours = 0;
         this.tutHours = 0;
