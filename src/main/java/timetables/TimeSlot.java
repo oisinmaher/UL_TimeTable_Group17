@@ -21,16 +21,13 @@ public class TimeSlot{
     private String classType;
     private CourseModule module;
     List<CourseFull> coursesTakingThisModule;
-    private Group group;
     static List<String> daysOfWeek = new ArrayList<>(Arrays.asList("mon","tue","wed","thu","fri"));
     static Set<String> validTimes = new HashSet<>(Arrays.asList("08","09","10","11","12","13","14","15","16","17"));
 
-    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, Group group, String classType, String roomId, String teacherId){
+    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, String classType, String roomId, String teacherId){
         this.dayTime = toCorrectTimeFormat(day, time);
         this.module = module;
         this.coursesTakingThisModule = coursesTakingThisModule;
-        this.group = group;
-        this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
         this.students = new HashMap<>();
         UserTimeTable teacherTimeTable = teacher.getUserTimeTable();

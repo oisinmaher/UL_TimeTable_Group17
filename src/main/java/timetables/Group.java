@@ -63,7 +63,7 @@ public class Group {
     }
 
     public void addLectureTime(String day, String time, String roomId, String teacherId){
-        TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
+        TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
            throw new IllegalArgumentException("This timeslot is already taken");
         }
@@ -88,7 +88,7 @@ public class Group {
     public void addClassTimes(String typeOfClass, String day, String time, String roomId, String teacherId){
         typeOfClass = typeOfClass.toLowerCase();
         if(typeOfClass.equals("lab")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lab", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Lab", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }
@@ -100,7 +100,7 @@ public class Group {
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
         else if(typeOfClass.equals("tutorial") || typeOfClass.equals("tut")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Tutorial", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Tutorial", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }

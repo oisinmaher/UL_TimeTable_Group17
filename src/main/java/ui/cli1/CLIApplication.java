@@ -14,7 +14,6 @@ public class CLIApplication {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-
         try {
             // --- Data layer: StudentData & TeacherData handle CSV internally ---
             StudentData studentData = new StudentData();

@@ -95,7 +95,13 @@ public final class CourseYear{
      * This now uses CourseSemester.pickModulesForThisSemester(), which applies
      * the odd/even last digit rule based on the semester name.
      */
-
+    public CourseSemester getSemester(String season) {
+        season = season.toLowerCase();
+        if(hasSemester(season)){
+            return courseSemesters.get(season);
+        }
+        throw new IllegalArgumentException("Season semester doesnt exist");
+    }
     public List<String> getModuleCodesForSemester(String semesterName){
         if (semesterName == null) {
             throw new IllegalArgumentException("Parameters can't be null");

@@ -69,6 +69,9 @@ public final class CourseSemester {
         }
         return allSemesters.get(semesterId);
     }
+    public boolean containsModule(String moduleCode){
+        return assignedModules.containsKey(moduleCode);
+    }
 
     /**
      *  Adds a module that's already been created (if a different course shares same module)
@@ -84,6 +87,9 @@ public final class CourseSemester {
      * @param name // module name e.g Database Systems
      */
     public void addNewModule(String code, String name){
+        if(containsModule(code)){
+            throw new IllegalArgumentException("Module already exists.");
+        }
         CourseModule module = new CourseModule(name.toLowerCase(), code, courseFull);
         assignedModules.put(code.toLowerCase(), module);
     }
