@@ -45,11 +45,10 @@ public class StudentMapper {
             );
         }
         return new Student(
-                    s.getUserId(),
-                    s.getName(),
-                    s.getCourseCode(),
-                    s.getYear()
-            );
+                s.getUserId(),
+                s.getName(),
+                s.getCourseCode(),
+                s.getYear()
+        );
     }
 }
-

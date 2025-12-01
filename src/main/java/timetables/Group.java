@@ -11,7 +11,17 @@ import java.util.*;
 
 /**
  * Group will be the students in a given module at a specific semester
- *
+ * Contains:
+ *      - Map of studentID numbers to Student objects (studentsInGroups)
+ *      - Map of roomID numbers to Room objects (rooms)
+ *      - Map of dayTime codes to TimeSlot (referencedTimeSlots)
+ *      - Set of all the dayTime codes that already have a TimeSlot on the timetable (usedTimes)
+ *      - Set of all TimeSlots (allTimeSlots)
+ *      - Map of all the dayTime codes to lecture TimeSlots (lecturesTimes)
+ *      - Map of all the dayTime codes to lab TimeSlots (labsTimes)
+ *      - Map of all the dayTime codes to tutorial TimeSlots (tutorialsTimes)
+ *      - List of CourseFull objects that take this module (coursesTakingThisModule)
+ *      - Map of module code to Group (allGroups)
  */
 public class Group {
 
@@ -30,6 +40,12 @@ public class Group {
     protected List<CourseFull> coursesTakingThisModule;
     private final static Map<String, Group> allGroups = new HashMap<>();
 
+    /**
+     * Constructor that creates the group of students taking a module
+     * @param courseModule a module
+     * @param coursesTakingThisModule list of courses that take this module
+     * @throws IllegalArgumentException if module is null
+     */
     public Group(CourseModule courseModule, List<CourseFull> coursesTakingThisModule){
         if (courseModule == null) {
             throw new IllegalArgumentException("Module can't be null");
@@ -49,10 +65,20 @@ public class Group {
         allGroups.put(moduleCode, this);
     }
 
+    /**
+     * Gets all the TimeSlots of the students taking a module
+     * @return set of all TimeSlots
+     */
+
     public Set<TimeSlot> getTimeSlots(){
         return allTimeSlots;
     }
 
+
+    /**
+     * Gets every TimeSlot within a Group
+     * @return a set of all TimeSlots
+     */
     public static Set<TimeSlot> getEveryTimeSlots() {
         Set<TimeSlot> allTimeSlots = new HashSet<>();
         for(Group g : DataManager.groups.values()){
@@ -63,6 +89,15 @@ public class Group {
         return allTimeSlots;
     }
 
+    /**
+     * Allows creation of timeslots in lectures for this group/module.
+     * Accounts for creation of the lecture by adding 1 to the total number of
+     * lecture hours for that module.
+     * @param day day of the week
+     * @param time time of day
+     * @param roomId room ID number
+     * @param teacherId teacher ID number
+     */
     public void addLectureTime(String day, String time, String roomId, String teacherId){
         TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
@@ -77,15 +112,25 @@ public class Group {
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
     }
 
+    /**
+     * Gets the map of all module codes with their associated Group
+     * @return map with all Groups
+     */
     public static Map<String, Group> getAllGroups(){
         return allGroups;
     }
     /**
-     * Allows creation of timeslots in labs/tutorials for this group/module
-     *
-     * @param typeOfClass
-     * @param day
-     * @param time
+     * Allows creation of timeslots in labs/tutorials for this group/module.
+     * Accounts for creation of the selected class by adding 1 to the total number of
+     * lab/tutorial hours for that module.
+     * @param typeOfClass type of class (lab, tutorial)
+     * @param day day of the week
+     * @param time the time of day
+     * @param roomId room ID number
+     * @param teacherId teacher ID number
+     * @throws IllegalArgumentException if the given dayTime for a lab already has a TimeSlot
+     * @throws IllegalArgumentException if the given dayTime for a tutorial already has a TimeSlot
+     * @throws IllegalArgumentException if lab or tutorial weren't selected
      */
     public void addClassTimes(String typeOfClass, String day, String time, String roomId, String teacherId){
         typeOfClass = typeOfClass.toLowerCase();
@@ -98,7 +143,6 @@ public class Group {
             module.setLabHours(prevLabHours+1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
-            allTimeSlotsMap.put(moduleCode + "_lab_" + timeSlot.getTime(), timeSlot);
             labsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
@@ -139,19 +183,39 @@ public class Group {
             throw new IllegalArgumentException(typeOfClass + " isn't a type of class \nPlease choose lecture, lab, or tutorial");
         }
     }
+
+    /**
+     * Adds a Student object to a map of students in this module group, using a given student ID
+     * @param studentId student ID number
+     */
     public void addStudent(String studentId){
         studentsInGroup.put(studentId, Student.getStudentFromId(studentId));
     }
+
+    /**
+     * Check if the given studentID has a corresponding Student object in this group
+     * @param studentId student ID number
+     * @return true if the studentId has a Student, false otherwise
+     */
     public boolean containsStudent(String studentId){
         return studentsInGroup.containsKey(studentId);
     }
+
+    /**
+     * Removes a Student object from the group of students in this module
+     * @param studentId student ID number
+     * @throws IllegalArgumentException if the given student ID isn't in the group of students
+     */
     public void removeStudent(String studentId){
         if(containsStudent(studentId))
             studentsInGroup.remove(studentId);
         else throw new IllegalArgumentException("studentId: " +studentId+" does not exist in this group");
     }
 
-
+    /**
+     * Sets the teacher/lecturer of this module group with a given teacher ID
+     * @param teacherId teacher ID number
+     */
     public void setTeacher(String teacherId){
         if (teacherId != null && !teacherId.isEmpty()) {
             this.lecturer = Teacher.getTeacherFromId(teacherId); // use existing object
@@ -159,40 +223,79 @@ public class Group {
             this.lecturer = null;
         }
     }
+
+    /**
+     * Gets the teacher/lecturer of this module group
+     * @return Teacher object
+     */
     public Teacher getTeacherObject() {
         return lecturer;
     }
+
+    /**
+     * Gets the name of the teacher of this module group
+     * @return teachers name / String indicating that this module has no teacher
+     */
     public String getTeacherName(){
         if(this.lecturer == null) return "Teacher is yet to be assigned";
         return this.lecturer.getName();
     }
 
+    /**
+     * Gets list of Student objects in this group
+     * @return list of Student objects
+     */
     public List<Student> getStudentsObject() {
         return new ArrayList<>(studentsInGroup.values());
     }
+
+    /**
+     * Gets list of student IDs in this group
+     * @return list of student IDs
+     */
     public List<String> getStudentsId(){
         return new ArrayList<>(studentsInGroup.keySet());
     }
 
+    /**
+     * Gets the number of students in this group
+     * @return number of students
+     */
     public int getNumberOfStudents() {
         return studentsInGroup.size();
     }
 
-
-    public List<Room> getRooms()
-    {
+    /**
+     * Gets the list of rooms
+     * @return list of Room objects
+     */
+    public List<Room> getRooms() {
         return new ArrayList<>(this.rooms.values());
     }
+
+
+    /**
+     * Gets the module from which this group are a part of.
+     * @return the module of this group of students
+     */
 
     public List<CourseFull> getCoursesTakingThisModule(){
         return this.coursesTakingThisModule;
     }
 
 
+    /**
+     * Gets the module associated with this group
+     * @return CourseModule
+     */
     public CourseModule getCourseModule(){
         return this.module;
     }
 
+    /**
+     * toString for group details
+     * @return String of information about the group
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

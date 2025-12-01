@@ -9,6 +9,7 @@ import java.util.*;
  *  - Belongs to a specific CourseFull
  *  - Has a year number (e.g. 1, 2, 3)
  *  - Contains a map of Season -> CourseSemester objects (e.g. Autumn, Spring)
+ *  - Contains a map of yearId -> CourseYear objects
  */
 public final class CourseYear{
 
@@ -21,12 +22,12 @@ public final class CourseYear{
     public static Map<String, CourseYear> allCourseYears = new HashMap<>();
 
     /**
-     * Constructs a CourseYear with a reference to CourseWithModule,
-     * a year number, and a list of semesters.
-     *
+     * Constructs a CourseYear with a yearId, yearNumber, courseFull object,
+     * map of courseSemesters and map of allCourseYears.
+     * @param courseFull a university course (e.g. Computer Systems)
      * @param yearNumber the numeric identifier for the year (e.g. 1, 2, 3)
-     *
      * @throws IllegalArgumentException if semesters is null
+     * @throws IllegalArgumentException if the course year already exists
      */
     public CourseYear(CourseFull courseFull, String yearNumber) {
         if(courseFull == null){
@@ -43,10 +44,19 @@ public final class CourseYear{
         this.courseSemesters = new HashMap<>();
     }
 
+    /**
+     * Gets the map of all year IDs to their CourseYear object
+     * @return all course years in the system
+     */
     public static Map<String, CourseYear> getAllCourseYears(){
         return allCourseYears;
     }
 
+    /**
+     * Gets CourseYear from a given yearID
+     * @param yearId in the form "courseCode_yearNumber"
+     * @return CourseYear object
+     */
     public static CourseYear getCourseYear(String yearId){
         return allCourseYears.get(yearId);
     }
@@ -58,17 +68,23 @@ public final class CourseYear{
     public String getYearNumber() {
         return this.yearNumber;
     }
-    /** Create a new course semester and add to mapping **/
+
+    /**
+     * Creates a new course semester and adds it to mapping (season, courseSemester)
+     * @param season autumn or spring
+     * @return CourseSemester object
+     */
     public CourseSemester addSemester(String season){
         CourseSemester courseSemester = new CourseSemester(this, season.toLowerCase(), courseFull);
         courseSemesters.put(season.toLowerCase(), courseSemester);
         return courseSemester;
     }
+
     /**
-     * Checks whether this CourseYear contains a semester with the given name.
+     * Checks whether this CourseYear contains a semester with the given name (season).
      * The comparison is case-insensitive.
-     * @param name the semester name to search for
-     * @return true if a semester with the given name exists, false otherwise
+     * @param name the semester name (season) to search for
+     * @return true if a semester with the given name (season) exists, false otherwise
      */
     public boolean hasSemester(String name) {
         if (name == null) {
@@ -82,6 +98,7 @@ public final class CourseYear{
         }
         return false;
     }
+
     /**
      * Returns a copy of the list of semesters in this year.
      * @return a new List containing the CourseSemester objects
@@ -90,18 +107,27 @@ public final class CourseYear{
         return new ArrayList<>(courseSemesters.values());
     }
 
-   /**
-     * Returns the list of CourseModule objects for a given semester name in this year.
-     * This now uses CourseSemester.pickModulesForThisSemester(), which applies
-     * the odd/even last digit rule based on the semester name.
+    /**
+     * Gets semester by a given season
+     * @param season autumn or spring
+     * @return CourseSemester object
+     * @throws IllegalArgumentException if semester doesn't exist
      */
     public CourseSemester getSemester(String season) {
         season = season.toLowerCase();
         if(hasSemester(season)){
             return courseSemesters.get(season);
         }
-        throw new IllegalArgumentException("Season semester doesnt exist");
+        throw new IllegalArgumentException("Season semester doesn't exist");
     }
+
+    /**
+     * Returns the list of module codes in courseSemesters
+     * @param semesterName autumn or spring
+     * @throws IllegalArgumentException if semesterName is null
+     * @throws IllegalArgumentException if no semester is found with the given semesterName
+     * @return list of module codes for a given semester
+     */
     public List<String> getModuleCodesForSemester(String semesterName){
         if (semesterName == null) {
             throw new IllegalArgumentException("Parameters can't be null");

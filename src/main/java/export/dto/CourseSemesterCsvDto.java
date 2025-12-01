@@ -15,6 +15,12 @@ public class CourseSemesterCsvDto {
 
     public CourseSemesterCsvDto() { }
 
+    /**
+     * Constructor for DTO
+     * @param semesterId in the form "CourseYearId_season"
+     * @param season autumn or spring
+     * @param moduleCodes module codes
+     */
     public CourseSemesterCsvDto(String semesterId, String season, String moduleCodes) {
         this.semesterId = semesterId;
         this.season = season;

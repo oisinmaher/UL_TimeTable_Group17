@@ -20,6 +20,13 @@ public class StudentMenuSession implements UserSession {
     private final TimetableService timetableService;
     private final String studentId;
 
+    /**
+     *
+     * @param in the Scanner that this menu uses
+     * @param studentService allows for operations on student data
+     * @param timetableService timetable views
+     * @param studentId student ID number
+     */
     public StudentMenuSession(Scanner in,
                               StudentService studentService,
                               TimetableService timetableService,

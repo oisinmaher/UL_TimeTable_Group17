@@ -6,10 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
+ * Room class.
+ * Contains:
+ *      - room type (Lecture room, Lab room, Tutorial room)
+ *      - Map of roomId to room object
+ *      - Map of roomId to set of room times that have already been used
  */
-public abstract class Room
-{
+public abstract class Room  {
     protected int maxCapacity; 
     private String roomID;
     protected String roomType;
@@ -17,11 +20,12 @@ public abstract class Room
     protected static Map<String, Set<String>> roomTimesUsed = new HashMap<>();
 
     /**
-     * @param roomID
-     * @param roomType
-     * @param maxCapacity
+     * Constructor with full parameters (includes max capacity)
+     * @param roomID room number
+     * @param roomType type of room
+     * @param maxCapacity maximum number of students that the room can hold
+     * @throws IllegalArgumentException if the given room ID is already associated with another room
      */
-    // Constructor full parameters (includes max capacity)
     public Room(String roomID, String roomType, int maxCapacity) {
         roomID = roomID.toLowerCase();
         this.roomID = roomID;
@@ -33,7 +37,13 @@ public abstract class Room
         allRooms.put(roomID, this);
         roomTimesUsed.put(roomID, new HashSet<>());
     }
-    // Constructor no maxCapacity
+
+    /**
+     * Constructor that doesn't take a maximum capacity for the room
+     * @param roomID room ID number
+     * @param roomType type of room
+     * @throws IllegalStateException if the given room ID is already associated with another room
+     */
     public Room(String roomID, String roomType) {
         roomID = roomID.toLowerCase();
         this.roomID = roomID;
@@ -44,57 +54,76 @@ public abstract class Room
         allRooms.put(roomID, this);
         roomTimesUsed.put(roomID, new HashSet<>());
     }
+
+    /**
+     * Checks if a given roomID has already been used (each one must be unique)
+     * @param roomID room ID number
+     * @return true if the given roomID is unique, false otherwise
+     */
     public static boolean containsRoom(String roomID){
         roomID = roomID.toLowerCase();
         return allRooms.containsKey(roomID);
     }
+
+    /**
+     * Gets the Room using a roomId
+     * @param roomID room ID number
+     * @throws IllegalArgumentException if the given roomId could not find the corresponding Room
+     * @return Room object from a given roomId
+     */
     public static Room getRoomFromId(String roomID){
         roomID = roomID.toLowerCase();
         if(containsRoom(roomID)){
             return allRooms.get(roomID);
         }
-        throw new IllegalArgumentException("Room Id doesnt exist");
+        throw new IllegalArgumentException("Room Id doesn't exist");
     }
 
     /**
-     * @return
+     * Gets the room number / ID
+     * @return roomID
      */
-    public String getRoomID()
-    {
+    public String getRoomID() {
         return this.roomID; 
     }
 
     /**
-     * @param roomID
+     * Gets the room number / ID
+     * @param roomID ID associated with a room
      */
-    public void setRoomID(String roomID)
-    {
+    public void setRoomID(String roomID) {
         this.roomID = roomID; 
     }
 
     /**
-     * @param maxCapacity
+     * Sets the max capacity of the room. Lab and Lecture room override this method.
+     * @param maxCapacity maximum number of students that the room can hold
      */
     public abstract void setMaxCapacity(int maxCapacity);
 
     /**
-     * @return
+     * Gets the max capacity of the room
+     * @return the maximum number of students that the room can hold
      */
-    public int getMaxCapacity()
-    {
+    public int getMaxCapacity() {
         return this.maxCapacity;
     }
 
-    public static Map<String, Room> getAllRooms(){
+    /**
+     * Gets the map of all room IDs to their corresponding Room object
+     * @return all rooms that are in the system
+     */
+    public static Map<String, Room> getAllRooms() {
         return allRooms;
     }
 
     /**
-     *
-     * @param roomType
+     * Sets the room type if given the correct room type
+     * @param roomType the type of room
+     * @throws IllegalArgumentException if the given room type is null or empty
+     * @throws IllegalArgumentException if the incorrect room type was given
      */
-    public void setRoomType(String roomType)
-    {
+    public void setRoomType(String roomType) {
         try {
         if (roomType == null || roomType.isEmpty()) {
             throw new IllegalArgumentException("rooms.Room type cannot be empty.");
@@ -109,28 +138,29 @@ public abstract class Room
         this.roomType = roomType;
         System.out.println("rooms.Room type successfully set to: " + roomType);
 
-    } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
         System.out.println("Error: " + e.getMessage());
-    }
-
+        }
     }
 
     /**
-     *
-     * @return
+     * Gets the type of room
+     * @return room type
      */
-    public String getRoomType()
-    {
+    public String getRoomType() {
         return this.roomType; 
     }
 
     /**
-     *
-     * @param roomType
-     * @return
+     * Gets the types of classes that the room can hold.
+     * @param roomType type of room
+     * @return the type of classes (Lectures, Labs, Tutorials) that can be facilitated in a room
      */
-    public abstract String canHold(String roomType); 
+    public abstract String canHold(String roomType);
 
+    /**
+     * @return roomID
+     */
     @Override
     public String toString(){
         return roomID;

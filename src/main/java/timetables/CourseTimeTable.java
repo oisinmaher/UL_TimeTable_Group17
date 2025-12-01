@@ -4,10 +4,21 @@ import programCourse.CourseFull;
 
 import java.util.*;
 
+/**
+ * CourseTimeTable class.
+ * Contains:
+ *      - Map of dayTime code to a list of TimeSlot objects
+ */
 public class CourseTimeTable {
     CourseFull courseFull;
     String courseCode;
     Map<String, List<TimeSlot>> classesAtTimes;
+
+    /**
+     * Constructor that creates a map of all times in the form "2_14" to timeslot objects, and then
+     * adds every possible time in the working week to this map ("1_09" to "5_17")
+     * @param courseFull a university course
+     */
     public CourseTimeTable(CourseFull courseFull){
         this.courseFull = courseFull;
         this.courseCode = courseFull.getCode();
@@ -17,6 +28,7 @@ public class CourseTimeTable {
 
     /**
      * This fills classesAtTimes map with every possible day and time (there's only 45)
+     * This method is duplicated in UserTimeTable
      * @param classesAtTimes TreeMap that holds all times as key and timeslot objects as values in a list
      */
     private void populateTimeMap(Map<String, List<TimeSlot>> classesAtTimes){
@@ -27,6 +39,12 @@ public class CourseTimeTable {
             }
         }
     }
+
+    /**
+     * Adds a scheduled class to the corresponding time on the timetable
+     * @param dayTime a code that represents the day of the week and the time on the hour together
+     * @param timeSlot a space on the timetable that is filled in
+     */
     public void addTimeSlot(String dayTime, TimeSlot timeSlot){
         classesAtTimes.get(dayTime).add(timeSlot);
     }

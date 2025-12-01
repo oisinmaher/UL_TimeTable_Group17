@@ -28,15 +28,15 @@ public interface StudentService
      * @param name the student's name
      * @return true if the student was added successfully; false if the ID already exists
      */
-    boolean addStudent(String id, String name, String courseCode, String year);   // Add a new student
+    boolean addStudent(String id, String name, String courseCode, String year);
 
     /**
-     * Removes a student from the system.
+     * Removes an existing student from the system.
      *
      * @param id the ID of the student to remove
      * @return true if the student was found and removed; false otherwise
      */
-    boolean removeStudent(String id);   // Remove an existing student
+    boolean removeStudent(String id);
 
     /**
      * Updates a specific field of a student (e.g., firstName or lastName).

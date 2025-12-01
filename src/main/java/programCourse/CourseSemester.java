@@ -35,7 +35,9 @@ public final class CourseSemester {
     /**
      * Creates a CourseSemester with a name and list of module codes.
      * @param season the name of the semester (e.g. "Autumn")
-     * @throws IllegalArgumentException if name is null
+     * @param courseFull university course (e.g. "Computer Systems")
+     * @throws IllegalArgumentException if season is null
+     * @throws IllegalArgumentException if spring or autumn is not inputted
      *
      * NOTE, as of Right now no mutual reference to the CourseYear its assigned
      */
@@ -44,7 +46,6 @@ public final class CourseSemester {
             throw new IllegalArgumentException("season is null");
         }
         season = season.toLowerCase();
-        // if neither spring nor autumn
         if (!(season.equals("spring") || season.equals("autumn"))) {
             throw new IllegalArgumentException("Season must be spring or autumn");
         }
@@ -54,18 +55,33 @@ public final class CourseSemester {
         this.assignedModules = new HashMap<>();
         this.courseFull = courseFull;
     }
+
+    /**
+     * Checks if a given module code can find its module object
+     * @param moduleCode module code
+     * @return true if module code found module, false otherwise
+     */
+    public boolean containsModule(String moduleCode){
+        return assignedModules.containsKey(moduleCode);
+    }
+
+    /**
+     * Gets the semesterId in the form "CourseYearId_season"
+     * @return semesterId
+     */
     public String getSemesterId(){
         return this.semesterId;
     }
 
     /**
-     *  Checks the STATIC allSemester map
+     * Checks the STATIC allSemester map
      * @param semesterId the semester id will be courseId + season
+     * @throws IllegalArgumentException if list of semesters doesn't have the given semesterId
      * @return CourseSemester object associated with semester id
      */
     public static CourseSemester getSemesterById(String semesterId){
         if(!allSemesters.containsKey(semesterId)){
-            throw new IllegalArgumentException("This semesterId doesnt exist");
+            throw new IllegalArgumentException("This semesterId doesn't exist");
         }
         return allSemesters.get(semesterId);
     }
@@ -74,14 +90,15 @@ public final class CourseSemester {
     }
 
     /**
-     *  Adds a module that's already been created (if a different course shares same module)
-     * @param moduleCode name of a module (its code)
+     * Adds a module that's already been created (if a different course shares same module)
+     * @param moduleCode the code of a module
      */
     public void addExistingModule(String moduleCode){
         assignedModules.put(moduleCode.toLowerCase(), CourseModule.getModuleFromCode(moduleCode));
     }
 
-    /** Creates new Course module
+    /**
+     * Creates new Course module
      * CourseModule constructor already has a check for existing modules
      * @param code // module code e.g cs4004
      * @param name // module name e.g Database Systems
@@ -95,7 +112,7 @@ public final class CourseSemester {
     }
 
     /**
-     * @return semester name as a String
+     * @return semester season as a String
      */
     public String getSeason() {
         return this.season;
@@ -109,22 +126,34 @@ public final class CourseSemester {
         return new ArrayList<>(assignedModules.keySet());
     }
 
+    /**
+     * Gets the list of course modules from assignedModules
+     * @return list of course module objects
+     */
     public List<CourseModule> getModuleObjects(){
         return new ArrayList<>(assignedModules.values());
     }
 
+    /**
+     * Gets the course module given a module code
+     * @param moduleCode a modules code
+     * @return Course module object
+     */
     public CourseModule getModuleFromCode(String moduleCode){
         moduleCode = moduleCode.toLowerCase();
         return assignedModules.get(moduleCode);
     }
 
+    /**
+     * Gets the map of all semester IDs to each CourseSemester object
+     * @return all CourseSemester objects
+     */
     public static Map<String, CourseSemester> getAllSemesters(){
         return allSemesters;
     }
 
     /**
      * Validates the semester and its modules.
-     *
      * Checks:
      *  - Semester name is not blank
      *  - Semester has at least one module
@@ -156,8 +185,12 @@ public final class CourseSemester {
         return issues;
     }
 
-
-    /** hashing for sets, might not use */
+    /** hashing for sets, might not use /
+    /**
+     * check if two semesterIds are equal
+     * @param o an Object
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,14 +198,19 @@ public final class CourseSemester {
         CourseSemester that = (CourseSemester) o;
         return this.getSemesterId().equals(that.getSemesterId());
     }
+
+    /**
+     * Gets hashCode of semesterId
+     * @return hashCode as an int
+     */
     @Override
     public int hashCode(){
         return this.getSemesterId().hashCode();
     }
+
     /**
      * Converts the semester to a readable string format:
      * e.g. "Autumn: CS1011, MA4001"
-     *
      * @return formatted string representation of this semester
      */
     @Override

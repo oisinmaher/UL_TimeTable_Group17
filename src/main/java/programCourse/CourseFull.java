@@ -20,7 +20,7 @@ import java.util.*;
 public class CourseFull {
     private final String courseCode;
     private final String name;
-    private static final Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't ba any data leaks.
+    private static final Map<String, CourseFull> courseCodeMapping = new HashMap<>();//Changed by Yousef 18-11 9:00 to make sure that there won't be any data leaks.
     private final Map<String, CourseYear> yearCodeMapping;
     private final CourseTimeTable courseTimeTable;
     private static Map<String, CourseFull> allCourseFulls = new HashMap<>();
@@ -28,11 +28,10 @@ public class CourseFull {
     /**
      * Constructs a CourseFull object by assigning the course code,
      * name, and list of academic years that make up the course.
-     *
      * @param courseCode  the course identifier (e.g. "LM121")
      * @param name  the course name displayed to users ("computer science")
-     *
      * @throws IllegalArgumentException if any argument is null
+     * @throws IllegalArgumentException if the given course code is already associated with a course
      */
     public CourseFull(String courseCode, String name) {
         // Validate inputs
@@ -107,7 +106,7 @@ public class CourseFull {
     }
 
     /**
-     *  returns course object associated with code
+     * returns course object associated with code
      * @param code the course's code (e.g "LM121")
      * @return a CourseFull object
      */
@@ -126,7 +125,7 @@ public class CourseFull {
 
     /**
      * returns courseYear object associated with year
-     * @param yearKey earKey is just a string on its own "1", "2", etc
+     * @param yearKey yearKey is just a string on its own "1", "2", etc
      * @return courseYear object
      */
     public CourseYear getCourseYear(String yearKey){
@@ -134,8 +133,8 @@ public class CourseFull {
     }
 
     /**
-     * Returns a list of all courses code and name
-     * @return list of course code and names
+     * Returns a list of all course codes and course names
+     * @return list of course codes and names
      */
     public static List<String> getAllCourses(){
         List<String> list = new ArrayList<>();
@@ -144,7 +143,11 @@ public class CourseFull {
         }
         return list;
     }
-    public CourseTimeTable getCourseTimeTable(){
+
+    /**
+     * Gets the timetable for a course
+     */
+    public CourseTimeTable getCourseTimeTable() {
         return this.courseTimeTable;
     }
 
