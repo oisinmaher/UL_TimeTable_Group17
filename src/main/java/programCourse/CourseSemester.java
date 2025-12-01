@@ -85,9 +85,6 @@ public final class CourseSemester {
         }
         return allSemesters.get(semesterId);
     }
-    public boolean containsModule(String moduleCode){
-        return assignedModules.containsKey(moduleCode);
-    }
 
     /**
      * Adds a module that's already been created (if a different course shares same module)

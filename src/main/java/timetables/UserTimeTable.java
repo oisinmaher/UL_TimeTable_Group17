@@ -20,6 +20,7 @@ public class UserTimeTable {
 
     /**
      * Constructor that creates a users timetable and adds it to a map of everyone's timetables
+     *
      * @param user a User object
      */
     public UserTimeTable(User user) {
@@ -32,6 +33,7 @@ public class UserTimeTable {
     /**
      * This fills classesAtTimes map with every possible day and time (there's only 45)
      * This method is duplicated in CourseTimeTable
+     *
      * @param classesAtTimes TreeMap that holds all times as key and timeslot objects as values in a list
      */
     private void populateTimeMap(Map<String, TimeSlot> classesAtTimes) {
@@ -45,6 +47,7 @@ public class UserTimeTable {
 
     /**
      * Searching through all timetables and retrieve the one with the corresponding ID number
+     *
      * @param userId the users ID number
      * @return the timetable linked with the users ID number
      */
@@ -54,6 +57,7 @@ public class UserTimeTable {
 
     /**
      * Checks if there is a Timeslot at a given time.
+     *
      * @param dayTime a code that represents the day of the week and the time on the hour together
      * @return true if there is class on at the given time, false otherwise
      */
@@ -63,7 +67,8 @@ public class UserTimeTable {
 
     /**
      * Adds a TimeSlot to a users timetable
-     * @param dayTime a code that represents the day of the week and the time on the hour together
+     *
+     * @param dayTime  a code that represents the day of the week and the time on the hour together
      * @param timeSlot a TimeSlot object
      * @throws IllegalArgumentException if the given time is already occupied by another TimeSlot
      */
@@ -76,6 +81,7 @@ public class UserTimeTable {
 
     /**
      * Gets all the timeslots from the users timetable
+     *
      * @return list of timeslots
      */
     public List<TimeSlot> getTimeSlots() {
@@ -85,39 +91,35 @@ public class UserTimeTable {
     /**
      * Prints Timetable for this user order
      */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+        @Override
+        public String toString() {
+            StringBuilder sb2 = new StringBuilder();
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+            for (int day = 1; day <= 5; day++) {
+                String dayName = TimeSlot.getDayFromNumber(day);
 
-        for (int day = 1; day <= 5; day++) {
-            String dayName = TimeSlot.getDayFromNumber(day);
+                sb2.append("====================================\n");
+                sb2.append("           ").append(dayName).append("\n");
+                sb2.append("====================================\n");
 
-            sb.append("====================================\n");
-            sb.append("           ").append(dayName).append("\n");
-            sb.append("====================================\n");
-
-            for (int time = 9; time <= 17; time++) {
-                dayTime = time > 9 ? day + "_" + time : day + "_09";
-                String timeFull = TimeSlot.getTimeFromShortened(time);
-                TimeSlot timeSlot = classesAtTimes.get(dayTime);
-                System.out.println("----------------------");
-                System.out.println(timeFull);
-                if (timeSlot == null) {
-                    System.out.println("Free Period");
-                } else {
-                    sb.append(slot.toString()).append("\n");
+                for (int time = 9; time <= 17; time++) {
+                    dayName = time > 9 ? day + "_" + time : day + "_09";
+                    String timeFull = TimeSlot.getTimeFromShortened(time);
+                    TimeSlot timeSlot = classesAtTimes.get(dayName);
+                    System.out.println("----------------------");
+                    System.out.println(timeFull);
+                    if (timeSlot == null) {
+                        System.out.println("Free Period");
+                    } else {
+                        sb2.append(sb2.toString()).append("\n");
+                    }
                 }
+
+                sb2.append("\n");
             }
 
-            sb.append("\n");
+            return sb2.toString();
         }
 
-        return sb.toString();
-    }
 
 }
-
