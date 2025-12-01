@@ -7,7 +7,7 @@ import users.Student;
 /**
  *
  */
-public class StudentMapper implements MapperInterface{
+public class StudentMapper {
     /**
      * Takes Student DTOs and makes them into a flat CSV exportable object, static as it only
      * takes in a Student object

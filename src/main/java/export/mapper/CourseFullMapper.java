@@ -7,7 +7,7 @@ import programCourse.CourseYear;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseFullMapper implements MapperInterface{
+public class CourseFullMapper {
 
     public static CourseFullCsvDto flatten(CourseFull c){
         List<String> yearNumbers = new ArrayList<>();

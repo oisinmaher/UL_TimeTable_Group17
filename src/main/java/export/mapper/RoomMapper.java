@@ -5,7 +5,7 @@ import rooms.LabRoom;
 import rooms.LectureRoom;
 import rooms.Room;
 
-public class RoomMapper implements MapperInterface{
+public class RoomMapper {
 
     public static RoomCsvDto flatten(Room room) {
         String type = (room instanceof LabRoom) ? "lab" : "lecture";

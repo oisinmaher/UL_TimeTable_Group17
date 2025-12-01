@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TimeSlotMapper implements MapperInterface {
+public class TimeSlotMapper {
 
     public static TimeSlotCsvDto flatten(TimeSlot ts) {
         //String timeSlotId = ts.getTime() + "_" + ts.getModule() + "_" + ts.getClassType();

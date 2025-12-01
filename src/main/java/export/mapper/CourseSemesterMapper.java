@@ -5,10 +5,9 @@ import programCourse.CourseFull;
 import programCourse.CourseSemester;
 import programCourse.CourseYear;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CourseSemesterMapper implements MapperInterface{
+public class CourseSemesterMapper {
 
     public static CourseSemesterCsvDto flatten(CourseSemester cs) {
         List<String> codes = cs.getModuleCodes();

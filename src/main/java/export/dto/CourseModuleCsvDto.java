@@ -2,7 +2,7 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CourseModuleCsvDto implements CsvDtoInterface{
+public class CourseModuleCsvDto {
 
     @CsvBindByName
     private String code;

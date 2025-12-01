@@ -2,7 +2,7 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CourseYearCsvDto implements CsvDtoInterface{
+public class CourseYearCsvDto {
 
     @CsvBindByName
     private String yearId;

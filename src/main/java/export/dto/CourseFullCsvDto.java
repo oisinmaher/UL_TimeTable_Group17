@@ -5,7 +5,7 @@ import com.opencsv.bean.CsvBindByName;
 /**
  * CourseFull Data transfer object
  */
-public class CourseFullCsvDto implements CsvDtoInterface{
+public class CourseFullCsvDto {
 
     @CsvBindByName
     private String courseCode;

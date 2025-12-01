@@ -4,7 +4,7 @@ import adminPanel1.DataManager;
 import export.dto.TeacherCsvDto;
 import users.Teacher;
 
-public class TeacherMapper implements MapperInterface{
+public class TeacherMapper {
 
     public static TeacherCsvDto flatten(Teacher teacher) {
         return new TeacherCsvDto(

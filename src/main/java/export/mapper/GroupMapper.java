@@ -5,15 +5,13 @@ import modules.CourseModule;
 import programCourse.CourseFull;
 import timetables.Group;
 import timetables.TimeSlot;
-import users.Student;
-import users.Teacher;
 import rooms.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupMapper implements MapperInterface{
+public class GroupMapper {
 
     public static GroupCsvDto flatten(Group group) {
 

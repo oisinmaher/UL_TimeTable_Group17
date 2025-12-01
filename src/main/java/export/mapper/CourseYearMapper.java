@@ -8,7 +8,7 @@ import programCourse.CourseYear;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseYearMapper implements MapperInterface {
+public class CourseYearMapper {
 
 
     public static CourseYearCsvDto flatten(CourseYear y){
