@@ -3,6 +3,7 @@ package ui.cli1;
 import adminPanel1.ReadData;
 import timetables.UserTimeTable;
 import users.Student;
+import users.Teacher;
 
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ public class CLIApplication {
         Scanner in = new Scanner(System.in);
         try {
 
+            //Gets all data from registery
             ReadData rd = new ReadData();
             rd.importAll();
 
@@ -59,7 +61,7 @@ public class CLIApplication {
                     case "2":
                         System.out.print("Enter teacher id: ");
                         String TeacherId = in.nextLine().trim();
-                        userTimeTable = Student.getStudentFromId(TeacherId).getUserTimeTable();
+                        userTimeTable = Teacher.getTeacherFromId(TeacherId).getUserTimeTable();
                         timetableService = new TimetableWrapperService(userTimeTable);
                         session = new TeacherMenuSession(in, teacherService, TeacherId, timetableService);
                         break;

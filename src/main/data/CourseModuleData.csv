@@ -1,5 +1,5 @@
 CODE,LABHOURS,LECHOURS,NAME,TUTHOURS
 cs4023,0,1,operating systems,1
-cs4401,1,0,database,0
-cs4004,2,2,SoftwareTesting,1
 cs4178,2,2,SoftwareRequirements,1
+cs4004,2,2,SoftwareTesting,1
+cs4401,1,0,database,0

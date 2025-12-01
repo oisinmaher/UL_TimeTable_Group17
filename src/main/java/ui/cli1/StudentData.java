@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Wrapper Class for student data
+ */
 public class StudentData {
 
     public Map<String, Student> getStudents(){

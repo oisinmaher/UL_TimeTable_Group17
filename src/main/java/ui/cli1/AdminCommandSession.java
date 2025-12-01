@@ -1,5 +1,6 @@
 package ui.cli1;
 
+import adminPanel1.WriteData;
 import modules.CourseModule;
 import programCourse.CourseFull;
 import programCourse.CourseSemester;
@@ -99,7 +100,9 @@ public class AdminCommandSession implements UserSession {
                 case "help":
                     printHelp();
                     break;
-                case "exit":
+                case "save-exit":
+                    WriteData wd = new WriteData();
+                    wd.writeAll();
                     running = false;
                     break;
                 default:
@@ -127,7 +130,7 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  list-students");
         System.out.println("  list-teachers");
         System.out.println("  help");
-        System.out.println("  exit");
+        System.out.println("  save-exit");
     }
 
     // ===== Students & Teachers Commands =====
