@@ -92,7 +92,7 @@ public class TimeSlot{
      * @param time
      * @return
      */
-    public String toCorrectTimeFormat(String day, String time){
+    public static String toCorrectTimeFormat(String day, String time){
         day = day.toLowerCase();
         // NEED CHECK FOR IF DAY IS mon tue wed thu fri
         if(day.length() > 3){

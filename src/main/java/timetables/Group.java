@@ -23,6 +23,7 @@ public class Group {
     private final Map<String, TimeSlot> referencedTimeSlots;
     protected Set<String> usedTimes;
     protected Set<TimeSlot> allTimeSlots;
+    protected static Map<String, TimeSlot> allTimeSlotsMap = new HashMap<>();
     protected Map<String, TimeSlot> lecturesTimes;
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
@@ -71,6 +72,7 @@ public class Group {
         module.setLecHours(prevLecHours + 1);
         usedTimes.add(timeSlot.getTime());
         allTimeSlots.add(timeSlot);
+        allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
     }
@@ -96,6 +98,7 @@ public class Group {
             module.setLabHours(prevLabHours+1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
             labsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
@@ -108,6 +111,7 @@ public class Group {
             module.setTutHours(prevTutHours + 1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_" + timeSlot.getTime(), timeSlot);
             tutorialsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
@@ -115,7 +119,10 @@ public class Group {
             throw new IllegalArgumentException("This type of class doesnt exist, \n please chose lab or tutorial");
         }
     }
-
+    public TimeSlot getTimeSlotFromTime(String day, String time){
+        String daytime = TimeSlot.toCorrectTimeFormat(day, time);
+        return allTimeSlotsMap.get(moduleCode + "_" + daytime);
+    }
     public List<TimeSlot> getTimeSlots(String typeOfClass){
         typeOfClass = typeOfClass.toLowerCase();
         if(typeOfClass.equals("lecture")){
