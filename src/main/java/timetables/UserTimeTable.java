@@ -12,6 +12,7 @@ public class UserTimeTable {
     Map<String, TimeSlot> classesAtTimes;
     final private static Map<String, UserTimeTable> allStudentsTimeTables = new HashMap<>();
 
+
     public UserTimeTable(User user) {
         this.user = user;
         classesAtTimes = new HashMap<>();
@@ -55,30 +56,36 @@ public class UserTimeTable {
         return new ArrayList<>(classesAtTimes.values());
     }
 
-    /**
-     * Prints Timetable for this user in corrected order, (can and most likely will be replaced with toString())
-     */
-    public void printTimeTable() {
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
         for (int day = 1; day <= 5; day++) {
-            String dayTime;
-            String dayFull = TimeSlot.getDayFromNumber(day);
-            System.out.println("######################");
-            System.out.println("Day of Week " + dayFull);
-            System.out.println("######################");
+            String dayName = TimeSlot.getDayFromNumber(day);
+
+            sb.append("====================================\n");
+            sb.append("           ").append(dayName).append("\n");
+            sb.append("====================================\n");
+
             for (int time = 9; time <= 17; time++) {
-                dayTime = time > 9 ? day + "_" + time : day + "_09";
-                String timeFull = TimeSlot.getTimeFromShortened(time);
-                TimeSlot timeSlot = classesAtTimes.get(dayTime);
-                System.out.println("----------------------");
-                System.out.println(timeFull);
-                if (timeSlot == null) {
-                    System.out.println("Free Period");
+                String key = (time > 9) ? day + "_" + time : day + "_09";
+                String timeLabel = TimeSlot.getTimeFromShortened(time);
+                TimeSlot slot = classesAtTimes.get(key);
+
+                sb.append(String.format("%-10s | ", timeLabel));
+
+                if (slot == null) {
+                    sb.append("Free Period\n");
                 } else {
-                    System.out.println(timeSlot);
+                    sb.append(slot.toString()).append("\n");
                 }
             }
+
+            sb.append("\n");
         }
-        System.out.print("----------------------\n\n");
+
+        return sb.toString();
     }
+
 }
 

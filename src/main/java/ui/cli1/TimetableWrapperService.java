@@ -29,38 +29,12 @@ public class TimetableWrapperService implements TimetableService {
 
     @Override
     public String getStudentTimetableAsString(String studentId) {
-        List<TimeSlot> slots = UserTimeTable.getUserTimetable(studentId).getTimeSlots();
-        if (slots == null || slots.isEmpty()) {
-            return "No timetable found for student " + studentId + ".";
-        }
-        return formatTimetable(slots, "Timetable for student " + studentId);
+        return timetable.toString();
     }
 
     @Override
     public String getTeacherTimetableAsString(String TeacherId) {
-        List<TimeSlot> slots = UserTimeTable.getUserTimetable(TeacherId).getTimeSlots();
-        if (slots == null || slots.isEmpty()) {
-            return "No timetable found for lecturer " + TeacherId + ".";
-        }
-        return formatTimetable(slots, "Timetable for lecturer " + TeacherId);
+        return timetable.toString();
     }
 
-    /**
-     * Formats a list of TimeSlots into a readable timetable string.
-     * Relies on TimeSlot.toString() and TimeSlot.compareTo().
-     */
-    private String formatTimetable(List<TimeSlot> slots, String title) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(title).append("\n");
-        sb.append("---------------------------------\n");
-
-        List<TimeSlot> copy = new ArrayList<>(slots);
-//        Collections.sort(copy); // TimeSlot should implement Comparable<TimeSlot>
-
-        for (TimeSlot slot : copy) {
-            sb.append(slot).append("\n");
-        }
-
-        return sb.toString();
-    }
 }
