@@ -63,7 +63,6 @@ public class TimeSlotMapper {
                 timeLong,
                 module,
                 courseFullList,
-                group,
                 csvDto.getClassType(),
                 csvDto.getRoomId(),
                 csvDto.getTeacherId()

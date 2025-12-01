@@ -1,6 +1,8 @@
 package ui.cli1;
 
+import adminPanel1.ReadData;
 import timetables.UserTimeTable;
+import users.Student;
 
 import java.util.Scanner;
 
@@ -12,6 +14,10 @@ public class CLIApplication {
 
         Scanner in = new Scanner(System.in);
         try {
+
+            ReadData rd = new ReadData();
+            rd.importAll();
+
             // --- Data layer: StudentData & TeacherData handle CSV internally ---
             StudentData studentData = new StudentData();
             TeacherData teacherData = new TeacherData();

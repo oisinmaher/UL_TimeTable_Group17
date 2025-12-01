@@ -65,24 +65,16 @@ public class Main {
         DataManager.timeSlots.add(opsSlot);
         DataManager.teachers.put(teacher.getUserId(), teacher);
         DataManager.teachers.put(teacher1.getUserId(), teacher1);
+*/
 
+        WriteData wd = new WriteData();
+            wd.writeAll();
 
-//        WriteData wd = new WriteData();
-//        try {
-//            wd.writeAll();
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        ReadData rd = new ReadData();
-//        try {
-//            rd.importAll();
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
+        ReadData rd = new ReadData();
+            rd.importAll();
 
         //student.getUserTimeTable().printTimeTable();
-//        DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
+        //DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();
 
         //DataManager.students.get("424234").getUserTimeTable().printTimeTable();
 
