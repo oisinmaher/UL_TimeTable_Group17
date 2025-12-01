@@ -1,4 +1,5 @@
 package ui.cli1;
+import modules.CourseModule;
 import users.*;
 import java.util.Arrays;
 import java.util.List;
@@ -13,12 +14,12 @@ public class AdminCommandSession implements UserSession {
     private final CourseYearService courseYearService;
 
     public AdminCommandSession(
-            Scanner in, StudentService studentService, TeacherService teacherService) {
+            Scanner in, StudentService studentService, TeacherService teacherService, CourseFullService courseFullService, CourseYearService courseYearService) {
         this.in = in;
         this.studentService = studentService;
         this.teacherService = teacherService;
-        this.courseFullService = null;
-        this.courseYearService = null;
+        this.courseFullService = courseFullService;
+        this.courseYearService = courseYearService;
     }
 
 
@@ -94,6 +95,9 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  update-teacher <id> <field> <newValue>");
         System.out.println("  add-course-full <courseCode> <courseName>");
         System.out.println("  add-course-year <courseCode> <year>");
+        System.out.println("  add-course-semester <courseCode> <courseYear> <semester>");
+        System.out.println("  add-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
+
         System.out.println("  list-courses");
         System.out.println("  list-course-years <courseCode>");
         System.out.println("  list-students");
@@ -104,7 +108,7 @@ public class AdminCommandSession implements UserSession {
     private void cmdAddStudent(String[] args) {
 //        System.out.println("Arguments in function are " + Arrays.toString(args));
         if (args.length < 4) {
-            System.out.println("Usage: add-student <id> <name>");
+            System.out.println("Usage: add-student <id> <name> <course> <year>");
             return;
         }
         String id = args[0];

@@ -20,6 +20,10 @@ public class CLIApplication {
             StudentData studentData = new StudentData();
             TeacherData teacherData = new TeacherData();
 
+            // -- Course Services
+            CourseFullService courseFullService = new InMemoryCourseFullService();
+            CourseYearService courseYearService = new InMemoryCourseYearService();
+
             // --- Service layer: CSV-backed services ---
             StudentService studentService = new CSVStudentService(studentData);
             TeacherService teacherService = new CSVTeacherService(teacherData);
@@ -65,7 +69,7 @@ public class CLIApplication {
                             System.out.println("Invalid admin password.");
                             break;
                         }
-                        session = new AdminCommandSession(in, studentService, teacherService);
+                        session = new AdminCommandSession(in, studentService, teacherService, courseFullService, courseYearService);
                         break;
 
                     case "4":
