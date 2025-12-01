@@ -44,8 +44,9 @@ public class TimeSlotMapper {
         String day = timeSplit[0];
         String time = timeSplit[1];
 
-        String timeLong = TimeSlot.getTimeFromShortened(Integer.parseInt(time));
         String dayWord = TimeSlot.getDayFromNumber(Integer.parseInt(day));
+        String hour = time;
+
 
         List<CourseFull> courseFullList = new ArrayList<>();
         String[] courses = csvDto.getCourseCodes().split(",");
@@ -60,7 +61,7 @@ public class TimeSlotMapper {
 
         TimeSlot timeSlot = new TimeSlot(
                 dayWord,
-                timeLong,
+                hour,
                 module,
                 courseFullList,
                 csvDto.getClassType(),

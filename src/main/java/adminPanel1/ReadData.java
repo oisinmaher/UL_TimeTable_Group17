@@ -11,7 +11,6 @@ import timetables.Group;
 import users.Student;
 import users.Teacher;
 
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;

@@ -1,11 +1,14 @@
 package ui.cli1;
 
+import adminPanel1.DataManager;
+import adminPanel1.WriteData;
 import programCourse.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryCourseFullService implements CourseFullService {
+
 
     @Override
     public boolean createCourse(String courseCode, String courseName) {
@@ -14,6 +17,10 @@ public class InMemoryCourseFullService implements CourseFullService {
             return false;
         }
         CourseFull courseFull = new CourseFull(courseCode, courseName);
+
+        DataManager.courseFulls.put(courseCode.toLowerCase(), courseFull);
+        WriteData writer = new WriteData();
+        writer.writeCourseFulls();
         return true;
     }
 

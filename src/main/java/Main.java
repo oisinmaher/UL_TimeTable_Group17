@@ -70,8 +70,8 @@ public class Main {
         WriteData wd = new WriteData();
             wd.writeAll();
 
-        ReadData rd = new ReadData();
-            rd.importAll();
+    //    ReadData rd = new ReadData();
+    //        rd.importAll();
 
         //student.getUserTimeTable().printTimeTable();
         //DataManager.courseFulls.get("lm051").getCourseTimeTable().printTimeTable();

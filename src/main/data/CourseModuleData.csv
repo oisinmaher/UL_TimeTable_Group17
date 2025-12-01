@@ -1,3 +1,14 @@
 CODE,LABHOURS,LECHOURS,NAME,TUTHOURS
-cs4023,0,1,operating systems,1
-cs4401,1,0,database,0
+cs4023,1,2,Operating Systems,1
+cs4141,2,2,Intro to Java,0
+cs4416,1,2,Database Systems,1
+cs4178,2,2,Software Requirements,0
+cs4014,2,2,Object Orientated Development,1
+cs4004,1,2,Software Testing,1
+cs4013,1,2,Representation and Modelling,1
+cs4221,1,2,Foundations of Computer Science 1,1
+et4011,1,2,Fundamentals of Computer Organisation,1
+ms4111,1,2,Discrete Mathematics,1
+ph6011,2,2,Condensed Matter Physics 1,2
+ph5093,2,2,Physics of Advanced Metrology,2
+ph5091,2,2,Physics of Materials,2

@@ -1,6 +1,9 @@
 package ui.cli1;
 
+import adminPanel1.DataManager;
+import adminPanel1.WriteData;
 import programCourse.CourseFull;
+import programCourse.CourseYear;
 
 public class InMemoryCourseYearService implements CourseYearService{
 
@@ -15,7 +18,11 @@ public class InMemoryCourseYearService implements CourseYearService{
             System.out.println("This course already has this year");
             return false;
         }
-        courseFull.addCourseYear(year);
+        CourseYear newYear = courseFull.addCourseYear(year);
+        DataManager.courseYears.put(newYear.getYearId(), newYear);
+        WriteData writer = new WriteData();
+        writer.writeCourseYears();
         return true;
     }
+
 }

@@ -1,5 +1,7 @@
 package ui.cli1;
-
+import adminPanel1.DataManager;
+import adminPanel1.DataManagerUtils;
+import adminPanel1.ReadData;
 import adminPanel1.WriteData;
 import modules.CourseModule;
 import programCourse.CourseFull;
@@ -7,9 +9,7 @@ import programCourse.CourseSemester;
 import programCourse.CourseYear;
 import rooms.LabRoom;
 import rooms.LectureRoom;
-import rooms.Room;
 import timetables.Group;
-import timetables.TimeSlot;
 import users.*;
 
 import java.util.Arrays;
@@ -36,6 +36,7 @@ public class AdminCommandSession implements UserSession {
 
     @Override
     public void run() {
+
         System.out.println("\n=== Admin Command Shell ===");
         System.out.println("Type 'help' to see available commands.");
 
@@ -65,8 +66,9 @@ public class AdminCommandSession implements UserSession {
                 case "update-teacher":
                     cmdUpdateTeacher(args);
                     break;
+                /*
                 case "add-course-full":
-                    cmdAddCourseFull(args);
+                cmdAddCourseFull(args);
                     break;
                 case "add-course-year":
                     cmdAddCourseYear(args);
@@ -83,18 +85,20 @@ public class AdminCommandSession implements UserSession {
                 case "add-timeslot":
                     cmdAddTimeslot(args);
                     break;
-                case "add-student-to-timeslot":
-                    cmdAddStudentToTime(args);
-                    break;
+
+                 */
                 case "create-room":
                     cmdCreateRoom(args);
                     break;
+                /*
                 case "list-courses":
                     cmdListCourses();
                     break;
                 case "list-course-years":
                     cmdListCourseYears(args);
                     break;
+
+                 */
                 case "list-students":
                     cmdListStudents();
                     break;
@@ -104,9 +108,7 @@ public class AdminCommandSession implements UserSession {
                 case "help":
                     printHelp();
                     break;
-                case "save-exit":
-                    WriteData wd = new WriteData();
-                    wd.writeAll();
+                case "exit":
                     running = false;
                     break;
                 default:
@@ -115,7 +117,6 @@ public class AdminCommandSession implements UserSession {
         }
     }
 
-
     private void printHelp() {
         System.out.println("Available commands:");
         System.out.println("  add-student <id> <fullName> <course> <year>");
@@ -123,21 +124,21 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  update-student <id> <field> <newValue>");
         System.out.println("  add-teacher <id> <fullName>");
         System.out.println("  update-teacher <id> <field> <newValue>");
-        System.out.println("  add-course-full <courseCode> <courseName>");
-        System.out.println("  add-course-year <courseCode> <year>");
-        System.out.println("  add-course-semester <courseCode> <courseYear> <semester>");
-        System.out.println("  create-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
-        System.out.println("  add-existing-module <courseCode> <courseYear> <semester> <moduleCode>");
-        System.out.println("  add-timeslot <moduleCode> <day> <time> <room> <teacher>");
-        System.out.println("  add-student-to-timeslot <moduleCode> <typeOfClass> <day> <time> <studentId>");
-        System.out.println("  create-room <roomID> <roomType> <maxCapacity>");
+        //System.out.println("  add-course-full <courseCode> <courseName>");
+        //System.out.println("  add-course-year <courseCode> <year>");
+        //System.out.println("  add-course-semester <courseCode> <courseYear> <semester>");
+        //System.out.println("  create-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
+        //System.out.println("  add-existing-module <courseCode> <courseYear> <semester> <moduleCode>");
+        //System.out.println("  add-timeslot <moduleCode> <day> <time> <room> <teacher>");
+        System.out.println("  create-room <roomID> <roomType> [maxCapacity]");
         System.out.println("  list-courses");
         System.out.println("  list-course-years <courseCode>");
         System.out.println("  list-students");
         System.out.println("  list-teachers");
         System.out.println("  help");
-        System.out.println("  save-exit");
+        System.out.println("  exit");
     }
+
 
     // ===== Students & Teachers Commands =====
     private void cmdAddStudent(String[] args) {
@@ -211,6 +212,7 @@ public class AdminCommandSession implements UserSession {
         String courseName = args[1];
         for (int i = 2; i < args.length; i++) courseName += " " + args[i];
         boolean ok = courseFullService.createCourse(courseCode, courseName);
+
         System.out.println(ok ? "Successfully added course " + courseCode + ": " + courseName : "Unsuccessful, check input.");
     }
 
@@ -220,6 +222,7 @@ public class AdminCommandSession implements UserSession {
             return;
         }
         boolean ok = courseYearService.addYear(args[0], args[1]);
+
         System.out.println(ok ? "Successfully added year " + args[1] + " to " + args[0] : "Unsuccessful, check input.");
     }
 
@@ -241,6 +244,11 @@ public class AdminCommandSession implements UserSession {
             return;
         }
         cy.addSemester(semester);
+        for(CourseSemester cs:cy.getSemesters()) {
+            DataManager.courseSemesters.put(cy.getYearId(),cs );
+        }
+        WriteData writer = new WriteData();
+        writer.writeCourseYears();
         System.out.println("Semester " + semester + " added to " + courseCode + " " + year);
     }
 
@@ -263,6 +271,12 @@ public class AdminCommandSession implements UserSession {
             return;
         }
         cs.addNewModule(moduleCode, moduleName);
+        CourseModule cm = cs.getModuleFromCode(moduleCode);
+        DataManager.courseModules.put(moduleCode, cm);
+        DataManager.groups.put(moduleCode, cm.getGroupAssigned());
+        WriteData wd = new WriteData();
+        wd.writeCourseModules();
+        wd.writeGroups();
         System.out.println("Module " + moduleCode + " added to " + courseCode + " " + year + " " + semester);
     }
 
@@ -289,6 +303,11 @@ public class AdminCommandSession implements UserSession {
             return;
         }
         cs.addExistingModule(moduleCode);
+        CourseModule cms = CourseModule.getModuleFromCode(moduleCode);
+        DataManager.groups.put(moduleCode,cms.getGroupAssigned());
+        WriteData wd = new WriteData();
+        wd.writeCourseModules();
+        wd.writeGroups();
         System.out.println("Module " + moduleCode + " added to " + courseCode + " " + year + " " + semester);
     }
 
@@ -328,32 +347,20 @@ public class AdminCommandSession implements UserSession {
                 System.out.println("Invalid type. Use lecture, lab, or tutorial.");
                 return;
             }
+
+            DataManager.groups.put(moduleCode, group);
+            WriteData wd = new WriteData();
+            wd.writeTimeSlots();
             System.out.println("Timeslot added successfully.");
         } catch (IllegalArgumentException e) {
             System.out.println("Error adding timeslot: " + e.getMessage());
         }
     }
-    //    / CourseFull, CourseYear, CourseSemester, ModuleCode, day, time, studentId
-    private void cmdAddStudentToTime(String[] args) {
-        if (args.length != 4) {
-            System.out.println("Usage: add-student-to-timeslot <moduleCode> <typeOfClass> <day> <time> <studentId>");
-            return;
-        }
-        String moduleCode = args[0];
-        String typeOfClass = args[1];
-        String day = args[2];
-        String time = args[3];
-        String studentId = args[4];
-        CourseModule module = CourseModule.getModuleFromCode(moduleCode);
-        Group group = module.getGroupAssigned();
-        TimeSlot ts = group.getTimeSlotFromTime(day, time, typeOfClass);
-        ts.addStudent(studentId);
-    }
 
 
     private void cmdCreateRoom(String[] args) {
         if (args.length < 2) {
-            System.out.println("Usage: create-room <roomID> <roomType> <maxCapacity>");
+            System.out.println("Usage: create-room <roomID> <roomType> [maxCapacity]");
             return;
         }
         String roomID = args[0];
@@ -368,10 +375,12 @@ public class AdminCommandSession implements UserSession {
             }
         }
         try {
-            if (roomType.equalsIgnoreCase("lab")) {
-                new LabRoom(roomID, roomType, maxCapacity);
-            } else if (roomType.equalsIgnoreCase("lecture")) {
-                new LectureRoom(roomID, roomType, maxCapacity);
+            if (roomType.equalsIgnoreCase("LabRoom")) {
+                LabRoom r = new LabRoom(roomID, roomType, maxCapacity);
+                DataManager.rooms.put(roomID, r);
+            } else if (roomType.equalsIgnoreCase("LectureRoom")) {
+                LectureRoom r = new LectureRoom(roomID, roomType, maxCapacity);
+                DataManager.rooms.put(roomID, r);
             } else {
                 System.out.println("Invalid room type.");
                 return;
