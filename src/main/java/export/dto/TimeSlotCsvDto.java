@@ -2,7 +2,7 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class TimeSlotCsvDto implements CsvDtoInterface {
+public class TimeSlotCsvDto {
     //@CsvBindByName
     //private String timeSlotId;
 

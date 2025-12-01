@@ -26,6 +26,7 @@ public class CsvReaderUtil<T> {
         this.type = type;
     }
 
+
     /**
      * Reads an entire file and creates a list of that file's objects
      * @return a list of objects
@@ -34,7 +35,7 @@ public class CsvReaderUtil<T> {
         try {
             Reader reader = new FileReader(path.toFile());
             HeaderColumnNameMappingStrategy<T> strategy = new HeaderColumnNameMappingStrategy<>();
-                    strategy.setType(type);
+            strategy.setType(type);
 
             CsvToBean<T> result = new CsvToBeanBuilder<T>(reader)
                     .withType(type)

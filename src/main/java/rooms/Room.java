@@ -8,14 +8,11 @@ import java.util.Set;
 /**
  * Room class.
  * Contains:
- *      - Maximum capacity of a room
- *      - roomID, or the room number
  *      - room type (Lecture room, Lab room, Tutorial room)
  *      - Map of roomId to room object
  *      - Map of roomId to set of room times that have already been used
  */
-public abstract class Room
-{
+public abstract class Room  {
     protected int maxCapacity; 
     private String roomID;
     protected String roomType;
@@ -23,13 +20,12 @@ public abstract class Room
     protected static Map<String, Set<String>> roomTimesUsed = new HashMap<>();
 
     /**
-     * Constructor that
+     * Constructor with full parameters (includes max capacity)
      * @param roomID room number
      * @param roomType type of room
      * @param maxCapacity maximum number of students that the room can hold
      * @throws IllegalArgumentException if the given room ID is already associated with another room
      */
-    // Constructor full parameters (includes max capacity)
     public Room(String roomID, String roomType, int maxCapacity) {
         roomID = roomID.toLowerCase();
         this.roomID = roomID;
@@ -87,8 +83,7 @@ public abstract class Room
      * Gets the room number / ID
      * @return roomID
      */
-    public String getRoomID()
-    {
+    public String getRoomID() {
         return this.roomID; 
     }
 
@@ -96,8 +91,7 @@ public abstract class Room
      * Gets the room number / ID
      * @param roomID ID associated with a room
      */
-    public void setRoomID(String roomID)
-    {
+    public void setRoomID(String roomID) {
         this.roomID = roomID; 
     }
 
@@ -111,12 +105,15 @@ public abstract class Room
      * Gets the max capacity of the room
      * @return the maximum number of students that the room can hold
      */
-    public int getMaxCapacity()
-    {
+    public int getMaxCapacity() {
         return this.maxCapacity;
     }
 
-    public static Map<String, Room> getAllRooms(){
+    /**
+     * Gets the map of all room IDs to their corresponding Room object
+     * @return all rooms that are in the system
+     */
+    public static Map<String, Room> getAllRooms() {
         return allRooms;
     }
 
@@ -150,8 +147,7 @@ public abstract class Room
      * Gets the type of room
      * @return room type
      */
-    public String getRoomType()
-    {
+    public String getRoomType() {
         return this.roomType; 
     }
 

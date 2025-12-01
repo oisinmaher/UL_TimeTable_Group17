@@ -3,9 +3,8 @@ package export.mapper;
 import export.dto.CourseModuleCsvDto;
 import modules.CourseModule;
 import programCourse.CourseFull;
-import programCourse.CourseYear;
 
-public class CourseModuleMapper implements MapperInterface{
+public class CourseModuleMapper {
 
     public static CourseModuleCsvDto flatten(CourseModule cm){
         return new CourseModuleCsvDto(

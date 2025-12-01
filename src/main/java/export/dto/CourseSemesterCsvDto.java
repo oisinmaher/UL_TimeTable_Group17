@@ -2,7 +2,7 @@ package export.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CourseSemesterCsvDto implements CsvDtoInterface{
+public class CourseSemesterCsvDto {
 
     @CsvBindByName
     private String semesterId;
@@ -15,6 +15,12 @@ public class CourseSemesterCsvDto implements CsvDtoInterface{
 
     public CourseSemesterCsvDto() { }
 
+    /**
+     * Constructor for DTO
+     * @param semesterId in the form "CourseYearId_season"
+     * @param season autumn or spring
+     * @param moduleCodes module codes
+     */
     public CourseSemesterCsvDto(String semesterId, String season, String moduleCodes) {
         this.semesterId = semesterId;
         this.season = season;

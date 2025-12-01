@@ -4,7 +4,6 @@ import programCourse.CourseFull;
 import timetables.CourseTimeTable;
 import timetables.Group;
 import timetables.TimeSlot;
-import users.Teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,21 +13,13 @@ import java.util.Map;
 /**
  * Course Module class
  * Contains:
- *      - add course to a course timetable
- *      - checks for a unique module code
- *      - retrieve a module given a module code
- *      - toString for module name and code
- *
- * Getters: moduleName, moduleCode, groupAssignedToModule (with or without moduleCode),
- *          LecHours, LabHours, TutHours, ListOfModules, ListOfModuleCodes
- *
- * Setters: LecHours, LabHours, TutHours
+ *      - List of all the courses that take this module (coursesTakingThisModule)
+ *      - Map of module code to CourseModule (allModules)
  */
 public class CourseModule {
     private List<CourseFull> coursesTakingThisModule = new ArrayList<>();
     private final String moduleName;
     private final String moduleCode;
-    private List<Teacher> lecturers;
     private int LecHours;
     private int labHours;
     private int tutHours;
@@ -104,6 +95,10 @@ public class CourseModule {
         return this.moduleName;
     }
 
+    /**
+     * Gets the map of all module codes to their CourseModule object
+     * @return all modules that are currently in the system
+     */
     public static Map<String, CourseModule> getModuleMap(){
         return allModules;
     }

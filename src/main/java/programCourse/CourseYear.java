@@ -45,12 +45,20 @@ public final class CourseYear{
     }
 
     /**
-     * Checks if a given yearId is used in allCourseYears
-     * @param yearId in the form "courseCode_yearNumber"
-     * @return true if YearId is found in allCourseYears, false otherwise
+     * Gets the map of all year IDs to their CourseYear object
+     * @return all course years in the system
      */
-    public static boolean containsCourseYearId(String yearId){
-        return allCourseYears.containsKey(yearId);
+    public static Map<String, CourseYear> getAllCourseYears(){
+        return allCourseYears;
+    }
+
+    /**
+     * Gets CourseYear from a given yearID
+     * @param yearId in the form "courseCode_yearNumber"
+     * @return CourseYear object
+     */
+    public static CourseYear getCourseYear(String yearId){
+        return allCourseYears.get(yearId);
     }
 
     /**
@@ -99,15 +107,21 @@ public final class CourseYear{
         return new ArrayList<>(courseSemesters.values());
     }
 
-     /**
-      * Returns the list of CourseModule objects for a given semester name in this year.
-      * This now uses CourseSemester.pickModulesForThisSemester(), which applies
-      * the odd/even last digit rule based on the semester name.
-      *
-      * This comment was a part of getModuleCodesForSemesters()
-      */
+    /**
+     * Gets semester by a given season
+     * @param season autumn or spring
+     * @return CourseSemester object
+     * @throws IllegalArgumentException if semester doesn't exist
+     */
+    public CourseSemester getSemester(String season) {
+        season = season.toLowerCase();
+        if(hasSemester(season)){
+            return courseSemesters.get(season);
+        }
+        throw new IllegalArgumentException("Season semester doesn't exist");
+    }
 
-     /**
+    /**
      * Returns the list of module codes in courseSemesters
      * @param semesterName autumn or spring
      * @throws IllegalArgumentException if semesterName is null

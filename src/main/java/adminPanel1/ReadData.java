@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class ReadData {
 
-    public void importAll() throws URISyntaxException {
+    public void importAll(){
 
         //Read in rooms
         Path roomPath = Paths.get("src/main/data/RoomData.csv");

@@ -24,9 +24,8 @@ public class TimeSlot{
     private String classType;
     private CourseModule module;
     List<CourseFull> coursesTakingThisModule;
-    private Group group;
     static List<String> daysOfWeek = new ArrayList<>(Arrays.asList("mon","tue","wed","thu","fri"));
-    static Set<String> validTimes = new HashSet<>(Arrays.asList("09","10","11","12","13","14","15","16","17"));
+    static Set<String> validTimes = new HashSet<>(Arrays.asList("08","09","10","11","12","13","14","15","16","17"));
 
     /**
      * Constructor that adds this TimeTable to the teachers timetable and to the timetables
@@ -35,17 +34,14 @@ public class TimeSlot{
      * @param time the time of day
      * @param module a CourseModule object
      * @param coursesTakingThisModule a list of
-     * @param group group of students taking a module
      * @param classType type of class
      * @param roomId room ID number
      * @param teacherId teachers ID number
      */
-    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, Group group, String classType, String roomId, String teacherId){
+    public TimeSlot(String day, String time, CourseModule module, List<CourseFull> coursesTakingThisModule, String classType, String roomId, String teacherId){
         this.dayTime = toCorrectTimeFormat(day, time);
         this.module = module;
         this.coursesTakingThisModule = coursesTakingThisModule;
-        this.group = group;
-        this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
         this.students = new HashMap<>();
         UserTimeTable teacherTimeTable = teacher.getUserTimeTable();
@@ -99,6 +95,54 @@ public class TimeSlot{
     }
 
     /**
+     * Gets the module of this timeslot
+     * @return CourseModule
+     */
+    public CourseModule getModule() {
+        return module;
+    }
+
+    /**
+     * Gets all the student IDs to Student
+     * @return all students in this timeslot
+     */
+    public Map<String, Student> getStudents() {
+        return students;
+    }
+
+    /**
+     * Gets the courses taking this module
+     * @return courses involved in this timeslot
+     */
+    public List<CourseFull> getCoursesTakingThisModule() {
+        return coursesTakingThisModule;
+    }
+
+    /**
+     * Gets the room where this timeslot is held
+     * @return Room
+     */
+    public Room getRoom() {
+        return room;
+    }
+
+    /**
+     * Gets the teacher of this timeslot
+     * @return Teacher
+     */
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    /**
+     * Gets the type of class of this timeslot
+     * @return class type
+     */
+    public String getClassType() {
+        return classType;
+    }
+
+    /**
      * This converts monday 1600 to 1_16, where 1 represents day (monday is 1st day of week) and 16 (represents 16:00)
      * This is useful because we can put all times in a single TreeSet that will be able to easily sort based
      * on the strings lexicographical size
@@ -108,7 +152,7 @@ public class TimeSlot{
      * @throws IllegalArgumentException if the given day is not between mon - fri
      * @throws IllegalArgumentException if the given time is not between 09:00 - 17:00
      */
-    public String toCorrectTimeFormat(String day, String time){
+    public static String toCorrectTimeFormat(String day, String time){
         day = day.toLowerCase();
         // NEED CHECK FOR IF DAY IS mon tue wed thu fri
         if(day.length() > 3){

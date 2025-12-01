@@ -32,7 +32,7 @@ public class Teacher extends User {
      * Adds modules to a map of modules that this teacher teaches
      * @param moduleCode code of a module
      */
-    public void addModuleToTeacher(String moduleCode){
+    public void addCourseToTeacher(String moduleCode){
         moduleCode = moduleCode.toLowerCase();
         CourseModule courseModule = CourseModule.getModuleFromCode(moduleCode);
         modulesTaught.put(moduleCode, courseModule);
@@ -44,9 +44,9 @@ public class Teacher extends User {
      * @throws IllegalArgumentException if the given module code does not match with any of
      *                                  the current modules that the teacher teaches
      */
-    public void removeModuleFromTeacher(String moduleCode){
+    public void removeCourseFromTeacher(String moduleCode){
         moduleCode = moduleCode.toLowerCase();
-        if(containsModule(moduleCode)){
+        if(containsCourse(moduleCode)){
             modulesTaught.remove(moduleCode);
         }
         else{
@@ -59,7 +59,7 @@ public class Teacher extends User {
      * @param moduleCode code of a module
      * @return true if the teacher teaches this module, false otherwise
      */
-    private boolean containsModule(String moduleCode){
+    private boolean containsCourse(String moduleCode){
         return modulesTaught.containsKey(moduleCode);
     }
 
@@ -82,6 +82,14 @@ public class Teacher extends User {
         if(checkTeacherId(teacherId))
             return allTeachers.get(teacherId);
         else throw new IllegalArgumentException("This Teacher ID " + teacherId + " does not exist");
+    }
+
+    /**
+     * Gets the map of all teacher IDs to each Teacher object
+     * @return all teachers that are in the system
+     */
+    public static Map<String, Teacher> getAllTeachers(){
+        return allTeachers;
     }
 
     /**

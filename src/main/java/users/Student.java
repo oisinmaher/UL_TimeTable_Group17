@@ -68,6 +68,14 @@ public class Student extends User {
     }
 
     /**
+     * Gets the map of all user IDs to Student objects
+     * @return all students that are enrolled in the system
+     */
+    public static Map<String, Student> getAllStudentsEnrolled(){
+        return allStudentsEnrolled;
+    }
+
+    /**
      * Sets the year that the student is in
      * @param courseYear year of study of a course
      */
@@ -97,6 +105,17 @@ public class Student extends User {
      */
     public CourseFull getCourseFull(){
         return this.courseFull;
+    }
+
+    /**
+     * Gets the timetable of this student
+     * @return UserTimeTable object
+     */
+    public UserTimeTable getUserTimeTable() {
+        if (userTimeTable == null) {
+            userTimeTable = new UserTimeTable(this);
+        }
+        return userTimeTable;
     }
 
     /**

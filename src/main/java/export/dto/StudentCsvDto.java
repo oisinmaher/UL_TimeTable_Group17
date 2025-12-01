@@ -6,7 +6,7 @@ import com.opencsv.bean.CsvBindByName;
  * Data Transfer Object for exporting Student objects to CSV.
  * Only contains flat fields needed for export - not objects.
  */
-public class StudentCsvDto implements CsvDtoInterface{
+public class StudentCsvDto {
 
     //This is the header on the CSV file
     //@CsvBindByPosition(position = 0)

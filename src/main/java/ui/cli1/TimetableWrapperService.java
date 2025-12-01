@@ -1,5 +1,7 @@
 package ui.cli1;
 
+
+
 import timetables.TimeSlot;
 import timetables.UserTimeTable;
 
@@ -18,6 +20,7 @@ public class TimetableWrapperService implements TimetableService {
 
     /**
      * Creates a new timetable service wrapper.
+     *
      * @param timetable the domain timetable that holds all sessions
      */
     public TimetableWrapperService(UserTimeTable timetable) {
@@ -27,52 +30,21 @@ public class TimetableWrapperService implements TimetableService {
     /**
      * Gets the students timetable as a string
      * @param studentId the ID of the student
-     * @return the students timetable as a string / or if no TimeSlots are found, display
-     * "No timetable found" message
+     * @return the students timetable as a string
      */
     @Override
     public String getStudentTimetableAsString(String studentId) {
-        List<TimeSlot> slots = UserTimeTable.getUserTimetable(studentId).getTimeSlots();
-        if (slots == null || slots.isEmpty()) {
-            return "No timetable found for student " + studentId + ".";
-        }
-        return formatTimetable(slots, "Timetable for student " + studentId);
+        return timetable.toString();
     }
 
     /**
      * Gets the teachers timetable as a string
      * @param TeacherId the ID of the lecturer
-     * @return the teachers timetable as a string / or if no TimeSlots are found, display
-     * "No timetable found" message
+     * @return the teachers timetable as a string
      */
     @Override
     public String getTeacherTimetableAsString(String TeacherId) {
-        List<TimeSlot> slots = UserTimeTable.getUserTimetable(TeacherId).getTimeSlots();
-        if (slots == null || slots.isEmpty()) {
-            return "No timetable found for lecturer " + TeacherId + ".";
-        }
-        return formatTimetable(slots, "Timetable for lecturer " + TeacherId);
+        return timetable.toString();
     }
 
-    /**
-     * Formats a list of TimeSlots into a readable timetable string.
-     * Relies on TimeSlot.toString() and TimeSlot.compareTo().
-     * @param slots list of TimeSlots
-     * @param title student / lecturer ID number
-     * @return list of TimeSlots as a timetable string
-     */
-    private String formatTimetable(List<TimeSlot> slots, String title) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(title).append("\n");
-        sb.append("---------------------------------\n");
-
-        List<TimeSlot> copy = new ArrayList<>(slots);
-//        Collections.sort(copy); // TimeSlot should implement Comparable<TimeSlot>
-
-        for (TimeSlot slot : copy) {
-            sb.append(slot).append("\n");
-        }
-
-        return sb.toString();
-    }
 }

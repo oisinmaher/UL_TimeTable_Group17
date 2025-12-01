@@ -15,7 +15,6 @@ public class LectureRoom extends Room{
     public LectureRoom(String roomID, String roomType, int maxCapacity) {
         super(roomID, roomType, maxCapacity); 
     }
-   
 
     /**
      * Sets the maximum capacity of a lecture room within the range of 1 - 1000
@@ -37,7 +36,6 @@ public class LectureRoom extends Room{
             System.err.println("Error: " + e.getMessage());
         }
     }
-
 
     /**
      * Gets the types of classes that the lecture room can hold.

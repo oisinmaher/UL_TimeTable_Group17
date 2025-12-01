@@ -20,15 +20,15 @@ public class DataManager {
     // (sort of, it only initializes when another class tries to use it)
     private static final DataManager INSTANCE = new DataManager();
 
-        public static Map<String, Room> rooms = Room.getAllRooms();
-        public static Map<String, Student> students = Student.getAllStudentsEnrolled();
-        public static Map<String, Teacher> teachers = Teacher.getAllTeachers();
-        public static Map<String, Group> groups = Group.getAllGroups();
-        public static Map<String, CourseFull> courseFulls = CourseFull.getAllCourseFulls();
-        public static Map<String, CourseYear> courseYears = CourseYear.getAllCourseYears();
-        public static Map<String, CourseSemester> courseSemesters = CourseSemester.getAllSemesters();
-        public static Map<String, CourseModule> courseModules = CourseModule.getModuleMap();
-        public static Set<TimeSlot> timeSlots = Group.getEveryTimeSlots();
+    public static Map<String, Room> rooms = Room.getAllRooms();
+    public static Map<String, Student> students = Student.getAllStudentsEnrolled();
+    public static Map<String, Teacher> teachers = Teacher.getAllTeachers();
+    public static Map<String, Group> groups = Group.getAllGroups();
+    public static Map<String, CourseFull> courseFulls = CourseFull.getAllCourseFulls();
+    public static Map<String, CourseYear> courseYears = CourseYear.getAllCourseYears();
+    public static Map<String, CourseSemester> courseSemesters = CourseSemester.getAllSemesters();
+    public static Map<String, CourseModule> courseModules = CourseModule.getModuleMap();
+    public static Set<TimeSlot> timeSlots = Group.getEveryTimeSlots();
 
 
     private DataManager() {

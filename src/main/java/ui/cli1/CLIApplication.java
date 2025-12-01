@@ -1,8 +1,9 @@
 package ui.cli1;
 
+import adminPanel1.ReadData;
 import timetables.UserTimeTable;
-import data.StudentData;
-import data.TeacherData;
+import users.Student;
+import users.Teacher;
 
 import java.util.Scanner;
 
@@ -10,23 +11,30 @@ import java.util.Scanner;
  * Entry point for the hybrid CLI of the timetabling system.
  */
 public class CLIApplication {
-
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-
         try {
+
+            //Gets all data from registery
+            ReadData rd = new ReadData();
+            rd.importAll();
+
             // --- Data layer: StudentData & TeacherData handle CSV internally ---
             StudentData studentData = new StudentData();
             TeacherData teacherData = new TeacherData();
+
+            // -- Course Services
+            CourseFullService courseFullService = new InMemoryCourseFullService();
+            CourseYearService courseYearService = new InMemoryCourseYearService();
 
             // --- Service layer: CSV-backed services ---
             StudentService studentService = new CSVStudentService(studentData);
             TeacherService teacherService = new CSVTeacherService(teacherData);
 
-            // --- Timetable layer: already prepared in the Timetable class (TreeMaps) ---
-            UserTimeTable domainTimetable = new UserTimeTable(null);     // already populated. Oisin please change later
-            TimetableService timetableService = new TimetableWrapperService(domainTimetable);
+            // --- Timetable layer: already prepared in the Timetable class
+            UserTimeTable userTimeTable;
+            TimetableService timetableService;
 
             boolean running = true;
 
@@ -45,12 +53,16 @@ public class CLIApplication {
                     case "1":
                         System.out.print("Enter student id: ");
                         String studentId = in.nextLine().trim();
+                        userTimeTable = Student.getStudentFromId(studentId).getUserTimeTable();
+                        timetableService = new TimetableWrapperService(userTimeTable);
                         session = new StudentMenuSession(in, studentService, timetableService, studentId);
                         break;
 
                     case "2":
                         System.out.print("Enter teacher id: ");
                         String TeacherId = in.nextLine().trim();
+                        userTimeTable = Teacher.getTeacherFromId(TeacherId).getUserTimeTable();
+                        timetableService = new TimetableWrapperService(userTimeTable);
                         session = new TeacherMenuSession(in, teacherService, TeacherId, timetableService);
                         break;
 
@@ -61,7 +73,7 @@ public class CLIApplication {
                             System.out.println("Invalid admin password.");
                             break;
                         }
-                        session = new AdminCommandSession(in, studentService, teacherService);
+                        session = new AdminCommandSession(in, studentService, teacherService, courseFullService, courseYearService);
                         break;
 
                     case "4":

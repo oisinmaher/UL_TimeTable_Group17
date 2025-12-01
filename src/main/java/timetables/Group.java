@@ -21,6 +21,7 @@ import java.util.*;
  *      - Map of all the dayTime codes to lab TimeSlots (labsTimes)
  *      - Map of all the dayTime codes to tutorial TimeSlots (tutorialsTimes)
  *      - List of CourseFull objects that take this module (coursesTakingThisModule)
+ *      - Map of module code to Group (allGroups)
  */
 public class Group {
 
@@ -32,6 +33,7 @@ public class Group {
     private final Map<String, TimeSlot> referencedTimeSlots;
     protected Set<String> usedTimes;
     protected Set<TimeSlot> allTimeSlots;
+    protected static Map<String, TimeSlot> allTimeSlotsMap = new HashMap<>();
     protected Map<String, TimeSlot> lecturesTimes;
     protected Map<String, TimeSlot> labsTimes;
     protected Map<String, TimeSlot> tutorialsTimes;
@@ -72,16 +74,11 @@ public class Group {
         return allTimeSlots;
     }
 
-    /**
-     * Creates a timeslot (lecture) for this group/module and accounts for creation of
-     * a lecture by adding 1 to the total lecture hours for that module.
-     * @param day the day of the week
-     * @param time the time of day
-     * @param roomId the rooms ID number
-     * @param teacherId the teachers ID number
-     * @throws IllegalArgumentException if the given dayTime already has a TimeSlot
-     */
 
+    /**
+     * Gets every TimeSlot within a Group
+     * @return a set of all TimeSlots
+     */
     public static Set<TimeSlot> getEveryTimeSlots() {
         Set<TimeSlot> allTimeSlots = new HashSet<>();
         for(Group g : DataManager.groups.values()){
@@ -92,8 +89,17 @@ public class Group {
         return allTimeSlots;
     }
 
+    /**
+     * Allows creation of timeslots in lectures for this group/module.
+     * Accounts for creation of the lecture by adding 1 to the total number of
+     * lecture hours for that module.
+     * @param day day of the week
+     * @param time time of day
+     * @param roomId room ID number
+     * @param teacherId teacher ID number
+     */
     public void addLectureTime(String day, String time, String roomId, String teacherId){
-        TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lecture", roomId, teacherId);
+        TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Lecture", roomId, teacherId);
         if(usedTimes.contains(timeSlot.getTime())){
            throw new IllegalArgumentException("This timeslot is already taken");
         }
@@ -101,13 +107,19 @@ public class Group {
         module.setLecHours(prevLecHours + 1);
         usedTimes.add(timeSlot.getTime());
         allTimeSlots.add(timeSlot);
+        allTimeSlotsMap.put(moduleCode + "_lec_" + timeSlot.getTime(), timeSlot);
         lecturesTimes.put(timeSlot.getTime(), timeSlot);
         referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
     }
 
+    /**
+     * Gets the map of all module codes with their associated Group
+     * @return map with all Groups
+     */
     public static Map<String, Group> getAllGroups(){
         return allGroups;
     }
+
     /**
      * Allows creation of timeslots in labs/tutorials for this group/module.
      * Accounts for creation of the selected class by adding 1 to the total number of
@@ -124,7 +136,7 @@ public class Group {
     public void addClassTimes(String typeOfClass, String day, String time, String roomId, String teacherId){
         typeOfClass = typeOfClass.toLowerCase();
         if(typeOfClass.equals("lab")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Lab", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, "Lab", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }
@@ -132,11 +144,12 @@ public class Group {
             module.setLabHours(prevLabHours+1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_lab_" + timeSlot.getTime(), timeSlot);
             labsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
         else if(typeOfClass.equals("tutorial") || typeOfClass.equals("tut")){
-            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule, this, "Tutorial", roomId, teacherId);
+            TimeSlot timeSlot = new TimeSlot(day, time, module, coursesTakingThisModule,  "Tutorial", roomId, teacherId);
             if(usedTimes.contains(timeSlot.getTime())){
                 throw new IllegalArgumentException("This timeslot is already used");
             }
@@ -144,12 +157,19 @@ public class Group {
             module.setTutHours(prevTutHours + 1);
             usedTimes.add(timeSlot.getTime());
             allTimeSlots.add(timeSlot);
+            allTimeSlotsMap.put(moduleCode + "_tut_" + timeSlot.getTime(), timeSlot);
             tutorialsTimes.put(timeSlot.getTime(), timeSlot);
             referencedTimeSlots.put(timeSlot.getTime(), timeSlot);
         }
         else{
             throw new IllegalArgumentException("This type of class doesn't exist, \n please chose lab or tutorial");
         }
+    }
+
+    public TimeSlot getTimeSlotFromTime(String day, String time, String classType){
+        classType = classType.substring(0,3).toLowerCase();
+        String daytime = TimeSlot.toCorrectTimeFormat(day, time);
+        return allTimeSlotsMap.get(moduleCode + "_" + daytime);
     }
 
     /**
@@ -274,7 +294,10 @@ public class Group {
     }
 
 
-
+    /**
+     * Gets the module associated with this group
+     * @return CourseModule
+     */
     public CourseModule getCourseModule(){
         return this.module;
     }
@@ -306,7 +329,4 @@ public class Group {
                 "], rooms=" + getRooms() +
                 '}';
     }
-
-
-
 }

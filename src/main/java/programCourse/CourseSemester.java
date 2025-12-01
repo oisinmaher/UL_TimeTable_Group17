@@ -57,6 +57,15 @@ public final class CourseSemester {
     }
 
     /**
+     * Checks if a given module code can find its module object
+     * @param moduleCode module code
+     * @return true if module code found module, false otherwise
+     */
+    public boolean containsModule(String moduleCode){
+        return assignedModules.containsKey(moduleCode);
+    }
+
+    /**
      * Gets the semesterId in the form "CourseYearId_season"
      * @return semesterId
      */
@@ -92,6 +101,9 @@ public final class CourseSemester {
      * @param name // module name e.g Database Systems
      */
     public void addNewModule(String code, String name){
+        if(containsModule(code)){
+            throw new IllegalArgumentException("Module already exists.");
+        }
         CourseModule module = new CourseModule(name.toLowerCase(), code, courseFull);
         assignedModules.put(code.toLowerCase(), module);
     }
@@ -129,13 +141,16 @@ public final class CourseSemester {
         return assignedModules.get(moduleCode);
     }
 
+    /**
+     * Gets the map of all semester IDs to each CourseSemester object
+     * @return all CourseSemester objects
+     */
     public static Map<String, CourseSemester> getAllSemesters(){
         return allSemesters;
     }
 
     /**
      * Validates the semester and its modules.
-     *
      * Checks:
      *  - Semester name is not blank
      *  - Semester has at least one module
