@@ -43,7 +43,7 @@ public class TimeSlot{
         this.dayTime = toCorrectTimeFormat(day, time);
         this.module = module;
         this.coursesTakingThisModule = coursesTakingThisModule;
-        this.group = group;
+        this.group = module.getGroupAssigned();
         this.module = group.getCourseModule();
         this.teacher = Teacher.getTeacherFromId(teacherId);
         this.students = new HashMap<>();

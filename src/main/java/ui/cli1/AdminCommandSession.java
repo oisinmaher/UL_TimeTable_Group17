@@ -14,6 +14,7 @@ import users.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdminCommandSession implements UserSession {
@@ -66,6 +67,10 @@ public class AdminCommandSession implements UserSession {
                 case "update-teacher":
                     cmdUpdateTeacher(args);
                     break;
+
+                case "add-course":
+                cmdAddCourse(args);
+                    break;
                 /*
                 case "add-course-full":
                 cmdAddCourseFull(args);
@@ -73,9 +78,13 @@ public class AdminCommandSession implements UserSession {
                 case "add-course-year":
                     cmdAddCourseYear(args);
                     break;
-                case "add-course-semester":
-                    cmdAddCourseSemester(args);
+
+                 */
+                case "attach-modules-semester":
+                    cmdAttachModulesSemester(args);
                     break;
+
+
                 case "create-course-module":
                     cmdCreateCourseModule(args);
                     break;
@@ -86,11 +95,10 @@ public class AdminCommandSession implements UserSession {
                     cmdAddTimeslot(args);
                     break;
 
-                 */
                 case "create-room":
                     cmdCreateRoom(args);
                     break;
-                /*
+
                 case "list-courses":
                     cmdListCourses();
                     break;
@@ -98,7 +106,6 @@ public class AdminCommandSession implements UserSession {
                     cmdListCourseYears(args);
                     break;
 
-                 */
                 case "list-students":
                     cmdListStudents();
                     break;
@@ -124,12 +131,15 @@ public class AdminCommandSession implements UserSession {
         System.out.println("  update-student <id> <field> <newValue>");
         System.out.println("  add-teacher <id> <fullName>");
         System.out.println("  update-teacher <id> <field> <newValue>");
-        //System.out.println("  add-course-full <courseCode> <courseName>");
-        //System.out.println("  add-course-year <courseCode> <year>");
-        //System.out.println("  add-course-semester <courseCode> <courseYear> <semester>");
-        //System.out.println("  create-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
-        //System.out.println("  add-existing-module <courseCode> <courseYear> <semester> <moduleCode>");
-        //System.out.println("  add-timeslot <moduleCode> <day> <time> <room> <teacher>");
+        System.out.println("  add-course <courseCode> <courseName> <year> <semester>");
+        /*
+        System.out.println("  add-course-full <courseCode> <courseName>");
+        System.out.println("  add-course-year <courseCode> <year>");
+        System.out.println("  add-course-semester <courseCode> <courseYear> <semester>");
+         */
+        System.out.println("  create-course-module <courseCode> <courseYear> <semester> <moduleCode> <moduleName>");
+        System.out.println("  add-existing-module <courseCode> <courseYear> <semester> <moduleCode>");
+        System.out.println("  add-timeslot <moduleCode> <day> <time> <room> <teacher>");
         System.out.println("  create-room <roomID> <roomType> [maxCapacity]");
         System.out.println("  list-courses");
         System.out.println("  list-course-years <courseCode>");
@@ -203,6 +213,29 @@ public class AdminCommandSession implements UserSession {
     }
 
     // ===== Courses =====
+
+    private void cmdAddCourse(String[] args){
+        if (args.length < 4) {
+            System.out.println("Usage:  add-course <courseCode> <courseName> <year> <semester>");
+            return;
+        }
+
+        String courseCode = args[0];
+        String courseName = args[1];
+        String year = args[2];
+        String semester = args[3];
+
+        CourseFull cf = new CourseFull(courseCode,courseName);
+        CourseYear cy = cf.addCourseYear(year);
+        cy.addSemester(semester);
+
+        WriteData writer = new WriteData();
+        writer.writeCourseYears();
+        writer.writeCourseFulls();
+        System.out.println("Course " + courseCode + " added");
+    }
+
+    /*
     private void cmdAddCourseFull(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: add-course-full <courseCode> <courseName>");
@@ -225,32 +258,35 @@ public class AdminCommandSession implements UserSession {
 
         System.out.println(ok ? "Successfully added year " + args[1] + " to " + args[0] : "Unsuccessful, check input.");
     }
-
-    private void cmdAddCourseSemester(String[] args) {
-        if (args.length != 3) {
-            System.out.println("Usage: add-course-semester <courseCode> <courseYear> <semester>");
+*/
+    private void cmdAttachModulesSemester(String[] args) {
+        if (args.length != 5) {
+            System.out.println("Usage: attach-modules-semester <courseCode> <courseYear> <semester> <moduleCode> <moduleName");
             return;
         }
         String courseCode = args[0];
         String year = args[1];
         String semester = args[2];
-        CourseYear cy = CourseFull.getCourseFromCode(courseCode).getCourseYear(year);
+        String moduleCode = args[3];
+        String moduleName = args[4];
+
+        CourseFull cf = DataManager.courseFulls.get(courseCode);
+        CourseYear cy = DataManager.courseFulls.get(courseCode).getCourseYear(year);
         if (cy == null) {
             System.out.println("Course year not found.");
             return;
         }
-        if (cy.hasSemester(semester)) {
-            System.out.println("Semester already exists.");
-            return;
-        }
-        cy.addSemester(semester);
-        for(CourseSemester cs:cy.getSemesters()) {
-            DataManager.courseSemesters.put(cy.getYearId(),cs );
-        }
+        CourseSemester cs = new CourseSemester(cy, semester, cf);
+        cs.addNewModule(moduleCode,moduleName);
+        CourseModule m = cs.getModuleFromCode(moduleCode);
+
         WriteData writer = new WriteData();
-        writer.writeCourseYears();
+        writer.writeCourseSemesters();
+        writer.writeCourseModules();
         System.out.println("Semester " + semester + " added to " + courseCode + " " + year);
     }
+
+
 
     private void cmdCreateCourseModule(String[] args) {
         if (args.length < 5) {

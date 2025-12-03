@@ -21,13 +21,14 @@ public class InMemoryCourseYearService implements CourseYearService{
             System.out.println("This course code doesn't exist");
             return false;
         }
-        CourseFull courseFull = CourseFull.getCourseFromCode(courseCode);
+        CourseFull courseFull = DataManager.courseFulls.get(courseCode);
         if(courseFull.containsYear(year)){
             System.out.println("This course already has this year");
             return false;
         }
         CourseYear newYear = courseFull.addCourseYear(year);
         DataManager.courseYears.put(newYear.getYearId(), newYear);
+        DataManager.courseFulls.put(courseCode, courseFull);
         WriteData writer = new WriteData();
         writer.writeCourseYears();
         return true;

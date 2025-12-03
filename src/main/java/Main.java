@@ -15,7 +15,8 @@ import users.Teacher;
 public class Main {
     public static void main(String[] args) {
 
-
+        ReadData rd = new ReadData();
+        rd.importAll();
 
     }
 }
