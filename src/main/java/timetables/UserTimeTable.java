@@ -87,29 +87,75 @@ public class UserTimeTable {
     public List<TimeSlot> getTimeSlots() {
         return new ArrayList<>(classesAtTimes.values());
     }
-/*
+
+    /*
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+
+            for (int day = 1; day <= 5; day++) {
+                String dayName = TimeSlot.getDayFromNumber(day);
+
+                sb.append("====================================\n");
+                sb.append("           ").append(dayName).append("\n");
+                sb.append("====================================\n");
+
+                for (int time = 9; time <= 17; time++) {
+                    String key = (time > 9) ? day + "_" + time : day + "_09";
+                    String timeLabel = TimeSlot.getTimeFromShortened(time);
+                    TimeSlot slot = classesAtTimes.get(key);
+
+                    sb.append(String.format("%-10s | ", timeLabel));
+
+                    if (slot == null) {
+                        sb.append("Free Period\n");
+                    } else {
+                        sb.append(slot.toString()).append("\n");
+                    }
+                }
+
+                sb.append("\n");
+            }
+
+            return sb.toString();
+        }
+    */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
+        // Header row
+        sb.append("Time\t");
         for (int day = 1; day <= 5; day++) {
-            String dayName = TimeSlot.getDayFromNumber(day);
+            String dayName = TimeSlot.getDayFromNumber(day); // e.g. "Monday"
+            sb.append(dayName).append("\t");
+        }
+        sb.append("\n");
 
-            sb.append("====================================\n");
-            sb.append("           ").append(dayName).append("\n");
-            sb.append("====================================\n");
+        // For each time from 09:00 to 17:00
+        for (int time = 9; time <= 17; time++) {
+            // First column: the time label (e.g. "09:00")
+            String timeLabel = TimeSlot.getTimeFromShortened(time);
+            sb.append(timeLabel).append("\t");
 
-            for (int time = 9; time <= 17; time++) {
-                String key = (time > 9) ? day + "_" + time : day + "_09";
-                String timeLabel = TimeSlot.getTimeFromShortened(time);
+            // Then one column per day
+            for (int day = 1; day <= 5; day++) {
+                String key;
+
+                // keys are like "1_09", "1_10", ... "5_17"
+                if (time == 9) {
+                    key = day + "_09";
+                } else {
+                    key = day + "_" + time;
+                }
+
                 TimeSlot slot = classesAtTimes.get(key);
 
-                sb.append(String.format("%-10s | ", timeLabel));
-
                 if (slot == null) {
-                    sb.append("Free Period\n");
+                    sb.append("Free").append("\t");
                 } else {
-                    sb.append(slot.toString()).append("\n");
+                    // You can change this to show whatever you want from TimeSlot
+                    sb.append(slot.toString()).append("\t");
                 }
             }
 
@@ -118,50 +164,6 @@ public class UserTimeTable {
 
         return sb.toString();
     }
-*/
-@Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-
-    // Header row
-    sb.append("Time\t");
-    for (int day = 1; day <= 5; day++) {
-        String dayName = TimeSlot.getDayFromNumber(day); // e.g. "Monday"
-        sb.append(dayName).append("\t");
-    }
-    sb.append("\n");
-
-    // For each time from 09:00 to 17:00
-    for (int time = 9; time <= 17; time++) {
-        // First column: the time label (e.g. "09:00")
-        String timeLabel = TimeSlot.getTimeFromShortened(time);
-        sb.append(timeLabel).append("\t");
-
-        // Then one column per day
-        for (int day = 1; day <= 5; day++) {
-            String key;
-
-            // keys are like "1_09", "1_10", ... "5_17"
-            if (time == 9) {
-                key = day + "_09";
-            } else {
-                key = day + "_" + time;
-            }
-
-            TimeSlot slot = classesAtTimes.get(key);
-
-            if (slot == null) {
-                sb.append("Free").append("\t");
-            } else {
-                // You can change this to show whatever you want from TimeSlot
-                sb.append(slot.toString()).append("\t");
-            }
-        }
-
-        sb.append("\n");
-    }
-
-    return sb.toString();
 }
 
 
